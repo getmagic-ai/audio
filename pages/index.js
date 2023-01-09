@@ -1,3 +1,4 @@
+// @PrathmeshSadake we should make the pages as in the design, we can start with the welcome page. I will try to take a crack that now https://github.com/getmagic-ai/audio/issues/1
 import { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
