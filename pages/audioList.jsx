@@ -3,7 +3,7 @@ import { fetchAudioData } from "./_app";
 
 export default function AudioList(props) {
   
-  const {data, isLoading, error} = useQuery('data', fetchAudioData,{staleTime: 10})
+  const {data, isLoading, error} = useQuery('data', fetchAudioData,/*{staleTime: 10}*/) //stale time isn't really needed, the defaults work well. Keeping it here for reference, can delete it
   console.log("Hey, just entered the data fethcing part...");
   if (isLoading) return "loading...";
   if (error) return "An error occured in fetching the data from nocodb";
