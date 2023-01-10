@@ -1,15 +1,14 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { fetchAudioData } from "./_app";
 
 export default function AudioList(props) {
   
-  const {data, isLoading, error} = useQuery('data', fetchAudioData,/*{staleTime: 10}*/) //stale time isn't really needed, the defaults work well. Keeping it here for reference, can delete it
+  const {data, isLoading, error} = useQuery(['data'], fetchAudioData)/*, {staleTime: 10}*/ //stale time isn't really needed, the defaults work well. Keeping it here for reference, can delete it
   console.log("Hey, just entered the data fethcing part...");
   if (isLoading) return "loading...";
   if (error) return "An error occured in fetching the data from nocodb";
   console.log(data.list[0]);
   
-  const dataForMapping = JSON.parse(JSON.stringify(data.list[0]));
 //use this array for test in case the API isn't working
   const test_audio_list = [
     { name: "Song 1", metadata: "Song 1 Metadata" },
