@@ -5,7 +5,7 @@ export default function LandingPage(props) {
         <div className="text-white text-5xl mb-4 ml-10">
           Never search for trending audio again
         </div>
-        <button className="py-4 px-4 bg-purple-700 rounded-full text-white text-xl">
+        <button className="w-48 py-4 px-4 bg-purple-700 rounded-full text-white text-xl">
           Enter
         </button>
       </div>
