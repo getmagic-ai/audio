@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchAudioData } from "./_app";
+import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 
-export default function AudioList(props) {
-  
+export default function AudioList({url}) {
+  const router = new useRouter();
+
   const {data, isLoading, error} = useQuery(['data'], fetchAudioData)/*, {staleTime: 10}*/ //stale time isn't really needed, the defaults work well. Keeping it here for reference, can delete it
   // console.log("Hey, just entered the data fethcing part..."); //debugging only
   if (isLoading) return "loading...";
@@ -16,6 +19,14 @@ export default function AudioList(props) {
     { name: "Song 3", metadata: "Song 3 Metadata" },
     { name: "Song 4", metadata: "Song 4 Metadata" },
   ];
+  const handleClick = (id) => {
+  
+    // window.open(url, '_blank') //this will open a new page with the sources URL
+    //But we want to open our own songDetail page, so thats what we are doing below
+
+  router.push('/songDetail?id=${id}')
+  
+  }
 
   return (
     <table>
@@ -25,11 +36,11 @@ export default function AudioList(props) {
           <th> Song! </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody >
         {
          data.list.map((item) => (
-          <tr key={item.id} className="px-4 py-4">
-            <td className="px-4 py-4">{item.title}</td>
+          <tr key={item.id} className="bg-blue-300 mt-2 mb-2 px-4 py-4" onClick={() => handleClick(item.title)}> 
+            <td className="px-4 py-4 mt-1">{item.title}</td>
             <td className="px-4 py-4">{item.audio_datasource_url}</td>
           </tr>
         ))}
@@ -37,3 +48,7 @@ export default function AudioList(props) {
     </table>
   );
 }
+
+
+//Notes
+/*If you want to pass the actual url , you can simply call the handle function like *handleClick(item.audio_datasource_url)*/
