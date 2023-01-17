@@ -1,9 +1,46 @@
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
+import {app} from '../../firebase-config'
+import { useRouter } from "next/router";
 export default function Signin() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
+  //create the Auth object
 
-    return (
+  const auth = getAuth(app);
+  const router = useRouter();
 
-        <>
-         <span className="text-blue-900 ">Sign In UX will be added here</span>
-        </>
-    )
+  const handleSignin = async () => {
+    try {
+      signInWithEmailAndPassword(auth, email, password);
+      router.push('/dashboard')
+    } catch {console.log('error')}
+  };
+
+  return (
+    <div>
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      {error && <p>{error}</p>}
+      <button onClick={handleSignin}>Sign In</button>
+    </div>
+  );
 }
