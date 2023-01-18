@@ -16,7 +16,8 @@ export default function Signup() {
 
   const handleSignup = async () => {
     try {
-      createUserWithEmailAndPassword(auth, email, password)
+      const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
+      console.log({...userCredentials.user.uid})
     } catch (err) {
       setError(err.message);
     }

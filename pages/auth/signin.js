@@ -15,7 +15,8 @@ export default function Signin() {
 
   const handleSignin = async () => {
     try {
-      signInWithEmailAndPassword(auth, email, password);
+     const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+     console.log({...userCredentials.user})
       router.push('/dashboard')
     } catch {console.log('error')}
   };
