@@ -32,25 +32,6 @@ const navigation = [
     icon: ShareIcon,
   },
 ];
-const userNavigation = [
-  {
-    name: "Your Profile",
-    callback: () => router.push("/dashboard/user/profile"),
-    icon: UserIcon,
-  },
-  {
-    name: "Settings",
-    callback: () => router.push("/dashboard/user/settings"),
-    icon: Cog8ToothIcon,
-  },
-  {
-    name: "Sign out",
-    callback: () => {
-      //   signOutAUser();
-    },
-    icon: KeyIcon,
-  },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -59,6 +40,26 @@ function classNames(...classes) {
 export default function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
+
+  const userNavigation = [
+    {
+      name: "Your Profile",
+      callback: () => router.push("/dashboard/user/my-profile"),
+      icon: UserIcon,
+    },
+    {
+      name: "Settings",
+      callback: () => router.push("/dashboard/user/settings"),
+      icon: Cog8ToothIcon,
+    },
+    {
+      name: "Sign out",
+      callback: () => {
+        //   signOutAUser();
+      },
+      icon: KeyIcon,
+    },
+  ];
 
   return (
     <div>
