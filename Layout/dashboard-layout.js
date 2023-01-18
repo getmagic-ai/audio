@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, use, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   KeyIcon,
@@ -13,6 +13,9 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import { getAuth, signOut } from "firebase/auth";
+import { app } from "@/firebase-config";
+
 
 const navigation = [
   { name: "Home", href: "/dashboard", icon: HomeIcon },
@@ -56,6 +59,9 @@ export default function DashboardLayout({ children }) {
       name: "Sign out",
       callback: () => {
         //   signOutAUser();
+        // adding for testing on 18 jan 2023 , you can redo this if needed @PrathmeshSadake
+        signOut(getAuth(app))
+        router.push('/'); //redirect to the home page
       },
       icon: KeyIcon,
     },

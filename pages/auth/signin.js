@@ -1,7 +1,8 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { db, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import {app} from '../../firebase-config'
+import { app, db, auth, googleAuthProvider, githubAuthProvider } from "../../firebase-config";
 import { useRouter } from "next/router";
+
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -15,10 +16,16 @@ export default function Signin() {
 
   const handleSignin = async () => {
     try {
-     const userCredentials = await signInWithEmailAndPassword(auth, email, password);
-     console.log({...userCredentials.user})
-      router.push('/dashboard')
-    } catch {console.log('error')}
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log({ ...userCredentials.user });
+      router.push("/upgrade");
+    } catch {
+      console.log("error");
+    }
   };
 
   return (
