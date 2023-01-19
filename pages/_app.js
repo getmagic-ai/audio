@@ -1,3 +1,4 @@
+import { AuthProvider } from "@/context/AuthContext";
 import DashboardLayout from "@/layout/dashboard-layout";
 import "@/styles/globals.css";
 import { Inter } from "@next/font/google";
@@ -8,7 +9,7 @@ import React from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const openRoutes = ["/", "/invitation-code", "/signup", "/signin"];
+const openRoutes = ["/", "/invitation-code", "/auth/signup", "/auth/signin"];
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -18,9 +19,11 @@ export default function App({ Component, pageProps }) {
         <title>Audio</title>
       </Head>
       {!openRoutes.includes(router.pathname) ? (
-        <DashboardLayout className={inter.className}>
-          <Component {...pageProps} />
-        </DashboardLayout>
+        <AuthProvider>
+          <DashboardLayout className={inter.className}>
+            <Component {...pageProps} />
+          </DashboardLayout>
+        </AuthProvider>
       ) : (
         <Component {...pageProps} />
       )}
