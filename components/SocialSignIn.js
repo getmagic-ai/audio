@@ -16,7 +16,7 @@ const SocialSignIn = () => {
 
     try {
       await signInWithPopup(auth, provider);
-      router.push("/dashboard/home");
+      router.push("/dashboard");
     } catch (error) {
       console.log("error");
       alert(error);
@@ -29,7 +29,7 @@ const SocialSignIn = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       console.log(result);
-      router.push("/dashboard/home");
+      router.push("/dashboard");
     } catch (error) {
       console.log("error");
       alert(error);
@@ -62,7 +62,9 @@ const SocialSignIn = () => {
           <div className='w-full border-t border-gray-300' />
         </div>
         <div className='relative flex justify-center text-sm'>
-          <span className='px-2 bg-gray-700 text-gray-200'>Or continue with</span>
+          <span className='px-2 bg-gray-700 text-gray-200'>
+            Or continue with
+          </span>
         </div>
       </div>
     </div>
