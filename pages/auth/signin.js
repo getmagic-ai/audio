@@ -1,6 +1,5 @@
-import { db, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import { app, db, auth, googleAuthProvider, githubAuthProvider } from "../../firebase-config";
+import { app, db, auth, googleAuthProvider, githubAuthProvider } from "../../config/firebase-config"
 import { useRouter } from "next/router";
 
 

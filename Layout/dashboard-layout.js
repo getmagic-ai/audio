@@ -14,7 +14,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import { getAuth, signOut } from "firebase/auth";
-import { app } from "@/firebase-config";
+import { app } from "../config/firebase-config";
 
 
 const navigation = [

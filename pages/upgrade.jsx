@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { createElement, useState } from "react";
+import { createCheckoutSession } from "@/stripe/createCheckoutSession";
+import { auth } from "../config/firebase-config";
 
 export default function Upgrade(props) {
   const [upgradestatus, setUpgradestatus] = useState("free"); //make these status as enums later instead of strings
@@ -7,6 +9,10 @@ export default function Upgrade(props) {
     switch (upgradeType) {
       case "pro":
         setUpgradestatus("pro");
+        const user = auth.currentUser;
+        if (user !== null) {
+          createCheckoutSession(user.uid);
+        }
         break;
       case "premium":
         setUpgradestatus("premium");

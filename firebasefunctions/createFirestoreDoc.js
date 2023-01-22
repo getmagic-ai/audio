@@ -1,28 +1,12 @@
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../config/firebase-config";
 
-export async function createFirestoreDoc(db, collectionName, object ){
-
-
-    const dbRef = collection(db, collectionName);
-    await addDoc(dbRef, object)
+export async function createFirestoreDoc(collectionName, object) {
+  const dbRef = collection(db, collectionName);
+  console.log(`adding the doc..`);
+  try {
+    await addDoc(dbRef, object);
+  } catch (error) {
+    console.log(error);
+  }
 }
-
-
-
-
-const googleHandler = async () => {
-    // signInWithRedirect(auth, googleAuthProvider);
-    const result = await signInWithPopup(auth, googleAuthProvider);
-    // console.log(result);
-    if (result) {
-      // This is the signed-in user
-      const user = result.user;
-      const dbRef = collection(db, "customers");
-      await addDoc(dbRef, {
-        uid: user.uid,
-        name: user.displayName,
-        authProvider: "Google",
-        email: user.email,
-      });
-    }
-  };
