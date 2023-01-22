@@ -11,12 +11,18 @@ import { CreateNewUser } from "../../utils/auth";
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const router = useRouter();
-  const handleCreateNewAccount = async (e) => {
-    e.preventDefault();
-    CreateNewUser(email, password, firstName, lastName, router);
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
+  //create the Auth object
+  const auth = getAuth();
+
+  const handleSignup = async () => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
+      console.log({...userCredentials.user.uid})
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   onAuthStateChanged(auth, (user) => {
