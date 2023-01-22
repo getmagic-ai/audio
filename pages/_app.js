@@ -14,7 +14,7 @@ const openRoutes = ["/", "/invitation-code", "/auth/signup", "/auth/signin"];
 export default function App({ Component, pageProps }) {
   const router = useRouter();
   return (
-    <React.Fragment>
+    <div className='max-w-md mx-auto'>
       <Head>
         <title>Audio</title>
       </Head>
@@ -27,6 +27,6 @@ export default function App({ Component, pageProps }) {
       ) : (
         <Component {...pageProps} />
       )}
-    </React.Fragment>
+    </div>
   );
 }

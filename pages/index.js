@@ -5,7 +5,7 @@ import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 const InvitationCode = () => {
   return (
     <div className='container max-w-lg mx-auto sm:px-6 lg:px-8 flex flex-col justify-center h-screen'>
-      <h1 className='text-4xl text-center font-medium text-gray-900'>
+      <h1 className='text-4xl text-center font-medium text-gray-100'>
         Never Search for Trending Audio Again
       </h1>
       <Link
