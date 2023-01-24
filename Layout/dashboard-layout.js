@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, use, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   KeyIcon,
@@ -13,6 +13,9 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import { getAuth, signOut } from "firebase/auth";
+import { app } from "../config/firebase-config";
+
 import Navbar from "./Navbar";
 import BottomNavigation from "./BottomNavigation";
 
@@ -35,34 +38,7 @@ const navigation = [
   },
 ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 export default function DashboardLayout({ children }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const router = useRouter();
-
-  const userNavigation = [
-    {
-      name: "Your Profile",
-      callback: () => router.push("/dashboard/user/my-profile"),
-      icon: UserIcon,
-    },
-    {
-      name: "Settings",
-      callback: () => router.push("/dashboard/user/settings"),
-      icon: Cog8ToothIcon,
-    },
-    {
-      name: "Sign out",
-      callback: () => {
-        //   signOutAUser();
-      },
-      icon: KeyIcon,
-    },
-  ];
-
   return (
     <div className='max-w-md mx-auto bg-black'>
       <Navbar />

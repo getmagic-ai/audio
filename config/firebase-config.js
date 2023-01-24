@@ -5,8 +5,11 @@ import {
   browserSessionPersistence,
   browserPopupRedirectResolver,
   setPersistence,
+  GoogleAuthProvider,
+  GithubAuthProvider
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -35,3 +38,5 @@ export const auth = getAuth(app);
 (async () => {
   await setPersistence(auth, browserLocalPersistence);
 })();
+export const googleAuthProvider = new GoogleAuthProvider();
+export const githubAuthProvider = new GithubAuthProvider();

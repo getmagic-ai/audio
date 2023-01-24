@@ -1,3 +1,11 @@
+import { useState } from "react";
+import {
+  app,
+  db,
+  auth,
+  googleAuthProvider,
+  githubAuthProvider,
+} from "../../config/firebase-config";
 import Image from "next/image";
 import Link from "next/link";
 import SocialSignIn from "../../components/SocialSignIn";
@@ -12,21 +20,19 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const loginHandler = useCallback(
-    async (event) => {
-      event.preventDefault();
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        router.push("/dashboard");
-      } catch (error) {
-        console.log("error");
-        alert(error);
-      }
-    },
-    [router]
-  );
-  const currentUser = useContext(AuthContext);
-  console.log(currentUser);
+  const handleSignin = async () => {
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log({ ...userCredentials.user });
+      router.push("/upgrade");
+    } catch {
+      console.log("error");
+    }
+  };
 
   onAuthStateChanged(auth, (user) => {
     if (user && typeof window !== "undefined") {
