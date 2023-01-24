@@ -1,4 +1,3 @@
-import React from "react";
 import { useQuery } from "react-query";
 import {
   HeartIcon,
@@ -7,7 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { fetchAudioData } from "../_app";
 
-const TrendingSongs = () => {
+export default function AudioList(props) {
   const { data, isLoading, error } = useQuery(
     ["data"],
     fetchAudioData
@@ -18,17 +17,7 @@ const TrendingSongs = () => {
   // console.log(data.list[0]); //debugging only
 
   return (
-    <div>
-      <h1 className='text-2xl font-semibold text-gray-200 mb-8'>
-        Trending Playlist of the Day
-      </h1>
-      <div className='my-5'>
-        <div className='tabs tabs-boxed'>
-          <a className='tab tab-active'>Instagram</a>
-          <a className='tab '>Tik Tok</a>
-          <a className='tab'>Youtube</a>
-        </div>
-      </div>
+    <div className='w-full'>
       <ul role='list' class='divide-y divide-gray-200'>
         {data.list.map((item) => (
           <li class='py-3 sm:py-4'>
@@ -59,6 +48,4 @@ const TrendingSongs = () => {
       </ul>
     </div>
   );
-};
-
-export default TrendingSongs;
+}

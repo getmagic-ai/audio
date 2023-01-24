@@ -29,15 +29,12 @@ const Profile = () => {
                 Username
               </label>
               <div className='mt-1 flex rounded-md shadow-sm'>
-                <span className='inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm'>
-                  workcation.com/
-                </span>
                 <input
                   type='text'
                   name='username'
                   id='username'
                   autoComplete='username'
-                  className='flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300'
+                  className='p-2 flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300'
                 />
               </div>
             </div>
@@ -54,7 +51,7 @@ const Profile = () => {
                   id='about'
                   name='about'
                   rows={3}
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md'
+                  className='p-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md'
                   defaultValue={""}
                 />
               </div>
@@ -159,7 +156,7 @@ const Profile = () => {
                   name='first-name'
                   id='first-name'
                   autoComplete='given-name'
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                  className='p-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
                 />
               </div>
             </div>
@@ -177,7 +174,7 @@ const Profile = () => {
                   name='last-name'
                   id='last-name'
                   autoComplete='family-name'
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                  className='p-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
                 />
               </div>
             </div>
@@ -195,7 +192,7 @@ const Profile = () => {
                   name='email'
                   type='email'
                   autoComplete='email'
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                  className='p-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
                 />
               </div>
             </div>
@@ -212,7 +209,7 @@ const Profile = () => {
                   id='country'
                   name='country'
                   autoComplete='country-name'
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                  className='p-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
                 >
                   <option>United States</option>
                   <option>Canada</option>
@@ -234,7 +231,7 @@ const Profile = () => {
                   name='street-address'
                   id='street-address'
                   autoComplete='street-address'
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                  className='p-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
                 />
               </div>
             </div>
@@ -252,7 +249,7 @@ const Profile = () => {
                   name='city'
                   id='city'
                   autoComplete='address-level2'
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                  className='p-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
                 />
               </div>
             </div>
@@ -270,7 +267,7 @@ const Profile = () => {
                   name='region'
                   id='region'
                   autoComplete='address-level1'
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                  className='p-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
                 />
               </div>
             </div>
@@ -288,258 +285,10 @@ const Profile = () => {
                   name='postal-code'
                   id='postal-code'
                   autoComplete='postal-code'
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                  className='p-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
                 />
               </div>
             </div>
-          </div>
-        </div>
-        <div className='pt-8'>
-          <h1 className='font-medium text-xl'>Add Payment Information</h1>
-          <div className='mt-6'>
-            <fieldset className='my-4'>
-              <div className='space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10'>
-                {paymentMethods.map((paymentMethod, paymentMethodIdx) => (
-                  <div key={paymentMethod.id} className='flex items-center'>
-                    {paymentMethodIdx === 0 ? (
-                      <input
-                        id={paymentMethod.id}
-                        name='payment-type'
-                        type='radio'
-                        defaultChecked
-                        className='focus:ring-gray-500 h-4 w-4 text-gray-600 border-gray-300'
-                      />
-                    ) : (
-                      <input
-                        id={paymentMethod.id}
-                        name='payment-type'
-                        type='radio'
-                        className='focus:ring-gray-500 h-4 w-4 text-gray-600 border-gray-300'
-                      />
-                    )}
-
-                    <label
-                      htmlFor={paymentMethod.id}
-                      className='ml-3 block text-sm font-medium text-gray-700'
-                    >
-                      {paymentMethod.title}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </fieldset>
-
-            <div className='mt-6 grid grid-cols-8 gap-y-6 gap-x-4'>
-              <div className='col-span-4'>
-                <label
-                  htmlFor='card-number'
-                  className='block text-sm font-medium text-gray-700'
-                >
-                  Card number
-                </label>
-                <div className='mt-1'>
-                  <input
-                    type='text'
-                    id='card-number'
-                    name='card-number'
-                    autoComplete='cc-number'
-                    className='mt-2 p-3 block w-full rounded-md border-gray-300 border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-                  />
-                </div>
-              </div>
-
-              <div className='col-span-4'>
-                <label
-                  htmlFor='name-on-card'
-                  className='block text-sm font-medium text-gray-700'
-                >
-                  Name on card
-                </label>
-                <div className='mt-1'>
-                  <input
-                    type='text'
-                    id='name-on-card'
-                    name='name-on-card'
-                    autoComplete='cc-name'
-                    className='mt-2 p-3 block w-full rounded-md border-gray-300 border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-                  />
-                </div>
-              </div>
-
-              <div className='col-span-3'>
-                <label
-                  htmlFor='expiration-date'
-                  className='block text-sm font-medium text-gray-700'
-                >
-                  Expiration date (MM/YY)
-                </label>
-                <div className='mt-1'>
-                  <input
-                    type='text'
-                    name='expiration-date'
-                    id='expiration-date'
-                    autoComplete='cc-exp'
-                    className='mt-2 p-3 block w-full rounded-md border-gray-300 border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label
-                  htmlFor='cvc'
-                  className='block text-sm font-medium text-gray-700'
-                >
-                  CVC
-                </label>
-                <div className='mt-1'>
-                  <input
-                    type='text'
-                    name='cvc'
-                    id='cvc'
-                    autoComplete='csc'
-                    className='mt-2 p-3 block w-full rounded-md border-gray-300 border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className='pt-8'>
-          <div>
-            <h3 className='text-lg leading-6 font-medium text-gray-900'>
-              Notifications
-            </h3>
-            <p className='mt-1 text-sm text-gray-500'>
-              We&apos;ll always let you know about important changes, but you
-              pick what else you want to hear about.
-            </p>
-          </div>
-          <div className='mt-6'>
-            <fieldset>
-              <legend className='text-base font-medium text-gray-900'>
-                By Email
-              </legend>
-              <div className='mt-4 space-y-4'>
-                <div className='relative flex items-start'>
-                  <div className='flex items-center h-5'>
-                    <input
-                      id='comments'
-                      name='comments'
-                      type='checkbox'
-                      className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
-                    />
-                  </div>
-                  <div className='ml-3 text-sm'>
-                    <label
-                      htmlFor='comments'
-                      className='font-medium text-gray-700'
-                    >
-                      Comments
-                    </label>
-                    <p className='text-gray-500'>
-                      Get notified when someones posts a comment on a posting.
-                    </p>
-                  </div>
-                </div>
-                <div className='relative flex items-start'>
-                  <div className='flex items-center h-5'>
-                    <input
-                      id='candidates'
-                      name='candidates'
-                      type='checkbox'
-                      className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
-                    />
-                  </div>
-                  <div className='ml-3 text-sm'>
-                    <label
-                      htmlFor='candidates'
-                      className='font-medium text-gray-700'
-                    >
-                      Candidates
-                    </label>
-                    <p className='text-gray-500'>
-                      Get notified when a candidate applies for a job.
-                    </p>
-                  </div>
-                </div>
-                <div className='relative flex items-start'>
-                  <div className='flex items-center h-5'>
-                    <input
-                      id='offers'
-                      name='offers'
-                      type='checkbox'
-                      className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
-                    />
-                  </div>
-                  <div className='ml-3 text-sm'>
-                    <label
-                      htmlFor='offers'
-                      className='font-medium text-gray-700'
-                    >
-                      Offers
-                    </label>
-                    <p className='text-gray-500'>
-                      Get notified when a candidate accepts or rejects an offer.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset className='mt-6'>
-              <div>
-                <legend className='text-base font-medium text-gray-900'>
-                  Push Notifications
-                </legend>
-                <p className='text-sm text-gray-500'>
-                  These are delivered via SMS to your mobile phone.
-                </p>
-              </div>
-              <div className='mt-4 space-y-4'>
-                <div className='flex items-center'>
-                  <input
-                    id='push-everything'
-                    name='push-notifications'
-                    type='radio'
-                    className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300'
-                  />
-                  <label
-                    htmlFor='push-everything'
-                    className='ml-3 block text-sm font-medium text-gray-700'
-                  >
-                    Everything
-                  </label>
-                </div>
-                <div className='flex items-center'>
-                  <input
-                    id='push-email'
-                    name='push-notifications'
-                    type='radio'
-                    className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300'
-                  />
-                  <label
-                    htmlFor='push-email'
-                    className='ml-3 block text-sm font-medium text-gray-700'
-                  >
-                    Same as email
-                  </label>
-                </div>
-                <div className='flex items-center'>
-                  <input
-                    id='push-nothing'
-                    name='push-notifications'
-                    type='radio'
-                    className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300'
-                  />
-                  <label
-                    htmlFor='push-nothing'
-                    className='ml-3 block text-sm font-medium text-gray-700'
-                  >
-                    No push notifications
-                  </label>
-                </div>
-              </div>
-            </fieldset>
           </div>
         </div>
       </div>

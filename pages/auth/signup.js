@@ -1,4 +1,9 @@
-import { app, auth, db, googleAuthProvider } from "../../config/firebase-config";
+import {
+  app,
+  auth,
+  db,
+  googleAuthProvider,
+} from "../../config/firebase-config";
 import { useState } from "react";
 import {
   getAuth,
@@ -49,7 +54,7 @@ export default function Signup() {
         email: user.email,
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       setError(err.message);
     }
   }
@@ -58,20 +63,20 @@ export default function Signup() {
     <>
       <div>
         <input
-          type="email"
-          placeholder="Email"
+          type='email'
+          placeholder='Email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          type="password"
-          placeholder="Password"
+          type='password'
+          placeholder='Password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <input
-          type="text"
-          placeholder="Username"
+          type='text'
+          placeholder='Username'
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
@@ -80,7 +85,7 @@ export default function Signup() {
       </div>
       <div>
         <button
-          className="py-4 rounded-md bg-blue-800 text-white"
+          className='py-4 rounded-md bg-blue-800 text-white'
           onClick={handleGoogleSignup}
         >
           Sign up with Google
