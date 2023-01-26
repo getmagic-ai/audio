@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   app,
   db,
@@ -13,7 +12,6 @@ import { useCallback, useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../context/AuthContext";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../config/firebase-config";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -132,7 +130,7 @@ export default function SignInPage() {
                 <div>
                   <button
                     type='submit'
-                    onClick={loginHandler}
+                    onClick={handleSignin} //@PrathmeshSadake replacig this with handleSignIn since its throwing an error due to missing loginHandler function
                     className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
                   >
                     Sign in
