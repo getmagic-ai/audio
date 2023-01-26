@@ -1,4 +1,4 @@
-import InvitationCodeInput from "@/components/InvitationCodeInput";
+import InvitationCodeInput from "../components/InvitationCodeInput";
 import React from "react";
 import Link from "next/link";
 

@@ -9,7 +9,7 @@ import Link from "next/link";
 
 const BottomNavigation = () => {
   return (
-    <div className='btm-nav max-w-md mx-auto bg-gray-800'>
+    <div className='fixed btm-nav max-w-md mx-auto bg-gray-800'>
       <Link href='/dashboard'>
         <HomeIcon height={25} />
       </Link>

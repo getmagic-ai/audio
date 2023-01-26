@@ -11,7 +11,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
-import { createFirestoreDoc } from "@/firebasefunctions/createFirestoreDoc";
+import { createFirestoreDoc } from "../../firebasefunctions/createFirestoreDoc";
 
 export default function Signup() {
   const [email, setEmail] = useState("");

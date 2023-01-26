@@ -1,6 +1,6 @@
-import { AuthProvider } from "@/context/AuthContext";
-import DashboardLayout from "@/layout/dashboard-layout";
-import "@/styles/globals.css";
+import { AuthProvider } from "../context/AuthContext";
+import DashboardLayout from "../layout//dashboard-layout";
+import "../styles/globals.css";
 import { Poppins } from "@next/font/google";
 
 import Head from "next/head";
@@ -25,13 +25,15 @@ export default function App({ Component, pageProps }) {
         <title>Audio</title>
       </Head>
       {!openRoutes.includes(router.pathname) ? (
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <DashboardLayout className={poppins.className}>
-              <Component {...pageProps} />
-            </DashboardLayout>
-          </QueryClientProvider>
-        </AuthProvider>
+        <div className='h-screen overflow-hidden'>
+          <AuthProvider>
+            <QueryClientProvider client={queryClient}>
+              <DashboardLayout className={poppins.className}>
+                <Component {...pageProps} />
+              </DashboardLayout>
+            </QueryClientProvider>
+          </AuthProvider>
+        </div>
       ) : (
         <Component {...pageProps} />
       )}
