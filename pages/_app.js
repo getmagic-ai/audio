@@ -1,5 +1,5 @@
 import { AuthProvider } from "../context/AuthContext";
-import DashboardLayout from "../layout/dashboard-layout";
+import DashboardLayout from "../layout/DashboardLayout";
 import "../styles/globals.css";
 import { Poppins } from "@next/font/google";
 
