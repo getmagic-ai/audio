@@ -6,7 +6,6 @@ import {
 } from "@heroicons/react/24/outline";
 
 import Navbar from "./Navbar";
-import BottomNavigation from "./BottomNavigation";
 
 const navigation = [
   { name: "Home", href: "/dashboard", icon: HomeIcon },
@@ -29,12 +28,12 @@ const navigation = [
 
 export default function DashboardLayout({ children }) {
   return (
-    <div className='max-w-md max-h-screen mx-auto bg-black overflow-hidden'>
+    <div className='max-w-md max-h-screen mx-auto bg-black'>
       <Navbar />
       <main className='flex-1'>
         <div className='py-6 pb-24 px-4 sm:px-6 md:px-8'>{children}</div>
       </main>
-      <BottomNavigation />
+      {/* <BottomNavigation /> */}
     </div>
   );
 }

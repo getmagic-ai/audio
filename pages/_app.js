@@ -20,20 +20,18 @@ const queryClient = new QueryClient();
 export default function App({ Component, pageProps }) {
   const router = useRouter();
   return (
-    <div className='max-w-md mx-auto'>
+    <div className='max-w-md mx-auto bg-black'>
       <Head>
         <title>Audio</title>
       </Head>
       {!openRoutes.includes(router.pathname) ? (
-        <div className='h-screen overflow-hidden'>
-          <AuthProvider>
-            <QueryClientProvider client={queryClient}>
-              <DashboardLayout className={poppins.className}>
-                <Component {...pageProps} />
-              </DashboardLayout>
-            </QueryClientProvider>
-          </AuthProvider>
-        </div>
+        <AuthProvider>
+          <QueryClientProvider client={queryClient}>
+            <DashboardLayout className={poppins.className}>
+              <Component {...pageProps} />
+            </DashboardLayout>
+          </QueryClientProvider>
+        </AuthProvider>
       ) : (
         <Component {...pageProps} />
       )}

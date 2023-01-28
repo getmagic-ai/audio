@@ -18,7 +18,7 @@ const TrendingSongs = () => {
   // console.log(data.list[0]); //debugging only
 
   return (
-    <div>
+    <div className='bg-black'>
       <h1 className='text-2xl font-semibold text-gray-200 mb-8'>
         Trending Playlist of the Day
       </h1>
