@@ -16,7 +16,7 @@ const SocialSignIn = () => {
 
     try {
       await signInWithPopup(auth, provider);
-      router.push("/dashboard");
+      router.push("/app");
     } catch (error) {
       console.log("error");
       alert(error);
@@ -29,7 +29,7 @@ const SocialSignIn = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       console.log(result);
-      router.push("/dashboard");
+      router.push("/app");
     } catch (error) {
       console.log("error");
       alert(error);

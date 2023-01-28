@@ -1,12 +1,12 @@
-import { AuthProvider } from "../context/AuthContext";
-import DashboardLayout from "../components/layout/DashboardLayout";
-import "../styles/globals.css";
+import { AuthProvider } from "@/context/AuthContext";
+import "@/styles/globals.css";
 import { Poppins } from "@next/font/google";
 
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 import { QueryClient, useQuery, QueryClientProvider } from "react-query";
+import AppLayout from "@/components/Layout";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -20,19 +20,21 @@ const queryClient = new QueryClient();
 export default function App({ Component, pageProps }) {
   const router = useRouter();
   return (
-    <div className='max-w-md mx-auto bg-black'>
+    <div className='bg-black min-h-screen'>
       <Head>
-        <title>Audio</title>
+        <title>Waveforms.io</title>
       </Head>
       {!openRoutes.includes(router.pathname) ? (
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <DashboardLayout className={poppins.className}>
+        // <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <AppLayout className={poppins.className}>
+            <div className='bg-black min-h-screen'>
               <Component {...pageProps} />
-            </DashboardLayout>
-          </QueryClientProvider>
-        </AuthProvider>
+            </div>
+          </AppLayout>
+        </QueryClientProvider>
       ) : (
+        // </AuthProvider>
         <Component {...pageProps} />
       )}
     </div>

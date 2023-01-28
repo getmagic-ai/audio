@@ -34,7 +34,7 @@ export default function SignInPage() {
 
   onAuthStateChanged(auth, (user) => {
     if (user && typeof window !== "undefined") {
-      router.push("/dashboard");
+      router.push("/app");
       return <></>;
     }
   });
