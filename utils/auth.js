@@ -35,11 +35,11 @@ export const CreateNewUser = (email, password, firstName, lastName, router) =>
           const userSnap = await getDoc(userRef);
           if (userSnap.exists()) {
             console.log("Document data:", userSnap.data());
-            router.push("/dashboard");
+            router.push("/app");
           } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
-            router.push("/onboarding");
+            router.push("/app");
           }
         })
         .catch((error) => {

@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Container } from "./Container";
 import UserAvatar from "react-user-avatar";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 import {
   UserIcon,
@@ -324,7 +324,13 @@ export function Navbar() {
     {
       name: "Sign out",
       callback: () => {
-        signOutAUser();
+        signOut(auth)
+          .then(() => {
+            console.log("Sign-out successful.");
+          })
+          .catch((error) => {
+            console.log("An error happened.", error.message);
+          });
       },
       icon: KeyIcon,
     },

@@ -21,9 +21,9 @@ const TrendingSongs = () => {
         loading={isLoading}
         cssOverride={{
           display: "block",
-          margin: "0 auto",
+          margin: "50px auto 0 auto",
         }}
-        size={150}
+        size={50}
         aria-label='Loading Spinner'
         data-testid='loader'
       />
