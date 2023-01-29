@@ -6,6 +6,7 @@ import {
   ArrowUpOnSquareIcon,
 } from "@heroicons/react/24/outline";
 import { fetchAudioData } from "@/pages/_app";
+import { ClipLoader } from "react-spinners";
 
 const TrendingSongs = () => {
   const { data, isLoading, error } = useQuery(
@@ -13,7 +14,20 @@ const TrendingSongs = () => {
     fetchAudioData
   ); /*, {staleTime: 10}*/ //stale time isn't really needed, the defaults work well. Keeping it here for reference, can delete it
   // console.log("Hey, just entered the data fethcing part..."); //debugging only
-  if (isLoading) return "loading...";
+  if (isLoading)
+    return (
+      <ClipLoader
+        color={"#661AE6"}
+        loading={isLoading}
+        cssOverride={{
+          display: "block",
+          margin: "0 auto",
+        }}
+        size={150}
+        aria-label='Loading Spinner'
+        data-testid='loader'
+      />
+    );
   if (error) return "An error occured in fetching the data from nocodb";
   console.log(data.list[0]); //debugging only
 

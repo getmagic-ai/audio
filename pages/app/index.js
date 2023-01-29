@@ -1,4 +1,5 @@
 import Newsletter from "@/components/Newsletter";
+import Link from "next/link";
 import React from "react";
 
 const Home = () => {
@@ -11,18 +12,25 @@ const Home = () => {
               Let's find more that brings us together.
             </h2>
             <p className='mb-8 font-light text-gray-500 sm:text-xl dark:text-gray-400'>
-              Flowbite helps you connect with friends, family and communities of
-              people who share your interests. Connecting with your friends and
-              family as well as discovering new ones is easy with features like
-              Groups, Watch and Marketplace.
+              Waveforms helps you to find trending audio for your next big
+              project so Never Search for Trending Audio Again. It’s time to
+              start using trending audio. But what are trending sounds, where do
+              you find them, and how do you know which ones are taking off?
+              We’ve got you.
             </p>
-            <div className='flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4'>
-              <a
-                href='#'
-                className='inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900'
+            <div className='flex flex-col space-y-4'>
+              <Link
+                href='/app/trending-songs'
+                className='inline-flex items-center justify-start py-2.5 text-base font-medium text-white bg-primary-700 rounded-lg hover:bg-primary-800'
+              >
+                View All Trending Audio
+              </Link>
+              <Link
+                href='/app/upgrade'
+                className='inline-flex items-center justify-start py-2.5 text-base font-medium text-white bg-primary-700 rounded-lg hover:bg-primary-800'
               >
                 Upgrade To Pro
-              </a>
+              </Link>
             </div>
           </div>
         </div>

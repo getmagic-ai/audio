@@ -8,7 +8,7 @@ const InviteAFriend = () => {
       <div>
         <label
           htmlFor='invitation-code'
-          className='block text-sm font-medium text-gray-700'
+          className='block text-sm font-medium text-gray-200'
         >
           Enter email to send invite
         </label>

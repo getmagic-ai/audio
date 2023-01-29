@@ -3,16 +3,18 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Popover, Transition, Menu } from "@headlessui/react";
 import clsx from "clsx";
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Container } from "./Container";
 import UserAvatar from "react-user-avatar";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 import {
   UserIcon,
   Cog8ToothIcon,
   LinkIcon,
   KeyIcon,
-  BookmarkIcon,
   HeartIcon,
+  ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import { signOutAUser } from "@/utils/auth";
 
@@ -197,6 +199,20 @@ function Avatar({ large = false, className, ...props }) {
 
 export function Navbar() {
   let isHomePage = useRouter().pathname === "/app";
+  const [user, setUser] = useState(null);
+
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      const uid = user.uid;
+      setUser(user);
+    } else {
+      // User is signed out
+      setUser(null);
+    }
+  });
 
   let headerRef = useRef();
   let avatarRef = useRef();
@@ -336,7 +352,7 @@ export function Navbar() {
                 <Avatar />
               </AvatarContainer>
             </div> */}
-            <div className='flex flex-1 justify-end md:justify-center'>
+            <div className='flex flex-1 justify-end'>
               <MobileNavigation className='pointer-events-auto md:hidden' />
               <DesktopNavigation className='pointer-events-auto hidden md:block' />
             </div>
@@ -344,12 +360,25 @@ export function Navbar() {
               <div className='pointer-events-auto'>
                 <Menu as='div' className='relative'>
                   <div>
-                    <Menu.Button className='max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
-                      <span className='sr-only'>Open user menu</span>
-                      {/* <AvatarContainer> */}
-                      <UserAvatar size='36' name='Prathmesh Sadake' />
-                      {/* </AvatarContainer> */}
-                    </Menu.Button>
+                    {user ? (
+                      <Menu.Button className='max-w-sm flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
+                        <span className='sr-only'>Open user menu</span>
+                        {/* <AvatarContainer> */}
+                        <UserAvatar
+                          size='36'
+                          name={user.displayName}
+                          src={user.photoURL}
+                        />
+                      </Menu.Button>
+                    ) : (
+                      <button
+                        onClick={() => router.push("/auth/signin")}
+                        className='px-4 py-2 text-sm font-medium rounded-full shadow-lg ring-1 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20'
+                      >
+                        <ArrowRightOnRectangleIcon className='h-5 w-5 text-white' />
+                      </button>
+                    )}
+                    {/* </AvatarContainer> */}
                   </div>
                   <Transition
                     as={Fragment}
