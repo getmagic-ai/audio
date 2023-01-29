@@ -25,16 +25,16 @@ export default function App({ Component, pageProps }) {
         <title>Waveforms.io</title>
       </Head>
       {!openRoutes.includes(router.pathname) ? (
-        // <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <AppLayout className={poppins.className}>
-            <div className='bg-black min-h-screen'>
-              <Component {...pageProps} />
-            </div>
-          </AppLayout>
-        </QueryClientProvider>
+        <AuthProvider>
+          <QueryClientProvider client={queryClient}>
+            <AppLayout className={poppins.className}>
+              <div className='bg-black min-h-screen'>
+                <Component {...pageProps} />
+              </div>
+            </AppLayout>
+          </QueryClientProvider>
+        </AuthProvider>
       ) : (
-        // </AuthProvider>
         <Component {...pageProps} />
       )}
     </div>

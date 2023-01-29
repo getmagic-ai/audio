@@ -8,7 +8,7 @@ export const AuthContext = React.createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  // const router = useRouter();
 
   const [userData, setUserData] = useState({
     userProviderId: "",
@@ -40,17 +40,6 @@ export const AuthProvider = ({ children }) => {
 
   console.log("USER DATA", userData);
   console.log("CURRENT DATA", currentUser);
-
-  // if (loading) {
-  //   return <>Loading...</>;
-  // }
-
-  if (typeof window !== "undefined") {
-    if (currentUser == null && !loading) {
-      router.push("/auth/signin");
-      return <></>;
-    }
-  }
 
   return (
     <AuthContext.Provider
