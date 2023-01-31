@@ -13,7 +13,7 @@ const poppins = Poppins({
   subsets: ["latin"],
 });
 
-const openRoutes = ["/", "/invitation-code", "/auth/signup", "/auth/signin"];
+const openRoutes = ["/", "/invitation-code", "/auth/signup", "/auth/signin","/waitlist"];
 
 // Created a client
 const queryClient = new QueryClient();
