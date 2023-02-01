@@ -34,6 +34,7 @@ export default function Upgrade(props) {
   const [upgradestatus, setUpgradestatus] = useState("free"); //make these status as enums later instead of strings
 
   function handleUpgrade(upgradeType) {
+    console.log('in handle upgrade.... new on 30 jan 2023')
     switch (upgradeType) {
       case "pro":
         setUpgradestatus("pro");
@@ -51,7 +52,7 @@ export default function Upgrade(props) {
   return (
     <div className='flex flex-col space-y-4'>
       <h1 className='text-3xl font-semibold text-gray-50'>Pricing Plans</h1>
-      {/* <button
+      <button
         className='bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600'
         onClick={() => handleUpgrade("pro")}
       >
@@ -62,7 +63,7 @@ export default function Upgrade(props) {
         onClick={() => handleUpgrade("premium")}
       >
         Upgrade to Premium
-      </button> */}
+      </button>
       <div className='mt-12 space-y-4 grid grid-cols-1 gap-6'>
         {tiers.map((tier) => (
           <div
