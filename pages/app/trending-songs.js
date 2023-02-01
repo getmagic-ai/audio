@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import {
   HeartIcon,
   ArrowTrendingUpIcon,
   ArrowUpOnSquareIcon,
+  ArrowTrendingDownIcon,
+  ArrowRightIcon,
 } from "@heroicons/react/24/outline";
 import { fetchAudioData } from "@/pages/_app";
 import { ClipLoader } from "react-spinners";
+import { AuthContext } from "@/context/AuthContext";
+import { useRouter } from "next/router";
+
+// import MusicIconPlaceholder from ".";
 
 const TrendingSongs = () => {
+  const [selectedTab, setSelectedTab] = useState(1);
+  const router = useRouter();
+  const { currentUser, userData, loading } = useContext(AuthContext);
   const { data, isLoading, error } = useQuery(
     ["data"],
     fetchAudioData
@@ -29,7 +38,7 @@ const TrendingSongs = () => {
       />
     );
   if (error) return "An error occured in fetching the data from nocodb";
-  console.log(data.list[0]); //debugging only
+  console.log(data.list[4]); //debugging only
 
   return (
     <div className='bg-black'>
@@ -38,26 +47,43 @@ const TrendingSongs = () => {
       </h1>
       <div className='my-5'>
         <div className='tabs tabs-boxed'>
-          <a className='tab tab-active'>Instagram</a>
-          <a className='tab '>Tik Tok</a>
-          <a className='tab'>Youtube</a>
+          <button
+            className={`tab ${selectedTab == 1 && "tab-active"}`}
+            onClick={() => setSelectedTab(1)}
+          >
+            Instagram
+          </button>
+          <button
+            className={`tab ${selectedTab == 2 && "tab-active"}`}
+            onClick={() => setSelectedTab(2)}
+          >
+            Tik Tok
+          </button>
+          <button
+            className={`tab ${selectedTab == 3 && "tab-active"}`}
+            onClick={() => setSelectedTab(3)}
+          >
+            Youtube
+          </button>
         </div>
       </div>
       <ul role='list' className='divide-y divide-gray-200'>
-        {data.list.map((item) => (
-          <a
-            href={item.audio_datasource_url}
-            target={"_blank"}
-            rel='noreferrer noopener'
-          >
-            <li className='py-3 sm:py-4'>
+        {data.list.map((item) => {
+          return (
+            <li className='py-3 sm:py-4' key={item.Id}>
               <div className='flex items-center space-x-4'>
                 <div className='flex-shrink-0'>
-                  <img
-                    className='w-8 h-8'
-                    src={item.datasource_metadata.coverThumb}
-                    alt={item.title}
-                  />
+                  <a
+                    href={item.audio_datasource_url}
+                    target={"_blank"}
+                    rel='noreferrer noopener'
+                  >
+                    <img
+                      className='w-8 h-8'
+                      src={item.datasource_metadata.coverThumb}
+                      alt={item.title}
+                    />
+                  </a>
                 </div>
                 <div className='flex-1 min-w-0'>
                   <p className='text-sm font-medium truncate text-white'>
@@ -68,14 +94,26 @@ const TrendingSongs = () => {
                   </p>
                 </div>
                 <div className='inline-flex items-center space-x-2'>
-                  <ArrowTrendingUpIcon height={20} />
+                  {parseInt(item.ranking_change) > 0 ? (
+                    <ArrowTrendingUpIcon height={20} color={"green"} />
+                  ) : parseInt(item.ranking_change) == 0 ? (
+                    <ArrowRightIcon height={20} color={"yellow"} />
+                  ) : (
+                    <ArrowTrendingDownIcon height={20} color={"red"} />
+                  )}
                   <ArrowUpOnSquareIcon height={20} />
-                  <HeartIcon height={20} />
+                  <HeartIcon
+                    className='cursor-pointer'
+                    height={20}
+                    onClick={() => {
+                      currentUser == null && router.push("/auth/signin");
+                    }}
+                  />
                 </div>
               </div>
             </li>
-          </a>
-        ))}
+          );
+        })}
       </ul>
     </div>
   );
