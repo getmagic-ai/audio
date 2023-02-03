@@ -6,7 +6,7 @@ import { data } from "autoprefixer";
 
 export default function Waitlist() {
   return (
-    <div className="container max-w-xs mx-auto sm:px-6 lg:px-8 flex flex-col justify-center h-screen">
+    <div className="container max-w-md mx-auto sm:px-6 lg:px-8 flex flex-col justify-center h-screen">
       <WaitlistComponent />
     </div>
   );
