@@ -11,6 +11,7 @@ import { fetchAudioData } from "@/pages/_app";
 import { ClipLoader } from "react-spinners";
 import { AuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/router";
+import Avatar from "react-avatar";
 
 // import MusicIconPlaceholder from ".";
 
@@ -78,10 +79,16 @@ const TrendingSongs = () => {
                     target={"_blank"}
                     rel='noreferrer noopener'
                   >
-                    <img
-                      className='w-8 h-8'
+                    <Avatar
+                      size='36'
+                      round={false}
+                      name={item.artist_name}
                       src={item.datasource_metadata.coverThumb}
-                      alt={item.title}
+                      color={Avatar.getRandomColor("sitebase", [
+                        "red",
+                        "green",
+                        "blue",
+                      ])}
                     />
                   </a>
                 </div>
