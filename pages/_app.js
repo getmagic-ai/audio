@@ -5,7 +5,7 @@ import { Poppins } from "@next/font/google";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
-import { QueryClient, useQuery, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AppLayout from "@/components/Layout";
 
 const poppins = Poppins({
@@ -13,7 +13,13 @@ const poppins = Poppins({
   subsets: ["latin"],
 });
 
-const openRoutes = ["/", "/invitation-code", "/auth/signup", "/auth/signin","/waitlist"];
+const openRoutes = [
+  "/",
+  "/invitation-code",
+  "/auth/signup",
+  "/auth/signin",
+  "/waitlist",
+];
 
 // Created a client
 const queryClient = new QueryClient();
@@ -44,7 +50,7 @@ export default function App({ Component, pageProps }) {
 export const fetchAudioData = async () => {
   // Creating a GET method call here, will be passed as an argument to useQuery elsewhere to get the data
   console.log(
-    "logging API token from env..." + process.env.NEXT_PUBLIC_API_TOKEN
+    "logging API token from env..." + process.env.API_TOKEN
   );
   const res = await fetch(
     "https://kollaboratenocodb.herokuapp.com/api/v1/db/data/v1/audio/audio_master_dev?limit=100&shuffle=0&offset=0",
@@ -52,7 +58,7 @@ export const fetchAudioData = async () => {
       method: "GET",
       headers: {
         acccept: "application/json",
-        "xc-token": process.env.NEXT_PUBLIC_API_TOKEN,
+        "xc-token": process.env.API_TOKEN,
       },
     }
   );

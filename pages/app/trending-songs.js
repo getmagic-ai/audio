@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   HeartIcon,
   ArrowTrendingUpIcon,
@@ -19,16 +19,16 @@ const TrendingSongs = () => {
   const [selectedTab, setSelectedTab] = useState(1);
   const router = useRouter();
   const { currentUser, userData, loading } = useContext(AuthContext);
-  const { data, isLoading, error } = useQuery(
+  const { data, isInitialLoading, error } = useQuery(
     ["data"],
     fetchAudioData
   ); /*, {staleTime: 10}*/ //stale time isn't really needed, the defaults work well. Keeping it here for reference, can delete it
   // console.log("Hey, just entered the data fethcing part..."); //debugging only
-  if (isLoading)
+  if (isInitialLoading)
     return (
       <ClipLoader
         color={"#661AE6"}
-        loading={isLoading}
+        loading={isInitialLoading}
         cssOverride={{
           display: "block",
           margin: "50px auto 0 auto",

@@ -32,7 +32,7 @@ export default function WaitlistComponent({ handleWaitlistData }) {
           {
             headers: {
               "Content-Type": "application/json",
-              "xc-auth": process.env.NEXT_PUBLIC_NOCODB_AUTH,
+              "xc-auth": process.env.NOCODB_AUTH,
             },
           }
         );
