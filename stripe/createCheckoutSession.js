@@ -13,8 +13,8 @@ export async function createCheckoutSession(uid) {
 
   const checkout_session_ref = await addDoc(checkoutRef, {
     price: "price_0MSoSngJmzQDibAWvQ0V29bC",
-    success_url: process.env.STRIPE_SUCCESS_LINK,
-    cancel_url: process.env.STRIPE_FAILURE_LINK,
+    success_url: process.env.NEXT_PUBLICSTRIPE_SUCCESS_LINK,
+    cancel_url: process.env.NEXT_PUBLICSTRIPE_FAILURE_LINK,
   });
 
   //wait for the checkout session to get attached, use onSnapshot for this

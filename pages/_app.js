@@ -46,19 +46,19 @@ export default function App({ Component, pageProps }) {
     </div>
   );
 }
-
 export const fetchAudioData = async () => {
   // Creating a GET method call here, will be passed as an argument to useQuery elsewhere to get the data
-  console.log(
-    "logging API token from env..." + process.env.API_TOKEN
-  );
+  // console.log(
+  //   "logging API token from env..." + process.env.NEXT_PUBLICAPI_TOKEN
+  // );
+
   const res = await fetch(
     "https://kollaboratenocodb.herokuapp.com/api/v1/db/data/v1/audio/audio_master_dev?limit=100&shuffle=0&offset=0",
     {
       method: "GET",
       headers: {
         acccept: "application/json",
-        "xc-token": process.env.API_TOKEN,
+        "xc-token": process.env.NEXT_PUBLICAPI_TOKEN,
       },
     }
   );

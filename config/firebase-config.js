@@ -11,13 +11,13 @@ import {
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID,
-  measurementId: process.env.MEASUREMENT_ID,
+  apiKey: process.env.NEXT_PUBLICAPI_KEY,
+  authDomain: process.env.NEXT_PUBLICAUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLICPROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLICSTORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLICMESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLICAPP_ID,
+  measurementId: process.env.NEXT_PUBLICMEASUREMENT_ID,
 };
 
 // Initialize Firebase
