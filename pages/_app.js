@@ -49,7 +49,7 @@ export default function App({ Component, pageProps }) {
 export const fetchAudioData = async () => {
   // Creating a GET method call here, will be passed as an argument to useQuery elsewhere to get the data
   // console.log(
-  //   "logging API token from env..." + process.env.NEXT_PUBLICAPI_TOKEN
+  //   "logging API token from env..." + process.env.NEXT_PUBLIC_API_TOKEN
   // );
 
   const res = await fetch(
@@ -58,7 +58,7 @@ export const fetchAudioData = async () => {
       method: "GET",
       headers: {
         acccept: "application/json",
-        "xc-token": process.env.NEXT_PUBLICAPI_TOKEN,
+        "xc-token": process.env.NEXT_PUBLIC_API_TOKEN,
       },
     }
   );

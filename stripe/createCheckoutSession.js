@@ -7,23 +7,26 @@ import { db, app } from "../config/firebase-config";
 import { collection, addDoc, doc, onSnapshot } from "firebase/firestore";
 import initializeStripe from "./initializeStripe";
 
-export async function createCheckoutSession(uid) {
-  const docRef = doc(db, "customers", uid);
-  const checkoutRef = collection(docRef, "checkout_sessions");
+export async function createCheckoutSession(uid){
 
-  const checkout_session_ref = await addDoc(checkoutRef, {
-    price: "price_0MSoSngJmzQDibAWvQ0V29bC",
-    success_url: process.env.NEXT_PUBLICSTRIPE_SUCCESS_LINK,
-    cancel_url: process.env.NEXT_PUBLICSTRIPE_FAILURE_LINK,
-  });
 
-  //wait for the checkout session to get attached, use onSnapshot for this
-  onSnapshot(checkout_session_ref, async (snap) => {
-    const { sessionId } = snap.data();
-    if (sessionId) {
-      console.log("redirecting.... hold on...");
-      const stripe = await initializeStripe();
-      stripe.redirectToCheckout({ sessionId });
-    }
-  });
+    const docRef = doc(db, "customers", uid);
+    const checkoutRef = collection(docRef,"checkout_sessions");
+    
+    const checkout_session_ref = await addDoc(checkoutRef, {
+        price: "price_0MSoSngJmzQDibAWvQ0V29bC",
+        success_url:process.env.NEXT_PUBLIC_STRIPE_SUCCESS_LINK,
+        cancel_url:process.env.NEXT_PUBLIC_STRIPE_FAILURE_LINK
+    })
+
+    //wait for the checkout session to get attached, use onSnapshot for this
+    onSnapshot(checkout_session_ref, async (snap) => {
+        const {sessionId} = snap.data();
+        if (sessionId){
+            console.log('redirecting.... hold on...')
+            const stripe = await initializeStripe();
+            stripe.redirectToCheckout({sessionId});
+        }
+    })
+    
 }

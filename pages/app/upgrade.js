@@ -1,4 +1,4 @@
-import { createElement, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { createCheckoutSession } from "@/stripe/createCheckoutSession";
 import { auth } from "@/config/firebase-config";
 
@@ -37,9 +37,10 @@ export default function Upgrade(props) {
 
   const [upgradestatus, setUpgradestatus] = useState("free"); //make these status as enums later instead of strings
   const { currentUser, userData, loading } = useContext(AuthContext);
+  const [hasUserClicked, setHasUserClicked] = useState(false);
 
   function handleUpgrade(upgradeType) {
-    console.log("in handle upgrade.... new on 30 jan 2023");
+    setHasUserClicked(true);
     switch (upgradeType) {
       case "pro":
         setUpgradestatus("pro");
@@ -53,22 +54,10 @@ export default function Upgrade(props) {
         break;
     }
   }
-
+  if (hasUserClicked) return <div></div>;
   return (
     <div className='flex flex-col space-y-4'>
       <h1 className='text-3xl font-semibold text-gray-50'>Pricing Plans</h1>
-      {/* <button
-        className='bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600'
-        onClick={() => handleUpgrade("pro")}
-      >
-        Upgrade to Pro
-      </button>
-      <button
-        className='bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600'
-        onClick={() => handleUpgrade("premium")}
-      >
-        Upgrade to Premium
-      </button> */}
       <div className='mt-12 space-y-4 grid grid-cols-1 gap-6'>
         {tiers.map((tier) => (
           <div
