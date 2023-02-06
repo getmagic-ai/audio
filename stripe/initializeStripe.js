@@ -4,7 +4,7 @@ let stripePromise;
 
 const initializeStripe = async () => {
   if (!stripePromise) {
-    stripePromise = await loadStripe(process.env.STRIPE_PK);
+    stripePromise = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PK);
     return stripePromise
   }
 };
