@@ -19,7 +19,7 @@ const TrendingSongs = () => {
   const [selectedTab, setSelectedTab] = useState(1);
   const router = useRouter();
   const { currentUser, userData, loading } = useContext(AuthContext);
-  const { data, isInitialLoading, error } = useQuery(/*data is loaded in the data object*/
+  const { data, isInitialLoading, error } = useQuery(/*data is loaded inthe data object*/
     ["data"],
     fetchAudioData
   ); /*, {staleTime: 10}*/ //stale time isn't really needed, the defaults work well. Keeping it here for reference, can delete it
@@ -40,11 +40,12 @@ const TrendingSongs = () => {
     );
   if (error) return "An error occured in fetching the data from nocodb";
   console.log(data.list[4]); //debugging only
-
+ const date = new Date();
+ const formattedDate = date.toLocaleDateString('en-US', {weekday: 'long'/*, year: 'numeric'*/, month: 'long',day: 'numeric'});
   return (
     <div className='bg-black'>
-      <h1 className='text-2xl font-semibold text-gray-200 mb-8'>
-        Trending Playlist of the Day
+      <h1 className='text-xl font-semibold text-gray-200 mb-8'>
+        Trending Audio for {formattedDate.toString()}
       </h1>
       <div className='my-5'>
         <div className='tabs tabs-boxed'>
@@ -52,13 +53,13 @@ const TrendingSongs = () => {
             className={`tab ${selectedTab == 1 && "tab-active"}`}
             onClick={() => setSelectedTab(1)}
           >
-            TikTok
+            Instagram
           </button>
           <button
             className={`tab ${selectedTab == 2 && "tab-active"}`}
             onClick={() => setSelectedTab(2)}
           >
-            Instagram
+            TikTok
           </button>
           <button
             className={`tab ${selectedTab == 3 && "tab-active"}`}
