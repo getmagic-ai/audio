@@ -45,7 +45,7 @@ const TrendingSongs = () => {
   return (
     <div className='bg-black'>
       <h1 className='text-xl font-semibold text-gray-200 mb-8'>
-        Trending Audio for {formattedDate.toString()}
+        Trending Audio for {formattedDate.toString()}!
       </h1>
       <div className='my-5'>
         <div className='tabs tabs-boxed'>
@@ -65,7 +65,7 @@ const TrendingSongs = () => {
             className={`tab ${selectedTab == 3 && "tab-active"}`}
             onClick={() => setSelectedTab(3)}
           >
-            Youtube
+            YouTube
           </button>
         </div>
       </div>
