@@ -19,7 +19,7 @@ const TrendingSongs = () => {
   const [selectedTab, setSelectedTab] = useState(1);
   const router = useRouter();
   const { currentUser, userData, loading } = useContext(AuthContext);
-  const { data, isInitialLoading, error } = useQuery(
+  const { data, isInitialLoading, error } = useQuery(/*data is loaded in the data object*/
     ["data"],
     fetchAudioData
   ); /*, {staleTime: 10}*/ //stale time isn't really needed, the defaults work well. Keeping it here for reference, can delete it
@@ -52,13 +52,13 @@ const TrendingSongs = () => {
             className={`tab ${selectedTab == 1 && "tab-active"}`}
             onClick={() => setSelectedTab(1)}
           >
-            Instagram
+            TikTok
           </button>
           <button
             className={`tab ${selectedTab == 2 && "tab-active"}`}
             onClick={() => setSelectedTab(2)}
           >
-            Tik Tok
+            Instagram
           </button>
           <button
             className={`tab ${selectedTab == 3 && "tab-active"}`}
