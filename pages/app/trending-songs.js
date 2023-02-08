@@ -42,6 +42,7 @@ const TrendingSongs = () => {
   console.log(data.list[4]); //debugging only
  const date = new Date();
  const formattedDate = date.toLocaleDateString('en-US', {weekday: 'long'/*, year: 'numeric'*/, month: 'long',day: 'numeric'});
+ const openSongDeeplink = (direct_audio_link) => {direct_audio_link? router.push(direct_audio_link): null}
   return (
     <div className='bg-black'>
       <h1 className='text-xl font-semibold text-gray-200 mb-8'>
@@ -73,20 +74,21 @@ const TrendingSongs = () => {
         {
         data.list.filter(item => item.channel === (selectedTab === 1?"tiktok":(selectedTab === 2?"instagram":"youtube"))).
         map((item) => {
-          console.log('tab selected is ... '+selectedTab)
+          // console.log(data.list)
+          // console.log('tab selected is ... '+selectedTab)
           return (
             <li className='py-3 sm:py-4' key={item.Id}>
               <div className='flex items-center space-x-4'>
                 <div className='flex-shrink-0'>
                   <a
-                    href={item.audio_datasource_url}
+                    href={item.direct_audio_link}
                     target={"_blank"}
                     rel='noreferrer noopener'
                   >
                     <Avatar
                       size='36'
                       round={false}
-                      name={item.artist_name}
+                      name={item.artist_name} 
                       src={item.datasource_metadata?.coverThumb} /*had to add this optional chaining .? item in to avoid a hard error, please fix @PrathmeshSadake */
                       color={Avatar.getRandomColor("sitebase", [
                         "red",
@@ -96,7 +98,7 @@ const TrendingSongs = () => {
                     />
                   </a>
                 </div>
-                <div className='flex-1 min-w-0'>
+                <div className='flex-1 min-w-0'   onClick={() => openSongDeeplink(item.direct_audio_link)}>
                   <p className='text-sm font-medium truncate text-white'>
                     {item.title}
                   </p>
@@ -117,7 +119,7 @@ const TrendingSongs = () => {
                     className='cursor-pointer'
                     height={20}
                     onClick={() => {
-                      currentUser == null && router.push("/auth/signin");
+                      currentUser == null && router.push("/auth/signin"); //@PrathmeshSadake can we test if users is signed in? It should add to their favorites list right?
                     }}
                   />
                 </div>
