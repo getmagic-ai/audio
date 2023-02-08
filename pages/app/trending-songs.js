@@ -53,13 +53,13 @@ const TrendingSongs = () => {
             className={`tab ${selectedTab == 1 && "tab-active"}`}
             onClick={() => setSelectedTab(1)}
           >
-            Instagram
+            TikTok
           </button>
           <button
             className={`tab ${selectedTab == 2 && "tab-active"}`}
             onClick={() => setSelectedTab(2)}
           >
-            TikTok
+            Instagram
           </button>
           <button
             className={`tab ${selectedTab == 3 && "tab-active"}`}
@@ -70,7 +70,10 @@ const TrendingSongs = () => {
         </div>
       </div>
       <ul role='list' className='divide-y divide-gray-200'>
-        {data.list.map((item) => {
+        {
+        data.list.filter(item => item.channel === (selectedTab === 1?"tiktok":(selectedTab === 2?"instagram":"youtube"))).
+        map((item) => {
+          console.log('tab selected is ... '+selectedTab)
           return (
             <li className='py-3 sm:py-4' key={item.Id}>
               <div className='flex items-center space-x-4'>
@@ -84,7 +87,7 @@ const TrendingSongs = () => {
                       size='36'
                       round={false}
                       name={item.artist_name}
-                      src={item.datasource_metadata.coverThumb}
+                      src={item.datasource_metadata?.coverThumb} /*had to add this optional chaining .? item in to avoid a hard error, please fix @PrathmeshSadake */
                       color={Avatar.getRandomColor("sitebase", [
                         "red",
                         "green",
@@ -128,3 +131,5 @@ const TrendingSongs = () => {
 };
 
 export default TrendingSongs;
+
+

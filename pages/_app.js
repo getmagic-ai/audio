@@ -53,7 +53,7 @@ export const fetchAudioData = async () => {
   // );
 
   const res = await fetch(
-    "https://kollaboratenocodb.herokuapp.com/api/v1/db/data/v1/audio/audio_master_dev?limit=100&shuffle=0&offset=0",
+    "https://kollaboratenocodb.herokuapp.com/api/v1/db/data/v1/audio/audio_master_dev?limit=700&shuffle=0&offset=0", /*Limit had to be updated, it simply wasn't puilling in the data. Took me a long time @PrathmeshSadake, lets fix this properly*/
     {
       method: "GET",
       headers: {
