@@ -39,7 +39,7 @@ const TrendingSongs = () => {
       />
     );
   if (error) return "An error occured in fetching the data from nocodb";
-  console.log(data.list[4]); //debugging only
+  // console.log(data.list[4]); //debugging only
  const date = new Date();
  const formattedDate = date.toLocaleDateString('en-US', {weekday: 'long'/*, year: 'numeric'*/, month: 'long',day: 'numeric'});
  const openSongDeeplink = (direct_audio_link) => {direct_audio_link? router.push(direct_audio_link): null}
@@ -107,7 +107,7 @@ const TrendingSongs = () => {
                   </p>
                 </div>
                 <div className='inline-flex items-center space-x-2'>
-                  {parseInt(item.ranking_change) > 0 ? (
+                  {parseInt(item.ranking_change) >= 0 ? (
                     <ArrowTrendingUpIcon height={20} color={"green"} />
                   ) : parseInt(item.ranking_change) == 0 ? (
                     <ArrowRightIcon height={20} color={"yellow"} />
