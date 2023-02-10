@@ -58,7 +58,7 @@ export const fetchAudioData = async () => {
       method: "GET",
       headers: {
         acccept: "application/json",
-        "xc-token": process.env.NEXT_PUBLIC_API_TOKEN,
+        "xc-token": process.env.NEXT_PUBLIC_NOCODB_AUTH,
       },
     }
   );
