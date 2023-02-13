@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 export default function WaitlistComponent({ handleWaitlistData }) {
   const [waitlist_name, setWaitlist_name] = useState(null);
@@ -17,6 +17,8 @@ export default function WaitlistComponent({ handleWaitlistData }) {
 
   const router = useRouter();
   const handleWaitlistFormSubmit = async (e) => {
+    console.log("about to hit....trending songs..");
+    router.push("/app/trending-songs");
     try {
       e.preventDefault();
       try {
@@ -47,6 +49,7 @@ export default function WaitlistComponent({ handleWaitlistData }) {
     } catch (error) {
       console.log("error is..." + error);
     }
+    console.log("about to hit....trending songs..");
     router.push("/app/trending-songs");
   };
 
