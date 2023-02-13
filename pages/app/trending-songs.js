@@ -87,8 +87,8 @@ const TrendingSongs = () => {
                 (selectedTab === 1
                   ? "tiktok"
                   : selectedTab === 2
-                  ? "instagram"
-                  : "youtube")
+                    ? "instagram"
+                    : "youtube")
             )
             .map((item) => {
               // console.log(data.list)
@@ -118,7 +118,7 @@ const TrendingSongs = () => {
                       </a>
                     </div>
                     <div
-                      className='flex-1 min-w-0'
+                      className='flex-1 min-w-0 cursor-pointer'
                       onClick={() => openSongDeeplink(item.direct_audio_link)}
                     >
                       <p className='text-sm font-medium truncate text-white'>
