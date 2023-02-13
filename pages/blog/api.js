@@ -12,3 +12,9 @@ export const getBlogs = async () => {
   });
   return result;
 };
+
+
+//adding this default component just to colocate this file. can move out too
+export default function Api(){
+    return <></>
+}
