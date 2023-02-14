@@ -12,6 +12,7 @@ import { ClipLoader } from "react-spinners";
 import { AuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import Avatar from "react-avatar";
+import Link from "next/link";
 
 // import MusicIconPlaceholder from ".";
 
@@ -48,9 +49,11 @@ const TrendingSongs = () => {
     month: "long",
     day: "numeric",
   });
-  const openSongDeeplink = (direct_audio_link) => {
-    direct_audio_link ? router.push(direct_audio_link) : null;
-  };
+
+  // const openSongDeeplink = (direct_audio_link) => {
+  //   direct_audio_link ? router.push(direct_audio_link) : null;
+  // };
+
   return (
     <div className='bg-black'>
       <h1 className='text-xl font-semibold text-gray-200 mb-8'>
@@ -117,17 +120,26 @@ const TrendingSongs = () => {
                         />
                       </a>
                     </div>
-                    <div
+                    {/* <div
                       className='flex-1 min-w-0 cursor-pointer'
                       onClick={() => openSongDeeplink(item.direct_audio_link)}
                     >
-                      <p className='text-sm font-medium truncate text-white'>
-                        {item.title}
-                      </p>
-                      <p className='text-xs font-medium truncate text-gray-200'>
-                        {item.artist_name}
-                      </p>
-                    </div>
+                    </div> */}
+                    {/* using Link component instead of onClick to allow user to see the link and open link in new tab, which is not possible through onClick */}
+                    {
+                      item.direct_audio_link && (
+                        <Link target={"_blank"} className='flex-1 min-w-0 cursor-pointer' href={item.direct_audio_link}>
+                          <p className='text-sm font-medium truncate text-white'>
+                            {item.title}
+                          </p>
+                          <p className='text-xs font-medium truncate text-gray-200'>
+                            {item.artist_name}
+                          </p>
+                        </Link>
+                      )
+                    }
+                    {/* using conditional rendering cause instagram data is not added as of now, so it has no direct_audio_link , and hence showing error */}
+
                     <div className='inline-flex items-center space-x-2'>
                       {parseInt(item.ranking_change) >= 0 ? (
                         <ArrowTrendingUpIcon height={20} color={"green"} />
