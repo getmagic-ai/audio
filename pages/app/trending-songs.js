@@ -12,8 +12,17 @@ import { ClipLoader } from "react-spinners";
 import { AuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import Avatar from "react-avatar";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/config/firebase-config";
 
-// import MusicIconPlaceholder from ".";
+const handleLike = async (userId, audioId) => {
+  // Add a new document in collection "likes"
+  await setDoc(doc(db, "likes", `${userId}_${audioId}`), {
+    audioId,
+    userId,
+    documentID: `${userId}_${audioId}`,
+  });
+};
 
 const TrendingSongs = () => {
   const [selectedTab, setSelectedTab] = useState(1);
@@ -87,8 +96,8 @@ const TrendingSongs = () => {
                 (selectedTab === 1
                   ? "tiktok"
                   : selectedTab === 2
-                    ? "instagram"
-                    : "youtube")
+                  ? "instagram"
+                  : "youtube")
             )
             .map((item) => {
               // console.log(data.list)
@@ -141,7 +150,9 @@ const TrendingSongs = () => {
                         className='cursor-pointer'
                         height={20}
                         onClick={() => {
-                          currentUser == null && router.push("/auth/signin"); //@PrathmeshSadake can we test if users is signed in? It should add to their favorites list right?
+                          currentUser == null
+                            ? router.push("/auth/signin")
+                            : handleLike(currentUser.uid, item.id);
                         }}
                       />
                     </div>
