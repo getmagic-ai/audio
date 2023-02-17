@@ -85,6 +85,12 @@ const TrendingSongs = () => {
           >
             YouTube
           </button>
+          <button
+            className={`tab ${selectedTab == 4 && "tab-active"}`}
+            onClick={() => setSelectedTab(4)}
+          >
+            Originals!
+          </button>
         </div>
       </div>
       <ul role='list' className='divide-y divide-gray-200'>
