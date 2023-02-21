@@ -35,7 +35,7 @@ const TrendingSongs = () => {
     fetchAudioData
   ); /*, {staleTime: 10}*/ //stale time isn't really needed, the defaults work well. Keeping it here for reference, can delete it
   // console.log("Hey, just entered the data fethcing part..."); //debugging only
-  console.log(data);
+  // console.log(data);
   if (isInitialLoading)
     return (
       <ClipLoader
@@ -99,8 +99,8 @@ const TrendingSongs = () => {
                 (selectedTab === 1
                   ? "tiktok"
                   : selectedTab === 2
-                  ? "instagram"
-                  : "youtube")
+                    ? "instagram"
+                    : "youtube")
             )
             .map((item) => {
               // console.log(data.list)

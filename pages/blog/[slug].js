@@ -1,6 +1,7 @@
 import { getBlogs } from "./api";
 
 import { useRouter } from "next/router";
+import { SingleBlog } from "./SingleBlog";
 
 
 export const getStaticPaths = async () => {
@@ -9,7 +10,7 @@ export const getStaticPaths = async () => {
   // console.log(result.data.data[2].id)
   return {
     paths: result.data.data.map((item) => (
-      {params: {slug: item.attributes.slug}}
+      { params: { slug: item.attributes.slug } }
     )),
     fallback: false,
   };
@@ -35,7 +36,9 @@ export default function Post({ data }) {
   return (
     <>
       {selectedBlog && (
-        <div className="text-white">{selectedBlog.attributes.blog_body}</div>
+        <>
+          <SingleBlog selectedBlog={selectedBlog} />
+        </>
       )}
     </>
   );
