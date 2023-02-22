@@ -37,7 +37,7 @@ export default function Post({ data }) {
     <>
       {selectedBlog && (
         <>
-          <SingleBlog selectedBlog={selectedBlog} />
+          <SingleBlog blog={selectedBlog} />
         </>
       )}
     </>
