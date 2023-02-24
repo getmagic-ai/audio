@@ -38,7 +38,8 @@ export const BlogCard = ({ blog }) => {
 
 
                 <div className='font-blog-body mt-4 mb-5 lg:text-lg '>
-                    <ReactMarkdown>{blog.attributes.Excerpt}</ReactMarkdown>... <span className='text-blue-600'>Read more</span>
+                    <ReactMarkdown>{blog.attributes.Excerpt}</ReactMarkdown>...
+                    <span className='text-blue-600'>Read more</span>
                 </div>
 
 
