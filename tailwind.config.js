@@ -8,6 +8,7 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+
     fontFamily: {
       "blog-title": ['Oswald', "sans-serif"],
       "blog-body": ['Lato', "sans-serif"],

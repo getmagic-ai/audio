@@ -1,8 +1,7 @@
-import full from 'core-js-pure/full';
 import Image from 'next/image';
 import Link from 'next/link'
 import React from 'react'
-const imgBaseUrl = "https://kollboratecms.herokuapp.com";
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 
 export const BlogCard = ({ blog }) => {
@@ -15,10 +14,10 @@ export const BlogCard = ({ blog }) => {
 
     return (
 
-        <div className='border-2 border-blue-cus   hover:shadow-md  hover:-translate-y-1 hover:shadow-white my-4 lg:mx-2 p-3 rounded-lg ease-out duration-200 inline-block blog-card'>
+        <div className='border-2 border-blue-cus   hover:shadow-md  hover:-translate-y-1 hover:shadow-white my-4 md:mx-1 lg:mx-2 px-5 lg:px-10 pt-5   rounded-lg ease-out duration-200 inline-block blog-card'>
 
             <Link href={"/blog/" + blog.attributes.slug}>
-                <h1 className='text-xl font-semibold text-gray-100 font-blog-title mb-4 lg:text-3xl
+                <h1 className='text-lg font-semibold text-gray-100 font-blog-title mb-4 md:text-2xl lg:text-3xl
                 '>{blog.attributes.Title}
                 </h1>
 
@@ -35,10 +34,12 @@ export const BlogCard = ({ blog }) => {
                     </p>
 
                 </div>
-                <Image className='w-full rounded-lg my-4' loader={() => src} src={src} width={500} height={500} alt="blog img" />
+                <Image className='lg:w-10/12   mx-auto rounded-lg my-4  aspect-video sm:w-10/12  ' loader={() => src} src={src} width={500} height={500} alt="blog img" />
 
 
-                <p className='font-blog-body mt-4 mb-10 lg:text-lg '>{blog.attributes.Excerpt}... <span className='text-blue-600'>Read more</span></p>
+                <div className='font-blog-body mt-4 mb-5 lg:text-lg '>
+                    <ReactMarkdown>{blog.attributes.Excerpt}</ReactMarkdown>... <span className='text-blue-600'>Read more</span>
+                </div>
 
 
 
