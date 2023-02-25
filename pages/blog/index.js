@@ -3,6 +3,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 
+
+
+
+//Core export
 export default function Index(props) {
   const { currentUser } = useContext(AuthContext);
   return (
@@ -11,12 +15,12 @@ export default function Index(props) {
         Hey, welcome the blogs page!
       </div>
       <div> Coming back soon with a news letter subsctiption</div>
-      {currentUser ? <LoggedInEmailForm /> : <LoggedOutEmailForm />}
+      {currentUser ? <LoggedInEmailForm currentUser={currentUser}/> : <LoggedOutEmailForm /> /*Check for current user and if valid, show logged in user text*/}
     </>
   );
 }
 
-export function LoggedInEmailForm({ email, onSubmit }) {
+export function LoggedInEmailForm({ email, onSubmit, currentUser }) {
   const [newEmail, setNewEmail] = useState(email);
 
   const handleSubmit = (event) => {
@@ -30,7 +34,7 @@ export function LoggedInEmailForm({ email, onSubmit }) {
       <input
         type="email"
         id="email"
-        value={newEmail}
+        value={currentUser.email}
         onChange={(event) => setNewEmail(event.target.value)}
         required
       />
