@@ -8,7 +8,16 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+
+    fontFamily: {
+      "blog-title": ['Oswald', "sans-serif"],
+      "blog-body": ['Lato', "sans-serif"],
+    },
+    extend: {
+      colors: {
+        "blue-cus": "#111827",
+      },
+    },
   },
   plugins: [require("daisyui")],
 };
