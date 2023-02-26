@@ -5,7 +5,7 @@ import { HiArrowNarrowLeft } from "react-icons/hi";
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 
-export const SingleBlog = ({ blog }) => {
+export default function SingleBlog ({ blog }) {
     const src = `https://kollboratecms.herokuapp.com${blog.attributes.Image.data[0].attributes.url}`
 
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };

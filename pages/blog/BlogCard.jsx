@@ -4,7 +4,7 @@ import React from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 
-export const BlogCard = ({ blog }) => {
+export default function BlogCard  ({ blog }) {
     const src = `https://kollboratecms.herokuapp.com${blog.attributes.Image.data[0].attributes.url}`
 
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
@@ -36,16 +36,10 @@ export const BlogCard = ({ blog }) => {
                 </div>
                 <Image className='lg:w-10/12   mx-auto rounded-lg my-4  aspect-video sm:w-10/12  ' loader={() => src} src={src} width={500} height={500} alt="blog img" />
 
-
                 <div className='font-blog-body mt-4 mb-5 lg:text-lg '>
                     <ReactMarkdown>{blog.attributes.Excerpt}</ReactMarkdown>...
                     <span className='text-blue-600'>Read more</span>
                 </div>
-
-
-
-
-
             </Link>
 
         </div>

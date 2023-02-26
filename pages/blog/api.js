@@ -4,7 +4,7 @@ const strapi_base_url = "https://kollboratecms.herokuapp.com";
 const get_all_blogs_api_path = "/api/blogs";
 const urlAxios = strapi_base_url + get_all_blogs_api_path;
 
-export const getBlogs = async () => {
+export const getBlogs = async () =>  {
     const newUrl = urlAxios + "?populate=*"
     const result = await axios.get(newUrl, {
         headers: {
@@ -14,7 +14,9 @@ export const getBlogs = async () => {
     return result;
 };
 
-
+export default function Test(){
+return(<></>)
+}
 
 
 
