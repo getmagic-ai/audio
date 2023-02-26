@@ -21,7 +21,7 @@ const handleLike = async (userId, audioId) => {
     audioId,
     userId,
     documentID: `${userId}_${audioId}`,
-  });
+  }).then((data) => console.log(data));
 };
 
 const TrendingSongs = () => {
@@ -66,7 +66,7 @@ const TrendingSongs = () => {
         Trending Audio for {formattedDate.toString()}!
       </h1>
       <div className='my-5'>
-        <div className='tabs tabs-boxed'>
+        <div className='tabs tabs-boxed bg-gray-800'>
           <button
             className={`tab ${selectedTab == 1 && "tab-active"}`}
             onClick={() => setSelectedTab(1)}
@@ -100,8 +100,6 @@ const TrendingSongs = () => {
                   : "youtube")
             )
             .map((item) => {
-              // console.log(data.list)
-              // console.log('tab selected is ... '+selectedTab)
               return (
                 <li className='py-3 sm:py-4' key={item.Id}>
                   <div className='flex items-center space-x-4'>
@@ -114,15 +112,11 @@ const TrendingSongs = () => {
                         <Avatar
                           size='36'
                           round={false}
-                          name={item.artist_name}
-                          src={
-                            item.datasource_metadata?.coverThumb
-                          } /*had to add this optional chaining .? item in to avoid a hard error, please fix @PrathmeshSadake */
-                          color={Avatar.getRandomColor("sitebase", [
-                            "red",
-                            "green",
-                            "blue",
-                          ])}
+                          name={
+                            item.artist_name ? item.artist_name : item.title
+                          }
+                          src={item.datasource_metadata?.coverThumb}
+                          maxInitials={1}
                         />
                       </a>
                     </div>
