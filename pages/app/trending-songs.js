@@ -13,8 +13,17 @@ import { AuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import Avatar from "react-avatar";
 import Link from "next/link";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/config/firebase-config";
 
-// import MusicIconPlaceholder from ".";
+const handleLike = async (userId, audioId) => {
+  // Add a new document in collection "likes"
+  await setDoc(doc(db, "likes", `${userId}_${audioId}`), {
+    audioId,
+    userId,
+    documentID: `${userId}_${audioId}`,
+  });
+};
 
 const TrendingSongs = () => {
   const [selectedTab, setSelectedTab] = useState(1);
@@ -26,7 +35,7 @@ const TrendingSongs = () => {
     fetchAudioData
   ); /*, {staleTime: 10}*/ //stale time isn't really needed, the defaults work well. Keeping it here for reference, can delete it
   // console.log("Hey, just entered the data fethcing part..."); //debugging only
-  console.log(data);
+  // console.log(data);
   if (isInitialLoading)
     return (
       <ClipLoader
@@ -78,6 +87,12 @@ const TrendingSongs = () => {
             onClick={() => setSelectedTab(3)}
           >
             YouTube
+          </button>
+          <button
+            className={`tab ${selectedTab == 4 && "tab-active"}`}
+            onClick={() => setSelectedTab(4)}
+          >
+            Originals!
           </button>
         </div>
       </div>
@@ -153,7 +168,9 @@ const TrendingSongs = () => {
                         className='cursor-pointer'
                         height={20}
                         onClick={() => {
-                          currentUser == null && router.push("/auth/signin"); //@PrathmeshSadake can we test if users is signed in? It should add to their favorites list right?
+                          currentUser == null
+                            ? router.push("/auth/signin")
+                            : handleLike(currentUser.uid, item.id);
                         }}
                       />
                     </div>

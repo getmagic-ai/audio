@@ -1,8 +1,7 @@
-import { useRouter } from "next/router";
-import { Popover, Transition, Menu } from "@headlessui/react";
-import { Fragment, useContext, useEffect, useRef } from "react";
-import { Container } from "./Container";
-import Avatar from "react-avatar";
+// import { useRouter } from "next/router";
+import { Fragment, useContext, useEffect, useState } from "react";
+// import { Container } from "./Container";
+// import Avatar from "react-avatar";
 
 import {
   UserIcon,
@@ -12,224 +11,271 @@ import {
   HeartIcon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
-import { signOutAUser } from "@/utils/auth";
-import { AuthContext } from "@/context/AuthContext";
-import MobileNavigation from "./MobileNavigation";
-import DesktopNavigation from "./DesktopNavigation";
+// import { signOutAUser } from "@/utils/auth";
+// import { AuthContext } from "@/context/AuthContext";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+// NEW NAVBAR CODE
+import React from "react";
+import Link from "next/link";
 
-function clamp(number, a, b) {
-  let min = Math.min(a, b);
-  let max = Math.max(a, b);
-  return Math.min(Math.max(number, min), max);
-}
+const userNavigation = [
+  {
+    name: "Your Profile",
+    callback: () => router.push("/app/user/profile"),
+    icon: UserIcon,
+  },
+  {
+    name: "Liked Songs",
+    callback: () => router.push("/app/user/my-likes"),
+    icon: HeartIcon,
+  },
+  {
+    name: "Invite a Friend",
+    callback: () => router.push("/app/user/invite-a-friend"),
+    icon: LinkIcon,
+  },
+  {
+    name: "Settings",
+    callback: () => router.push("/app/user/settings"),
+    icon: Cog8ToothIcon,
+  },
+  {
+    name: "Sign out",
+    callback: () => signOutAUser(),
+    icon: KeyIcon,
+  },
+];
 
-export function Navbar() {
-  let isHomePage = useRouter().pathname === "/app";
-  const router = useRouter();
-  const { currentUser, userData, loading } = useContext(AuthContext);
+const Navbar = () => {
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
 
-  let headerRef = useRef();
-  let avatarRef = useRef();
-  let isInitial = useRef(true);
-
-  useEffect(() => {
-    let downDelay = avatarRef.current?.offsetTop ?? 0;
-    let upDelay = 64;
-
-    function setProperty(property, value) {
-      document.documentElement.style.setProperty(property, value);
-    }
-
-    function updateHeaderStyles() {
-      let { top, height } = headerRef.current.getBoundingClientRect();
-      let scrollY = clamp(
-        window.scrollY,
-        0,
-        document.body.scrollHeight - window.innerHeight
-      );
-
-      if (isInitial.current) {
-        setProperty("--header-position", "sticky");
-      }
-
-      setProperty("--content-offset", `${downDelay}px`);
-
-      if (isInitial.current || scrollY < downDelay) {
-        setProperty("--header-height", `${downDelay + height}px`);
-        setProperty("--header-mb", `${-downDelay}px`);
-      } else if (top + height < -upDelay) {
-        let offset = Math.max(height, scrollY - upDelay);
-        setProperty("--header-height", `${offset}px`);
-        setProperty("--header-mb", `${height - offset}px`);
-      } else if (top === 0) {
-        setProperty("--header-height", `${scrollY + height}px`);
-        setProperty("--header-mb", `${-scrollY}px`);
-      }
-    }
-
-    function updateAvatarStyles() {
-      if (!isHomePage) {
-        return;
-      }
-
-      let fromScale = 1;
-      let toScale = 36 / 64;
-      let fromX = 0;
-      let toX = 2 / 16;
-
-      let scrollY = downDelay - window.scrollY;
-
-      let scale = (scrollY * (fromScale - toScale)) / downDelay + toScale;
-      scale = clamp(scale, fromScale, toScale);
-
-      let x = (scrollY * (fromX - toX)) / downDelay + toX;
-      x = clamp(x, fromX, toX);
-
-      setProperty(
-        "--avatar-image-transform",
-        `translate3d(${x}rem, 0, 0) scale(${scale})`
-      );
-
-      let borderScale = 1 / (toScale / scale);
-      let borderX = (-toX + x) * borderScale;
-      let borderTransform = `translate3d(${borderX}rem, 0, 0) scale(${borderScale})`;
-
-      setProperty("--avatar-border-transform", borderTransform);
-      setProperty("--avatar-border-opacity", scale === toScale ? 1 : 0);
-    }
-
-    function updateStyles() {
-      updateHeaderStyles();
-      updateAvatarStyles();
-      isInitial.current = false;
-    }
-
-    updateStyles();
-    window.addEventListener("scroll", updateStyles, { passive: true });
-    window.addEventListener("resize", updateStyles);
-
-    return () => {
-      window.removeEventListener("scroll", updateStyles, { passive: true });
-      window.removeEventListener("resize", updateStyles);
-    };
-  }, [isHomePage]);
-
-  const userNavigation = [
-    {
-      name: "Your Profile",
-      callback: () => router.push("/app/user/profile"),
-      icon: UserIcon,
-    },
-    {
-      name: "Liked Songs",
-      callback: () => router.push("/app/user/my-likes"),
-      icon: HeartIcon,
-    },
-    {
-      name: "Invite a Friend",
-      callback: () => router.push("/app/user/invite-a-friend"),
-      icon: LinkIcon,
-    },
-    {
-      name: "Settings",
-      callback: () => router.push("/app/user/settings"),
-      icon: Cog8ToothIcon,
-    },
-    {
-      name: "Sign out",
-      callback: () => signOutAUser(),
-      icon: KeyIcon,
-    },
-  ];
-
+  const handleToggleDropdown = () => {
+    console.log("toggle dropdown" + openDropdown);
+    setOpenDropdown(!openDropdown);
+  };
   return (
-    <header
-      className='pointer-events-none relative z-50 flex flex-col px-4 sm:px-6 md:px-8 bg-black pb-4'
-      style={{
-        height: "var(--header-height)",
-        marginBottom: "var(--header-mb)",
-      }}
-    >
-      <div
-        ref={headerRef}
-        className='top-0 z-10 pt-4 pb-2'
-        style={{ position: 'fixed' }}
-      >
-        <div className='relative flex gap-4'>
-          <div className='flex flex-1'>
-            <Avatar size='36' round={true} name={"LOGO"} />
-          </div>
-          <div className='flex justify-end md:justify-center'>
-            <MobileNavigation className='pointer-events-auto md:hidden' />
-            <DesktopNavigation className='pointer-events-auto hidden md:block' />
-          </div>
-          <div className='flex justify-end md:flex-1'>
-            <div className='pointer-events-auto'>
-              <Menu as='div' className='relative'>
-                <div>
-                  {currentUser ? (
-                    <Menu.Button className='max-w-sm flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
-                      <span className='sr-only'>Open user menu</span>
-                      <Avatar
-                        size='36'
-                        round={true}
-                        name={userData.userName}
-                        src={userData.userPhotoLink}
-                      />
-                    </Menu.Button>
-                  ) : (
-                    <button
-                      onClick={() => router.push("/auth/signin")}
-                      className='px-4 py-2 text-sm font-medium rounded-full shadow-lg ring-1 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20'
-                    >
-                      <ArrowRightOnRectangleIcon className='h-5 w-5 text-white' />
-                    </button>
-                  )}
-                </div>
-                <Transition
-                  as={Fragment}
-                  enter='transition ease-out duration-100'
-                  enterFrom='transform opacity-0 scale-95'
-                  enterTo='transform opacity-100 scale-100'
-                  leave='transition ease-in duration-75'
-                  leaveFrom='transform opacity-100 scale-100'
-                  leaveTo='transform opacity-0 scale-95'
-                >
-                  <Menu.Items className='origin-top-right absolute right-0 mt-4 w-60 rounded-md shadow-lg py-1 bg-zinc-900 text-zinc-400 ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                    {userNavigation.map((item) => (
-                      <Menu.Item key={item.name}>
-                        {({ active }) => (
-                          <button
-                            onClick={item.callback}
-                            className={classNames(
-                              active ? "bg-gray-800" : "",
-                              "flex items-center w-full text-left cursor-pointer px-4 py-2 text-sm text-gray-300"
-                            )}
-                          >
-                            <item.icon
-                              className={classNames(
-                                router.pathname === item.href
-                                  ? "text-blue-500"
-                                  : "text-gray-300 group-hover:text-gray-200",
-                                "mr-2 flex-shrink-0 h-4 w-4"
-                              )}
-                            />
-                            {item.name}
-                          </button>
-                        )}
-                      </Menu.Item>
-                    ))}
-                  </Menu.Items>
-                </Transition>
-              </Menu>
+    <nav class='bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900'>
+      <div class='container flex flex-wrap items-center justify-between mx-auto'>
+        <a href='https://flowbite.com/' class='flex items-center'>
+          <img
+            src='https://flowbite.com/docs/images/logo.svg'
+            class='h-6 mr-3 sm:h-9'
+            alt='Flowbite Logo'
+          />
+          <span class='self-center text-xl font-semibold whitespace-nowrap dark:text-white'>
+            WaveForms.io
+          </span>
+        </a>
+        <div class='flex items-center md:order-2 relative'>
+          <button
+            type='button'
+            class='flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600'
+            id='user-menu-button'
+            aria-expanded='false'
+            data-dropdown-toggle='user-dropdown'
+            data-dropdown-placement='bottom'
+            onClick={handleToggleDropdown}
+          >
+            <span class='sr-only'>Open user menu</span>
+            <img
+              class='w-8 h-8 rounded-full'
+              src='/docs/images/people/profile-picture-3.jpg'
+              alt='user photo'
+            />
+          </button>
+          {/* Dropdown menu  */}
+          {openDropdown && (
+            <div
+              class='z-50 absolute top-10 right-10 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600'
+              id='user-dropdown'
+            >
+              <div class='px-4 py-3'>
+                <span class='block text-sm text-gray-900 dark:text-white'>
+                  Bonnie Green
+                </span>
+                <span class='block text-sm font-medium text-gray-500 truncate dark:text-gray-400'>
+                  name@flowbite.com
+                </span>
+              </div>
+              <ul class='py-2' aria-labelledby='user-menu-button'>
+                <li>
+                  <a
+                    href='#'
+                    class='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
+                  >
+                    Dashboard
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href='#'
+                    class='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
+                  >
+                    Settings
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href='#'
+                    class='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
+                  >
+                    Earnings
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href='#'
+                    class='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
+                  >
+                    Sign out
+                  </a>
+                </li>
+              </ul>
             </div>
+          )}
+          <button
+            data-collapse-toggle='mobile-menu-2'
+            type='button'
+            class='inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+            aria-controls='mobile-menu-2'
+            aria-expanded='false'
+            onClick={() => setOpenMenu(!openMenu)}
+          >
+            <span class='sr-only'>Open main menu</span>
+            <svg
+              class='w-6 h-6'
+              aria-hidden='true'
+              fill='currentColor'
+              viewBox='0 0 20 20'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                fill-rule='evenodd'
+                d='M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z'
+                clip-rule='evenodd'
+              ></path>
+            </svg>
+          </button>
+        </div>
+        {openMenu && (
+          <div
+            class='items-center justify-between w-full md:flex md:w-auto md:order-1'
+            id='mobile-menu-2'
+          >
+            <ul class='flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700'>
+              <li>
+                <a
+                  href='#'
+                  class='block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white'
+                  aria-current='page'
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href='#'
+                  class='block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+                >
+                  About
+                </a>
+              </li>
+              <li>
+                <a
+                  href='#'
+                  class='block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+                >
+                  Services
+                </a>
+              </li>
+              <li>
+                <a
+                  href='#'
+                  class='block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+                >
+                  Pricing
+                </a>
+              </li>
+              <li>
+                <a
+                  href='/blog'
+                  class='block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+                >
+                  Blogs
+                </a>
+              </li>
+              <li>
+                <a
+                  href='#'
+                  class='block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+                >
+                  Contact
+                </a>
+              </li>
+            </ul>
           </div>
+        )}
+        {/* DESKTOP */}
+        <div
+          class='items-center hidden justify-between w-full md:flex md:w-auto md:order-1'
+          id='mobile-menu-2'
+        >
+          <ul class='flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700'>
+            <li>
+              <Link
+                href='/app/trending-songs'
+                class='block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white'
+                aria-current='page'
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <a
+                href='#'
+                class='block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+              >
+                About
+              </a>
+            </li>
+            <li>
+              <a
+                href='#'
+                class='block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+              >
+                Services
+              </a>
+            </li>
+            <li>
+              <a
+                href='#'
+                class='block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+              >
+                Pricing
+              </a>
+            </li>
+            <li>
+              <Link
+                href='/blog'
+                class='block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+              >
+                Blogs
+              </Link>
+            </li>
+            <li>
+              <a
+                href='#'
+                class='block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
-    </header>
+    </nav>
   );
-}
+};
+
+export default Navbar;
