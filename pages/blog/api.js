@@ -14,7 +14,9 @@ export const getBlogs = async () => {
     return result;
 };
 
-
+export default function Test(){
+return(<></>)
+}
 
 
 

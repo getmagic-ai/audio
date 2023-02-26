@@ -4,7 +4,7 @@ import React from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 
-export const BlogCard = ({ blog }) => {
+export default BlogCard = ({ blog }) => {
     const src = `https://kollboratecms.herokuapp.com${blog.attributes.Image.data[0].attributes.url}`
 
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
