@@ -1,6 +1,7 @@
-import { getBlogs } from "./api";
+import {getBlogs} from "./api";
 
 import { useRouter } from "next/router";
+import SingleBlog from "./SingleBlog";
 
 
 export const getStaticPaths = async () => {
@@ -9,7 +10,7 @@ export const getStaticPaths = async () => {
   // console.log(result.data.data[2].id)
   return {
     paths: result.data.data.map((item) => (
-      {params: {slug: item.attributes.slug}}
+      { params: { slug: item.attributes.slug } }
     )),
     fallback: false,
   };
@@ -24,8 +25,6 @@ export const getStaticProps = async ({ params }) => {
   };
 };
 
-
-
 export default function Post({ data }) {
   const router = useRouter();
   const { slug } = router.query; //using this to extract the query params
@@ -35,7 +34,9 @@ export default function Post({ data }) {
   return (
     <>
       {selectedBlog && (
-        <div className="text-white">{selectedBlog.attributes.blog_body}</div>
+        <>
+          <SingleBlog blog={selectedBlog} />
+        </>
       )}
     </>
   );
