@@ -57,10 +57,7 @@ export function LoggedInEmailForm({ email, onSubmit, currentUser }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label className="block sm:inline " htmlFor="email">
-        {" "}
-        Hey there logged in user! <br /> Email address:
-      </label>
+      <label htmlFor="email"> Hey there logged in user! <br /> Email address:</label>
       <input
         className=" rounded px-2  w-72 md:px-5 sm:ml-2"
         type="email"
@@ -70,12 +67,7 @@ export function LoggedInEmailForm({ email, onSubmit, currentUser }) {
         required
       />
       <br />
-      <button
-        className="p-2 rounded-lg text-black mt-2 bg-gray-400"
-        type="submit"
-      >
-        Save
-      </button>
+      <button className="px-2 mt-2 rounded-lg bg-gray-500 text-black" type="submit">Save</button>
     </form>
   );
 }
@@ -90,9 +82,7 @@ export function LoggedOutEmailForm({ onSubmit }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label className="block sm:inline " htmlFor="email">
-        Hey there Logged out User! <br /> Email address:
-      </label>
+      <label htmlFor="email">Hey there Logged out User! <br /> Email address:</label>
       <input
         className=" rounded px-2  w-72 md:px-5 sm:ml-2"
         type="email"
@@ -101,12 +91,8 @@ export function LoggedOutEmailForm({ onSubmit }) {
         onChange={(event) => setEmail(event.target.value)}
         required
       />
-      <button
-        className="p-2 rounded-lg text-black mt-2 bg-gray-400"
-        type="submit"
-      >
-        Subscribe
-      </button>
+      <br />
+      <button className="px-2 mt-2 rounded-lg bg-gray-500 text-black" type="submit">Subscribe</button>
     </form>
   );
 }

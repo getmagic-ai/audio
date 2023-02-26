@@ -16,7 +16,7 @@ const Home = () => {
               project so Never Search for Trending Audio Again. It’s time to
               start using trending audio. But what are trending sounds, where do
               you find them, and how do you know which ones are taking off?
-              We’ve got you.
+              We've got you.
             </p>
             <div className='flex flex-col space-y-4'>
               <Link

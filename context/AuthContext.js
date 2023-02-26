@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     });
   }, []);
-  
+
   //remove the console logs after debugging needs are met
 
   console.log("USER DATA", userData);

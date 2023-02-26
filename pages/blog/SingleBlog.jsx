@@ -5,14 +5,33 @@ import { HiArrowNarrowLeft } from "react-icons/hi";
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 
-export default function SingleBlog ({ blog }) {
+export default function SingleBlog({ blog }) {
     const src = `https://kollboratecms.herokuapp.com${blog.attributes.Image.data[0].attributes.url}`
 
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
     function formatMyDate(value, locale = 'en-GB') {
         return new Date(value).toLocaleDateString(locale, dateOptions);
     } //to format the date fetched from strapi
+    function imageExists() {
 
+        fetch(src, { method: 'HEAD' })
+            .then(res => {
+                if (res.ok) {
+                    {
+                        console.log('Image exists.')
+                        return true;
+                    }
+                } else {
+                    console.log('Image does not exist.')
+
+                }
+            })
+            .catch(err => console.log('Error:', err))
+
+        return false;
+
+
+    }
     return (
         <div className='p-3'>
             <div className='mb-3 text-blue-600 ' >
@@ -37,8 +56,13 @@ export default function SingleBlog ({ blog }) {
 
             </div>
 
-            <Image className=' bg-cover bg-center w-full rounded-lg mt-3 mb-5  mx-auto aspect-video sm:w-10/12 md:w-8/12' loader={() => src} src={src} width={500} height={500} alt="blog img" />
-
+            {
+                imageExists() ? (
+                    <Image className='lg:w-10/12   mx-auto rounded-lg my-4  aspect-video sm:w-10/12  ' loader={() => src} src={src} width={500} height={500} alt="blog img" />
+                )
+                    :
+                    <Image className='lg:w-10/12   mx-auto rounded-lg my-4  aspect-video sm:w-10/12  ' src="/dummy.png" width={500} height={500} alt="dummy img" />
+            }
 
             <div className='font-blog-body mt-4 mb-10 lg:text-lg text-justify'><ReactMarkdown>{blog.attributes.blog_body}</ReactMarkdown></div>
 
