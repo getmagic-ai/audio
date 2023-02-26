@@ -1,7 +1,7 @@
-import { getBlogs } from "./api";
+import {getBlogs} from "./api";
 
 import { useRouter } from "next/router";
-import { SingleBlog } from "./SingleBlog";
+import SingleBlog from "./SingleBlog";
 
 
 export const getStaticPaths = async () => {
@@ -24,8 +24,6 @@ export const getStaticProps = async ({ params }) => {
     },
   };
 };
-
-
 
 export default function Post({ data }) {
   const router = useRouter();

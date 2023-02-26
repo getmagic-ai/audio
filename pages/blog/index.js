@@ -2,14 +2,10 @@ import { useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
-import { getBlogs } from "./api"
-import { BlogCard } from "./BlogCard"
-import qs from "qs"
+import {getBlogs} from "./api";
+import BlogCard from "./BlogCard";
+import qs from "qs";
 
-
-
-
-//Core export
 export default function Index({ posts }) {
   const { currentUser } = useContext(AuthContext);
   return (
@@ -18,40 +14,37 @@ export default function Index({ posts }) {
         Get the latest of Media and Technology updates !
       </div>
       <div className=" w-full   lg:flex  md:flex md:flex-wrap lg:flex-wrap lg:justify-evenly  md:justify-evenly">
-        {
-          posts.map((blog) => {
-            return (
-              <BlogCard key={blog.id} blog={blog} />
-
-            )
-
-          })
-        }
+        {posts.map((blog) => {
+          return <BlogCard key={blog.id} blog={blog} />;
+        })}
       </div>
 
       <div> Coming back soon with a news letter subscription</div>
       <br />
-      {currentUser ? <LoggedInEmailForm currentUser={currentUser} /> : <LoggedOutEmailForm /> /*Check for current user and if valid, show logged in user text*/}
-
+      {
+        currentUser ? (
+          <LoggedInEmailForm currentUser={currentUser} />
+        ) : (
+          <LoggedOutEmailForm />
+        ) /*Check for current user and if valid, show logged in user text*/
+      }
     </>
   );
 }
 
-
 export async function getStaticProps() {
   const options = {
-    populate: '*',
-
-  }
+    populate: "*",
+  };
   const queryString = qs.stringify(options);
 
-  const blogs = await getBlogs(queryString)
+  const blogs = await getBlogs(queryString);
   // console.log("this is ", data)
   return {
     props: {
       posts: blogs.data.data,
-    }
-  }
+    },
+  };
 }
 
 export function LoggedInEmailForm({ email, onSubmit, currentUser }) {
@@ -64,7 +57,10 @@ export function LoggedInEmailForm({ email, onSubmit, currentUser }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label className="block sm:inline " htmlFor="email"> Hey there logged in user! <br /> Email address:</label>
+      <label className="block sm:inline " htmlFor="email">
+        {" "}
+        Hey there logged in user! <br /> Email address:
+      </label>
       <input
         className=" rounded px-2  w-72 md:px-5 sm:ml-2"
         type="email"
@@ -74,7 +70,12 @@ export function LoggedInEmailForm({ email, onSubmit, currentUser }) {
         required
       />
       <br />
-      <button className="p-2 rounded-lg text-black mt-2 bg-gray-400" type="submit">Save</button>
+      <button
+        className="p-2 rounded-lg text-black mt-2 bg-gray-400"
+        type="submit"
+      >
+        Save
+      </button>
     </form>
   );
 }
@@ -89,7 +90,9 @@ export function LoggedOutEmailForm({ onSubmit }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label className="block sm:inline " htmlFor="email">Hey there Logged out User! <br /> Email address:</label>
+      <label className="block sm:inline " htmlFor="email">
+        Hey there Logged out User! <br /> Email address:
+      </label>
       <input
         className=" rounded px-2  w-72 md:px-5 sm:ml-2"
         type="email"
@@ -98,7 +101,12 @@ export function LoggedOutEmailForm({ onSubmit }) {
         onChange={(event) => setEmail(event.target.value)}
         required
       />
-      <button className="p-2 rounded-lg text-black mt-2 bg-gray-400" type="submit">Subscribe</button>
+      <button
+        className="p-2 rounded-lg text-black mt-2 bg-gray-400"
+        type="submit"
+      >
+        Subscribe
+      </button>
     </form>
   );
 }
