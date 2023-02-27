@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { getBlogs } from "./api";
-import BlogCard from "./BlogCard";
+import BlogCard from "@/components/BlogCard";
 import qs from "qs";
 
 export default function Index({ posts }) {

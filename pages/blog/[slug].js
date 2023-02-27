@@ -1,7 +1,7 @@
 import { getBlogs } from "./api";
 
 import { useRouter } from "next/router";
-import SingleBlog from "./SingleBlog";
+import SingleBlog from "@/components/SingleBlog";
 
 
 
