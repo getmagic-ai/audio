@@ -6,31 +6,16 @@ import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 export default function BlogCard({ blog }) {
 
-    const src = `https://kollboratecms.herokuapp.com${blog.attributes.Image.data[0].attributes.url}`
+    // const src = `https://kollboratecms.herokuapp.com${blog.attributes.Image.data[0].attributes.url}`
+
+    //commenting it out for now cause strapi images are not available
 
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
     function formatMyDate(value, locale = 'en-GB') {
         return new Date(value).toLocaleDateString(locale, dateOptions);
     } //to format the date fetched from strapi
 
-    function imageExists() {
 
-        fetch(src, { method: 'HEAD' })
-            .then(res => {
-                if (res.ok) {
-
-                    console.log('Image exists.')
-                    return true;
-
-                } else {
-                    console.log('Image does not exist.')
-                    return false;
-
-                }
-            })
-            .catch(err => console.log('Error:', err))
-
-    }
 
 
     return (
@@ -56,15 +41,12 @@ export default function BlogCard({ blog }) {
 
                 </div>
 
+                <Image className='lg:w-10/12   mx-auto rounded-lg my-4  aspect-video sm:w-10/12  ' src="/dummy.png" width={500} height={500} alt="dummy img" />
+
                 {
-                    imageExists() ? (
-
-
-                        <Image className='lg:w-10/12   mx-auto rounded-lg my-4  aspect-video sm:w-10/12  ' loader={() => src} src={src} width={500} height={500} alt="blog img" />
-                    )
-                        :
-                        <Image className='lg:w-10/12   mx-auto rounded-lg my-4  aspect-video sm:w-10/12  ' src="/dummy.png" width={500} height={500} alt="dummy img" />
+                    //using dummy image for the time being
                 }
+
 
 
                 <div className='font-blog-body mt-4 mb-5 lg:text-lg '>
