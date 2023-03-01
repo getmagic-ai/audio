@@ -3,7 +3,9 @@ import Link from 'next/link';
 import React from 'react'
 import { HiArrowNarrowLeft } from "react-icons/hi";
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-
+import { AiFillTwitterSquare } from 'react-icons/ai'
+import { AiFillFacebook } from 'react-icons/ai'
+import { AiFillLinkedin } from 'react-icons/ai'
 
 export default function SingleBlog({ blog }) {
     // const src = `https://kollboratecms.herokuapp.com${blog.attributes.Image.data[0].attributes.url}`
@@ -36,40 +38,39 @@ export default function SingleBlog({ blog }) {
 
     }
     return (
-        <div className='p-3'>
+        <div className='-mt-12'>
             <div className='mb-3 text-blue-600 ' >
-                <Link href={"/blog"} ><HiArrowNarrowLeft className='inline' /> Back</Link></div>
-            <h1 className='text-xl font-semibold text-gray-100 font-blog-title mb-4 lg:text-3xl
+                <Link href={"/blog"} ><HiArrowNarrowLeft className='inline' /> Back</Link>
+            </div>
+            <div className='bg-gray-500 inline px-2 py-1 rounded-full text-black text-sm '>
+                {blog.attributes.Categories}
+            </div>
+            <p className='text-sm  font-blog-title text-gray-500 sm:dispay-none lg:inline lg:text-base my-3  ' >
+                {formatMyDate(blog.attributes.createdAt)}
+            </p>
+            <h1 className='text-xl font-semibold text-gray-100 font-blog-title mb-5  md:text-4xl lg:text-4xl
                 '>{blog.attributes.Title}
             </h1>
 
-            <div className='bg-gray-500 inline px-2 py-1 rounded-full text-black text-sm'>
-                {blog.attributes.Categories}
-            </div>
-
-
-            <div className=' flex flex-wrap justify-evenly w-full my-4'>
-
-                <p className='text-xs text-center  font-blog-title text-gray-500 sm:dispay-none lg:inline lg:text-base my-auto  w-5/12' >
-                    {formatMyDate(blog.attributes.createdAt)}
-                </p>
-                <span className='divide border-r-2 border-gray-500'></span>
-                <p className='text-xs text-center font-blog-title text-gray-500 sm:block lg:inline w-5/12  my-1 lg:text-base'>By {blog.attributes.writer.data.attributes.Name}
-                </p>
-
-            </div>
-
-
-            <Image className='lg:w-10/12   mx-auto rounded-lg my-4  aspect-video sm:w-10/12  ' src="/dummy.png" width={500} height={500} alt="dummy img" />
+            <Image className='lg:w-10/12   mx-auto rounded-lg my-4  aspect-video sm:w-10/12  ' src="/assets/images/dummy.png" width={500} height={500} alt="dummy img" />
             {
                 //using dummy image for the time being
             }
 
+            <div className='flex m-4 justify-center'>
+                <img className='w-8 h-8 sm:w-10 sm:h-10 rounded-full mr-2' src='/assets/images/dummy-author-profile.webp' />
+                <p className='text-sm  font-blog-title text-gray-500 sm:block lg:inline  my-auto lg:text-base'>By {blog.attributes.writer.data.attributes.Name}
+                </p>
+                <Link href={"#"} className="my-2">
+                    <AiFillTwitterSquare className=' rounded-full w-7 h-7 text-blue-400 ml-4 mt-auto my-1' /></Link>
 
-            <div className='font-blog-body mt-4 mb-10 lg:text-lg text-justify'><ReactMarkdown>{blog.attributes.blog_body}</ReactMarkdown></div>
 
-
-
+                <Link href={"#"} className="my-2">
+                    <AiFillFacebook className='rounded-full w-7 h-7 text-blue-600 mt-auto' /></Link>
+                <Link href={"#"} className="my-2">
+                    <AiFillLinkedin className='rounded-full w-7 h-7 text-blue-400 mt-auto' /></Link>
+            </div>
+            <div className='font-blog-body text-sm  mb-10 sm:text-xl lg:text-2xl text-gray-100'><ReactMarkdown>{blog.attributes.blog_body}</ReactMarkdown></div>
         </div>
     )
 }

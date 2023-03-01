@@ -10,8 +10,8 @@ module.exports = {
   theme: {
 
     fontFamily: {
-      "blog-title": ['Oswald', "sans-serif"],
-      "blog-body": ['Lato', "sans-serif"],
+      "blog-body": ['Tilt Neon', "cursive"],
+      "blog-title": ['Tilt Neon', 'cursive'],
     },
     extend: {
       colors: {

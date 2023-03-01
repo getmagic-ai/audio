@@ -1,15 +1,14 @@
 import { getBlogs } from "./api";
-
+import qs from 'qs'
 import { useRouter } from "next/router";
 import SingleBlog from "@/components/SingleBlog";
 
 
 
-export default function Post({ data }) {
+export default function Post({ posts }) {
   const router = useRouter();
   const { slug } = router.query; //using this to extract the query params
-
-  const selectedBlog = data.find((blog) => blog.attributes.slug === slug);
+  const selectedBlog = posts.find((blog) => blog.attributes.slug === slug);
 
   return (
     <>
@@ -35,10 +34,18 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  const result = await getBlogs();
+  const options = {
+    populate: "*",
+    sort: "publishedAt:desc",
+
+  };
+  const queryString = qs.stringify(options);
+
+  const blogs = await getBlogs(queryString);
+  // console.log("this is ", data)
   return {
     props: {
-      data: result.data.data,
+      posts: blogs.data.data,
     },
   };
 };

@@ -35,6 +35,8 @@ export default function Index({ posts }) {
 export async function getStaticProps() {
   const options = {
     populate: "*",
+    sort: "publishedAt:desc",
+
   };
   const queryString = qs.stringify(options);
 
