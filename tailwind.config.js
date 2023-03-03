@@ -10,8 +10,9 @@ module.exports = {
   theme: {
 
     fontFamily: {
-      "blog-body": ['Tilt Neon', "cursive"],
-      "blog-title": ['Tilt Neon', 'cursive'],
+      "blog-body": ['Roboto Flex', 'sans-serif'],
+      "blog-title": ['Roboto Flex', 'sans-serif'],
+
     },
     extend: {
       colors: {

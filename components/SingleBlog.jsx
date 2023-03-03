@@ -45,10 +45,10 @@ export default function SingleBlog({ blog }) {
             <div className='bg-gray-500 inline px-2 py-1 rounded-full text-black text-sm '>
                 {blog.attributes.Categories}
             </div>
-            <p className='text-sm  font-blog-title text-gray-500 sm:dispay-none lg:inline lg:text-base my-3  ' >
+            <p className='text-sm  font-blog-title text-gray-500 sm:dispay-none lg:inline lg:text-base my-3  lg:mx-3' >
                 {formatMyDate(blog.attributes.createdAt)}
             </p>
-            <h1 className='text-xl font-semibold text-gray-100 font-blog-title mb-5  md:text-4xl lg:text-4xl
+            <h1 className='text-xl font-semibold text-gray-100 font-blog-title mb-5  md:text-4xl lg:text-4xl lg:my-5
                 '>{blog.attributes.Title}
             </h1>
 
