@@ -71,25 +71,25 @@ const TrendingSongs = () => {
       <div className='my-5'>
         <div className='tabs tabs-boxed bg-gray-800'>
           <button
-            className={`tab ${selectedTab == 1 && "tab-active"}`}
+            className={`tab text-gray-100 ${selectedTab == 1 && "tab-active"}`}
             onClick={() => setSelectedTab(1)}
           >
             TikTok
           </button>
           <button
-            className={`tab ${selectedTab == 2 && "tab-active"}`}
+            className={`tab text-gray-100 ${selectedTab == 2 && "tab-active"}`}
             onClick={() => setSelectedTab(2)}
           >
             Instagram
           </button>
           <button
-            className={`tab ${selectedTab == 3 && "tab-active"}`}
+            className={`tab text-gray-100 ${selectedTab == 3 && "tab-active"}`}
             onClick={() => setSelectedTab(3)}
           >
             YouTube
           </button>
           <button
-            className={`tab ${selectedTab == 4 && "tab-active"}`}
+            className={`tab text-gray-100 ${selectedTab == 4 && "tab-active"}`}
             onClick={() => setSelectedTab(4)}
           >
             Originals!
