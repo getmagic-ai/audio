@@ -52,7 +52,7 @@ export default function SingleBlog({ blog }) {
                 '>{blog.attributes.Title}
             </h1>
 
-            <Image className='lg:w-10/12   mx-auto rounded-lg my-4  aspect-video sm:w-10/12  ' src="/assets/images/dummy.png" width={500} height={500} alt="dummy img" />
+            <Image className='lg:w-10/12   mx-auto rounded-lg my-4  aspect-video sm:w-10/12  ' src="/assets/images/dummy2.jpg" width={500} height={500} alt="dummy img" />
             {
                 //using dummy image for the time being
             }

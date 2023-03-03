@@ -26,7 +26,7 @@ export default function BlogCard({ blog }) {
         <div className='my-5 md:mx-1 py-2 lg:mx-2 lg:px-10  rounded-lg ease-out duration-200 inline-block blog-card align-middle'>
 
             <Link href={"/blog/" + blog.attributes.slug}>
-                <Image className='lg:w-10/12   rounded-lg mb-1  aspect-video sm:w-10/12 mx-auto ' src="/dummy.png" width={500} height={500} alt="dummy img" />
+                <Image className='lg:w-10/12   rounded-lg mb-1  aspect-video sm:w-10/12 mx-auto ' src="/assets/images/dummy2.jpg" width={500} height={500} alt="dummy img" />
 
                 {
                     //using dummy image for the time being
