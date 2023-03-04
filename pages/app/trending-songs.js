@@ -7,13 +7,14 @@ import {
   ArrowTrendingDownIcon,
   ArrowRightIcon,
 } from "@heroicons/react/24/outline";
+import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 import { fetchAudioData } from "@/pages/_app";
 import { ClipLoader } from "react-spinners";
 import { AuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import Avatar from "react-avatar";
 import Link from "next/link";
-import { doc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/config/firebase-config";
 
 const handleLike = async (userId, audioId) => {
@@ -22,7 +23,24 @@ const handleLike = async (userId, audioId) => {
     audioId,
     userId,
     documentID: `${userId}_${audioId}`,
-  }).then((data) => console.log(data));
+  });
+};
+
+const deleteLike = async (userId, audioId) => {
+  await deleteDoc(doc(db, "likes", `${userId}_${audioId}`));
+};
+
+const getHasUserLiked = async (userId, audioId) => {
+  const docRef = doc(db, "likes", `${userId}_${audioId}`);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log(docSnap.data());
+    return true;
+  } else {
+    // doc.data() will be undefined in this case
+    return false;
+  }
 };
 
 const TrendingSongs = () => {
@@ -105,8 +123,8 @@ const TrendingSongs = () => {
                 (selectedTab === 1
                   ? "tiktok"
                   : selectedTab === 2
-                    ? "instagram"
-                    : "youtube")
+                  ? "instagram"
+                  : "youtube")
             )
             .map((item) => {
               return (
@@ -135,18 +153,20 @@ const TrendingSongs = () => {
                     >
                     </div> */}
                     {/* using Link component instead of onClick to allow user to see the link and open link in new tab, which is not possible through onClick */}
-                    {
-                      item.direct_audio_link && (
-                        <Link target={"_blank"} className='flex-1 min-w-0 cursor-pointer' href={item.direct_audio_link}>
-                          <p className='text-sm font-medium truncate text-white'>
-                            {item.title}
-                          </p>
-                          <p className='text-xs font-medium truncate text-gray-200'>
-                            {item.artist_name}
-                          </p>
-                        </Link>
-                      )
-                    }
+                    {item.direct_audio_link && (
+                      <Link
+                        target={"_blank"}
+                        className='flex-1 min-w-0 cursor-pointer'
+                        href={item.direct_audio_link}
+                      >
+                        <p className='text-sm font-medium truncate text-white'>
+                          {item.title}
+                        </p>
+                        <p className='text-xs font-medium truncate text-gray-200'>
+                          {item.artist_name}
+                        </p>
+                      </Link>
+                    )}
                     {/* using conditional rendering cause instagram data is not added as of now, so it has no direct_audio_link , and hence showing error */}
 
                     <div className='inline-flex items-center space-x-2'>
@@ -158,15 +178,38 @@ const TrendingSongs = () => {
                         <ArrowTrendingDownIcon height={20} color={"red"} />
                       )}
                       <ArrowUpOnSquareIcon height={20} />
-                      <HeartIcon
-                        className='cursor-pointer'
-                        height={20}
-                        onClick={() => {
-                          currentUser == null
-                            ? router.push("/auth/signin")
-                            : handleLike(currentUser.uid, item.id);
-                        }}
-                      />
+                      {!currentUser ? (
+                        <HeartIcon
+                          className='cursor-pointer'
+                          height={20}
+                          onClick={() => {
+                            currentUser == null
+                              ? router.push("/auth/signin")
+                              : handleLike(currentUser.uid, item.Id);
+                          }}
+                        />
+                      ) : getHasUserLiked(currentUser.uid, item.Id) ? (
+                        <HeartIconSolid
+                          className='cursor-pointer'
+                          color='#d00'
+                          height={20}
+                          onClick={() => {
+                            currentUser == null
+                              ? router.push("/auth/signin")
+                              : deleteLike(currentUser.uid, item.Id);
+                          }}
+                        />
+                      ) : (
+                        <HeartIcon
+                          className='cursor-pointer'
+                          height={20}
+                          onClick={() => {
+                            currentUser == null
+                              ? router.push("/auth/signin")
+                              : handleLike(currentUser.uid, item.Id);
+                          }}
+                        />
+                      )}
                     </div>
                   </div>
                 </li>
