@@ -7,7 +7,7 @@ import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 export default function BlogCard({ blog }) {
 
-    // const imgSrc = `https://kollboratecms.herokuapp.com${blog.attributes.Image.data[0].attributes.url}`
+    // const imgsrc = `https://kollboratecms.herokuapp.com${blog.attributes.Image.data[0].attributes.url}`
 
     //commenting it out for now cause strapi images are not available
 
