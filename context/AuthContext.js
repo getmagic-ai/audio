@@ -37,11 +37,11 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     });
   }, []);
-  
+
   //remove the console logs after debugging needs are met
 
-  console.log("USER DATA", userData);
-  console.log("CURRENT DATA", currentUser);
+  // console.log("USER DATA", userData);
+  // console.log("CURRENT DATA", currentUser);
 
   return (
     <AuthContext.Provider
