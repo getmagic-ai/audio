@@ -7,7 +7,7 @@ import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 export default function BlogCard({ blog }) {
 
-    // const src = `https://kollboratecms.herokuapp.com${blog.attributes.Image.data[0].attributes.url}`
+    // const imgSrc = `https://kollboratecms.herokuapp.com${blog.attributes.Image.data[0].attributes.url}`
 
     //commenting it out for now cause strapi images are not available
 
@@ -23,7 +23,7 @@ export default function BlogCard({ blog }) {
 
     return (
 
-        <div className='my-5 md:mx-1 py-2 lg:mx-2 lg:px-10  rounded-lg ease-out duration-200 inline-block blog-card align-middle'>
+        <div className='my-10 md:mx-1 pt-2 lg:mx-2 lg:px-10  rounded-lg ease-out duration-200 inline-block blog-card align-middle  '>
 
             <Link href={"/blog/" + blog.attributes.slug}>
                 <Image className='lg:w-10/12   rounded-lg mb-1  aspect-video sm:w-10/12 mx-auto ' src="/assets/images/dummy2.jpg" width={500} height={500} alt="dummy img" />
@@ -31,8 +31,8 @@ export default function BlogCard({ blog }) {
                 {
                     //using dummy image for the time being
                 }
-                <div className='p-1'>
-                    <h1 className='text-lg font-semibold text-gray-100 font-blog-title mb-2 md:text-xl lg:text-2xl 
+                <div className=''>
+                    <h1 className='text-xl font-semibold text-gray-100 font-blog-title my-3 md:text-xl lg:text-2xl 
                 '>{blog.attributes.Title}
                     </h1>
 
@@ -46,7 +46,7 @@ export default function BlogCard({ blog }) {
                     </div>
                     {
                         (screenSize.width > 800) && (
-                            <div className='font-blog-body mt-4 mb-5 lg:text-lg '>
+                            <div className='font-blog-body mt-3 lg:text-lg text-justify'>
                                 <ReactMarkdown>{blog.attributes.Excerpt}</ReactMarkdown>...
                                 <span className='text-blue-600'>Read more</span>
                             </div>
