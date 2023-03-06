@@ -1,8 +1,8 @@
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import ChevronDownIcon from './icons/ChevronDownIcon';
+import ChevronDownIcon from "./icons/ChevronDownIcon";
 import CloseIcon from "./icons/CloseIcon";
-import MobileNavItem from './MobileNavItem';
+import MobileNavItem from "./MobileNavItem";
 
 export default function MobileNavigation(props) {
   return (
@@ -50,6 +50,7 @@ export default function MobileNavigation(props) {
                 <MobileNavItem href='/app/trending-songs'>
                   Trending Songs
                 </MobileNavItem>
+                <MobileNavItem href='/blog'>Latest from Us</MobileNavItem>
                 <MobileNavItem href='/app/upgrade'>
                   Upgrade to Pro / Premium
                 </MobileNavItem>

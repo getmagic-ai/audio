@@ -11,6 +11,7 @@ import {
   KeyIcon,
   HeartIcon,
   ArrowRightOnRectangleIcon,
+  DocumentIcon,
 } from "@heroicons/react/24/outline";
 import { signOutAUser } from "@/utils/auth";
 import { AuthContext } from "@/context/AuthContext";
@@ -46,6 +47,11 @@ export function Navbar() {
       name: "Settings",
       callback: () => router.push("/app/user/settings"),
       icon: Cog8ToothIcon,
+    },
+    {
+      name: "Latest from Us",
+      callback: () => router.push("/blog"),
+      icon: DocumentIcon,
     },
     {
       name: "Sign out",

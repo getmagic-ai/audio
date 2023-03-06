@@ -7,14 +7,28 @@ import {
   ArrowTrendingDownIcon,
   ArrowRightIcon,
 } from "@heroicons/react/24/outline";
+import { ShareSocial } from "react-share-social";
+import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 import { fetchAudioData } from "@/pages/_app";
 import { ClipLoader } from "react-spinners";
 import { AuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import Avatar from "react-avatar";
 import Link from "next/link";
-import { doc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/config/firebase-config";
+import Modal from "react-modal";
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+Modal.setAppElement("#root");
 
 const handleLike = async (userId, audioId) => {
   // Add a new document in collection "likes"
@@ -22,11 +36,29 @@ const handleLike = async (userId, audioId) => {
     audioId,
     userId,
     documentID: `${userId}_${audioId}`,
-  }).then((data) => console.log(data));
+  });
+};
+
+const deleteLike = async (userId, audioId) => {
+  await deleteDoc(doc(db, "likes", `${userId}_${audioId}`));
+};
+
+const getHasUserLiked = async (userId, audioId) => {
+  const docRef = doc(db, "likes", `${userId}_${audioId}`);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log(docSnap.data());
+    return true;
+  } else {
+    // doc.data() will be undefined in this case
+    return false;
+  }
 };
 
 const TrendingSongs = () => {
   const [selectedTab, setSelectedTab] = useState(1);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
   const { currentUser, userData, loading } = useContext(AuthContext);
   const { data, isInitialLoading, error } = useQuery(
@@ -63,8 +95,53 @@ const TrendingSongs = () => {
   //   direct_audio_link ? router.push(direct_audio_link) : null;
   // };
 
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
-    <div className='bg-black'>
+    <div className='bg-black relative'>
+      <div>
+        <button onClick={openModal}>Open Modal</button>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+        >
+          <button onClick={closeModal}>close</button>
+          <ShareSocial
+            url='url_to_share.com'
+            socialTypes={[
+              "facebook",
+              "twitter",
+              "whatsapp",
+              "telegram",
+            ]}
+            onSocialButtonClicked={(data) => console.log(data)}
+            style={{
+              root: {
+                background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+                borderRadius: 3,
+                border: 0,
+                boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+                color: "white",
+              },
+              copyContainer: {
+                border: "1px solid blue",
+                background: "rgb(0,0,0,0.7)",
+              },
+              title: {
+                color: "aquamarine",
+                fontStyle: "italic",
+              },
+            }}
+          />
+        </Modal>
+      </div>
       <h1 className='text-xl font-semibold text-gray-200 mb-8'>
         Trending Audio for {formattedDate.toString()}!
       </h1>
@@ -105,8 +182,8 @@ const TrendingSongs = () => {
                 (selectedTab === 1
                   ? "tiktok"
                   : selectedTab === 2
-                    ? "instagram"
-                    : "youtube")
+                  ? "instagram"
+                  : "youtube")
             )
             .map((item) => {
               return (
@@ -135,18 +212,20 @@ const TrendingSongs = () => {
                     >
                     </div> */}
                     {/* using Link component instead of onClick to allow user to see the link and open link in new tab, which is not possible through onClick */}
-                    {
-                      item.direct_audio_link && (
-                        <Link target={"_blank"} className='flex-1 min-w-0 cursor-pointer' href={item.direct_audio_link}>
-                          <p className='text-sm font-medium truncate text-white'>
-                            {item.title}
-                          </p>
-                          <p className='text-xs font-medium truncate text-gray-200'>
-                            {item.artist_name}
-                          </p>
-                        </Link>
-                      )
-                    }
+                    {item.direct_audio_link && (
+                      <Link
+                        target={"_blank"}
+                        className='flex-1 min-w-0 cursor-pointer'
+                        href={item.direct_audio_link}
+                      >
+                        <p className='text-sm font-medium truncate text-white'>
+                          {item.title}
+                        </p>
+                        <p className='text-xs font-medium truncate text-gray-200'>
+                          {item.artist_name}
+                        </p>
+                      </Link>
+                    )}
                     {/* using conditional rendering cause instagram data is not added as of now, so it has no direct_audio_link , and hence showing error */}
 
                     <div className='inline-flex items-center space-x-2'>
@@ -157,16 +236,39 @@ const TrendingSongs = () => {
                       ) : (
                         <ArrowTrendingDownIcon height={20} color={"red"} />
                       )}
-                      <ArrowUpOnSquareIcon height={20} />
-                      <HeartIcon
-                        className='cursor-pointer'
-                        height={20}
-                        onClick={() => {
-                          currentUser == null
-                            ? router.push("/auth/signin")
-                            : handleLike(currentUser.uid, item.id);
-                        }}
-                      />
+                      <ArrowUpOnSquareIcon height={20} onClick={openModal} />
+                      {!currentUser ? (
+                        <HeartIcon
+                          className='cursor-pointer'
+                          height={20}
+                          onClick={() => {
+                            currentUser == null
+                              ? router.push("/auth/signin")
+                              : handleLike(currentUser.uid, item.Id);
+                          }}
+                        />
+                      ) : getHasUserLiked(currentUser.uid, item.Id) ? (
+                        <HeartIconSolid
+                          className='cursor-pointer'
+                          color='#d00'
+                          height={20}
+                          onClick={() => {
+                            currentUser == null
+                              ? router.push("/auth/signin")
+                              : deleteLike(currentUser.uid, item.Id);
+                          }}
+                        />
+                      ) : (
+                        <HeartIcon
+                          className='cursor-pointer'
+                          height={20}
+                          onClick={() => {
+                            currentUser == null
+                              ? router.push("/auth/signin")
+                              : handleLike(currentUser.uid, item.Id);
+                          }}
+                        />
+                      )}
                     </div>
                   </div>
                 </li>
