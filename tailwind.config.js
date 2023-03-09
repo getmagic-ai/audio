@@ -10,8 +10,9 @@ module.exports = {
   theme: {
 
     fontFamily: {
-      "blog-title": ['Oswald', "sans-serif"],
-      "blog-body": ['Lato', "sans-serif"],
+      "blog-body": ['Roboto Flex', 'sans-serif'],
+      "blog-title": ['Roboto Flex', 'sans-serif'],
+
     },
     extend: {
       colors: {

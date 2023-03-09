@@ -2,17 +2,24 @@ import { useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
-import {getBlogs} from "./api";
+import { getBlogs } from "./api";
 import BlogCard from "@/components/BlogCard";
 import qs from "qs";
+import SearchBox from "@/components/SearchBox";
+import Categories from "@/components/Categories";
 
 export default function Index({ posts }) {
   const { currentUser } = useContext(AuthContext);
   return (
     <>
-      <div className="text-white items-center align-middle text-xl mb-3">
+      <div className="text-white items-center align-middle text-xl mb-3 -my-10 ">
         Get the latest of Media and Technology updates !
       </div>
+
+      <SearchBox />
+
+      <Categories />
+
       <div className=" w-full   lg:flex  md:flex md:flex-wrap lg:flex-wrap lg:justify-evenly  md:justify-evenly">
         {posts.map((blog) => {
           return <BlogCard key={blog.id} blog={blog} />;
@@ -35,6 +42,8 @@ export default function Index({ posts }) {
 export async function getStaticProps() {
   const options = {
     populate: "*",
+    sort: "publishedAt:desc",
+
   };
   const queryString = qs.stringify(options);
 
@@ -57,10 +66,7 @@ export function LoggedInEmailForm({ email, onSubmit, currentUser }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label className="block sm:inline " htmlFor="email">
-        {" "}
-        Hey there logged in user! <br /> Email address:
-      </label>
+      <label htmlFor="email"> Hey there logged in user! <br /> Email address:</label>
       <input
         className=" rounded px-2  w-72 md:px-5 sm:ml-2"
         type="email"
@@ -70,12 +76,7 @@ export function LoggedInEmailForm({ email, onSubmit, currentUser }) {
         required
       />
       <br />
-      <button
-        className="p-2 rounded-lg text-black mt-2 bg-gray-400"
-        type="submit"
-      >
-        Save
-      </button>
+      <button className="px-2 mt-2 rounded-lg bg-gray-500 text-black" type="submit">Save</button>
     </form>
   );
 }
@@ -90,9 +91,7 @@ export function LoggedOutEmailForm({ onSubmit }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label className="block sm:inline " htmlFor="email">
-        Hey there Logged out User! <br /> Email address:
-      </label>
+      <label htmlFor="email">Hey there Logged out User! <br /> Email address:</label>
       <input
         className=" rounded px-2  w-72 md:px-5 sm:ml-2"
         type="email"
@@ -101,12 +100,8 @@ export function LoggedOutEmailForm({ onSubmit }) {
         onChange={(event) => setEmail(event.target.value)}
         required
       />
-      <button
-        className="p-2 rounded-lg text-black mt-2 bg-gray-400"
-        type="submit"
-      >
-        Subscribe
-      </button>
+      <br />
+      <button className="px-2 mt-2 rounded-lg bg-gray-500 text-black" type="submit">Subscribe</button>
     </form>
   );
 }
