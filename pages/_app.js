@@ -34,7 +34,7 @@ export default function App({ Component, pageProps }) {
         <AuthProvider>
           <QueryClientProvider client={queryClient}>
             <AppLayout className={poppins.className}>
-              <div className='bg-black min-h-screen'>
+              <div className='bg-black'>
                 <Component {...pageProps} />
               </div>
             </AppLayout>

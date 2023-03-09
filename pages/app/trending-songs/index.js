@@ -70,17 +70,19 @@ const TrendingSongs = () => {
   // console.log(data);
   if (isInitialLoading)
     return (
-      <ClipLoader
-        color={"#661AE6"}
-        loading={isInitialLoading}
-        cssOverride={{
-          display: "block",
-          margin: "50px auto 0 auto",
-        }}
-        size={50}
-        aria-label='Loading Spinner'
-        data-testid='loader'
-      />
+      <div className='flex items-center justify-center h-screen w-full'>
+        <ClipLoader
+          color={"#661AE6"}
+          loading={isInitialLoading}
+          cssOverride={{
+            display: "block",
+            // margin: "50px auto 0 auto",
+          }}
+          size={50}
+          aria-label='Loading Spinner'
+          data-testid='loader'
+        />
+      </div>
     );
   if (error) return "An error occured in fetching the data from nocodb";
   // console.log(data.list[4]); //debugging only
@@ -115,12 +117,7 @@ const TrendingSongs = () => {
           <button onClick={closeModal}>close</button>
           <ShareSocial
             url='url_to_share.com'
-            socialTypes={[
-              "facebook",
-              "twitter",
-              "whatsapp",
-              "telegram",
-            ]}
+            socialTypes={["facebook", "twitter", "whatsapp", "telegram"]}
             onSocialButtonClicked={(data) => console.log(data)}
             style={{
               root: {
@@ -214,9 +211,9 @@ const TrendingSongs = () => {
                     {/* using Link component instead of onClick to allow user to see the link and open link in new tab, which is not possible through onClick */}
                     {item.direct_audio_link && (
                       <Link
-                        target={"_blank"}
+                        // target={"_blank"}
                         className='flex-1 min-w-0 cursor-pointer'
-                        href={item.direct_audio_link}
+                        href={`/app/trending-songs/${item.Id}`}
                       >
                         <p className='text-sm font-medium truncate text-white'>
                           {item.title}
@@ -228,7 +225,7 @@ const TrendingSongs = () => {
                     )}
                     {/* using conditional rendering cause instagram data is not added as of now, so it has no direct_audio_link , and hence showing error */}
 
-                    <div className='inline-flex items-center space-x-2'>
+                    {/* <div className='inline-flex items-center space-x-2'>
                       {parseInt(item.ranking_change) >= 0 ? (
                         <ArrowTrendingUpIcon height={20} color={"green"} />
                       ) : parseInt(item.ranking_change) == 0 ? (
@@ -269,7 +266,7 @@ const TrendingSongs = () => {
                           }}
                         />
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 </li>
               );
