@@ -5,6 +5,7 @@ import { auth } from "@/config/firebase-config";
 import { CheckIcon } from "@heroicons/react/24/solid";
 import { AuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/router";
+import { ClipLoader } from "react-spinners";
 
 const tiers = [
   {
@@ -54,7 +55,25 @@ export default function Upgrade(props) {
         break;
     }
   }
-  if (hasUserClicked) return <div></div>;
+  if (hasUserClicked)
+    return (
+      <div className='container max-w-lg mx-auto sm:px-6 lg:px-8 flex flex-col items-center h-screen'>
+        <h1 className='text-4xl text-center font-medium text-gray-100 mb-8'>
+          Redirecting you to checkout
+        </h1>
+        <ClipLoader
+          color={"#661AE6"}
+          loading={true}
+          cssOverride={{
+            display: "block",
+            // margin: "50px auto 0 auto",
+          }}
+          size={50}
+          aria-label='Loading Spinner'
+          data-testid='loader'
+        />
+      </div>
+    );
   return (
     <div className='flex flex-col space-y-4'>
       <h1 className='text-3xl font-semibold text-gray-50'>Pricing Plans</h1>
