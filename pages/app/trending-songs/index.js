@@ -15,8 +15,7 @@ import { AuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import Avatar from "react-avatar";
 import Link from "next/link";
-import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "@/config/firebase-config";
+
 import Modal from "react-modal";
 const customStyles = {
   content: {
@@ -29,32 +28,6 @@ const customStyles = {
   },
 };
 Modal.setAppElement("#root");
-
-const handleLike = async (userId, audioId) => {
-  // Add a new document in collection "likes"
-  await setDoc(doc(db, "likes", `${userId}_${audioId}`), {
-    audioId,
-    userId,
-    documentID: `${userId}_${audioId}`,
-  });
-};
-
-const deleteLike = async (userId, audioId) => {
-  await deleteDoc(doc(db, "likes", `${userId}_${audioId}`));
-};
-
-const getHasUserLiked = async (userId, audioId) => {
-  const docRef = doc(db, "likes", `${userId}_${audioId}`);
-  const docSnap = await getDoc(docRef);
-
-  if (docSnap.exists()) {
-    console.log(docSnap.data());
-    return true;
-  } else {
-    // doc.data() will be undefined in this case
-    return false;
-  }
-};
 
 const TrendingSongs = () => {
   const [selectedTab, setSelectedTab] = useState(1);
@@ -214,6 +187,7 @@ const TrendingSongs = () => {
                         // target={"_blank"}
                         className='flex-1 min-w-0 cursor-pointer'
                         href={`/app/trending-songs/${item.Id}`}
+                        query={item}
                       >
                         <p className='text-sm font-medium truncate text-white'>
                           {item.title}
