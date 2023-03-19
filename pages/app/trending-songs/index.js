@@ -79,7 +79,7 @@ const TrendingSongs = () => {
   }
 
   return (
-    <div className='bg-black relative'>
+    <div className='bg-black relative min-h-screen'>
       <div>
         <button onClick={openModal}>Open Modal</button>
         <Modal
@@ -199,7 +199,7 @@ const TrendingSongs = () => {
                     )}
                     {/* using conditional rendering cause instagram data is not added as of now, so it has no direct_audio_link , and hence showing error */}
 
-                    {/* <div className='inline-flex items-center space-x-2'>
+                    <div className='inline-flex items-center space-x-2'>
                       {parseInt(item.ranking_change) >= 0 ? (
                         <ArrowTrendingUpIcon height={20} color={"green"} />
                       ) : parseInt(item.ranking_change) == 0 ? (
@@ -208,39 +208,16 @@ const TrendingSongs = () => {
                         <ArrowTrendingDownIcon height={20} color={"red"} />
                       )}
                       <ArrowUpOnSquareIcon height={20} onClick={openModal} />
-                      {!currentUser ? (
-                        <HeartIcon
-                          className='cursor-pointer'
-                          height={20}
-                          onClick={() => {
-                            currentUser == null
-                              ? router.push("/auth/signin")
-                              : handleLike(currentUser.uid, item.Id);
-                          }}
-                        />
-                      ) : getHasUserLiked(currentUser.uid, item.Id) ? (
-                        <HeartIconSolid
-                          className='cursor-pointer'
-                          color='#d00'
-                          height={20}
-                          onClick={() => {
-                            currentUser == null
-                              ? router.push("/auth/signin")
-                              : deleteLike(currentUser.uid, item.Id);
-                          }}
-                        />
-                      ) : (
-                        <HeartIcon
-                          className='cursor-pointer'
-                          height={20}
-                          onClick={() => {
-                            currentUser == null
-                              ? router.push("/auth/signin")
-                              : handleLike(currentUser.uid, item.Id);
-                          }}
-                        />
-                      )}
-                    </div> */}
+                      <HeartIcon
+                        className='cursor-pointer'
+                        height={20}
+                        onClick={() => {
+                          currentUser == null
+                            ? router.push("/auth/signin")
+                            : router.push(`/app/trending-songs/${item.Id}`);
+                        }}
+                      />
+                    </div>
                   </div>
                 </li>
               );
