@@ -16,7 +16,7 @@ const Home = () => {
             </h2>
             <p className='mb-8 font-light text-gray-500 sm:text-xl dark:text-gray-400'>
               Waveforms helps you to find trending audio for your next big
-              project so Never Search for Trending Audio Again. It’s time to
+              project so Never Search for Trending Audio Again. It's time to
               start using trending audio. But what are trending sounds, where do
               you find them, and how do you know which ones are taking off?
               We've got you.
