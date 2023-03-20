@@ -1,8 +1,11 @@
-import Newsletter from "@/components/Newsletter";
+import NewsletterForm from "@/components/NewsletterForm";
+import { AuthContext } from "@/context/AuthContext";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 
 const Home = () => {
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <div className='space-y-6'>
       <section className='bg-gray-900'>
@@ -35,7 +38,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <Newsletter />
+      <NewsletterForm currentUser={currentUser} />
     </div>
   );
 };

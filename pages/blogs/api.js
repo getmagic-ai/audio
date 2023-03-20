@@ -4,8 +4,9 @@ const strapi_base_url = "https://kollboratecms.herokuapp.com";
 const get_all_blogs_api_path = "/api/blogs";
 const urlAxios = strapi_base_url + get_all_blogs_api_path;
 
-export const getBlogs = async (props) => {
-    const newUrl = urlAxios + `?${props}`
+
+export const getBlogs = async (queryString) => {
+    const newUrl = urlAxios + `?${queryString}`
     const result = await axios.get(newUrl, {
         headers: {
             Authorization: "Bearer " + process.env.NEXT_PUBLIC_STRAPI_DEV,
@@ -14,9 +15,6 @@ export const getBlogs = async (props) => {
     return result;
 };
 
-export default function Test() {
-    return (<></>)
-}
 
 
 

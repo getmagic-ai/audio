@@ -40,7 +40,7 @@ export default function SingleBlog({ blog }) {
     return (
         <div className='-mt-12'>
             <div className='mb-3 text-blue-600 ' >
-                <Link href={"/blog"} ><HiArrowNarrowLeft className='inline' /> Back</Link>
+                <Link href={"/blogs"} ><HiArrowNarrowLeft className='inline' /> Back</Link>
             </div>
             <div className='bg-gray-500 inline px-2 py-1 rounded-full text-black text-sm '>
                 {blog.attributes.Categories}
