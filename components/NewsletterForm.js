@@ -11,13 +11,14 @@ function NewsletterForm({ currentUser }) {
     async function subscribe(event) {
         event.preventDefault()
         const email = event.currentTarget.elements.email.value
+        setIsSending(true)
 
         fetch('api/sendgrid', {
             method: "post",
             body: email
         }).then(res => {
-            setIsSending(true)
             if (res.status == 200) {
+                alert("Subscribed Successfully !")
                 toast.success(res.statusText);
                 setIsSending(false)
 
@@ -42,13 +43,14 @@ function NewsletterForm({ currentUser }) {
                 </label>
                 <form method="post" onSubmit={subscribe} className='mt-5 mx-auto'>
                     <input
+                        value={currentUser.email}
                         onChange={(e) => {
                             setRecipient(e.target.value);
                         }}
-                        value={currentUser.email}
                         type='email'
                         name='email'
                         placeholder='Your email'
+                        required
                         className='input input-primary input-bordered'></input>
                     <button
                         className={`btn ml-3 ${isSending ? "btn-disabled loading" : "btn-primary"
@@ -77,10 +79,11 @@ function NewsletterForm({ currentUser }) {
                         onChange={(e) => {
                             setRecipient(e.target.value);
                         }}
-                        value={recipient}
+
                         type='email'
                         name='email'
                         placeholder='Your email'
+                        required
                         className='input input-primary input-bordered'></input>
                     <button
                         className={`btn ml-3 ${isSending ? "btn-disabled loading" : "btn-primary"
