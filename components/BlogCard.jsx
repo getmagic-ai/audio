@@ -25,7 +25,7 @@ export default function BlogCard({ blog }) {
 
         <div className='my-10 md:mx-1 pt-2 lg:mx-2 lg:px-10  rounded-lg ease-out duration-200 inline-block blog-card align-middle  '>
 
-            <Link href={"/blog/" + blog.attributes.slug}>
+            <Link href={"/blogs/" + blog.attributes.slug}>
                 <Image className='lg:w-10/12   rounded-lg mb-1  aspect-video sm:w-10/12 mx-auto ' src="/assets/images/dummy2.jpg" width={500} height={500} alt="dummy img" />
 
                 {
@@ -62,7 +62,6 @@ export default function BlogCard({ blog }) {
 
 function useWindowSize() {
     // Initialize state with undefined width/height so server and client renders match
-    // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
     const [windowSize, setWindowSize] = useState({
         width: undefined,
         height: undefined,

@@ -1,8 +1,11 @@
-import Newsletter from "@/components/Newsletter";
+import NewsletterForm from "@/components/NewsletterForm";
+import { AuthContext } from "@/context/AuthContext";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 
 const Home = () => {
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <div className='space-y-6'>
       <section className='bg-gray-900'>
@@ -13,7 +16,7 @@ const Home = () => {
             </h2>
             <p className='mb-8 font-light text-gray-500 sm:text-xl dark:text-gray-400'>
               Waveforms helps you to find trending audio for your next big
-              project so Never Search for Trending Audio Again. It’s time to
+              project so Never Search for Trending Audio Again. It's time to
               start using trending audio. But what are trending sounds, where do
               you find them, and how do you know which ones are taking off?
               We've got you.
@@ -35,7 +38,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <Newsletter />
+      <NewsletterForm currentUser={currentUser} />
     </div>
   );
 };
