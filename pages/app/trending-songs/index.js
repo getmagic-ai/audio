@@ -70,6 +70,13 @@ const TrendingSongs = () => {
   //   direct_audio_link ? router.push(direct_audio_link) : null;
   // };
 
+  const setLocalStorageItem = (item) => {
+    if (typeof window !== "undefined") {
+      // Client-side-only code
+      window.localStorage.setItem("audio", JSON.stringify(item));
+    }
+  };
+
   function openModal() {
     setIsOpen(true);
   }
@@ -214,7 +221,8 @@ const TrendingSongs = () => {
                         onClick={() => {
                           currentUser == null
                             ? router.push("/auth/signin")
-                            : router.push(`/app/trending-songs/${item.Id}`);
+                            : setLocalStorageItem(item);
+                          router.push(`/app/trending-songs/${item.Id}`);
                         }}
                       />
                     </div>
