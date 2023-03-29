@@ -50,7 +50,7 @@ export function Navbar() {
     },
     {
       name: "Latest from Us",
-      callback: () => router.push("/blog"),
+      callback: () => router.push("/blogs"),
       icon: DocumentIcon,
     },
     {
