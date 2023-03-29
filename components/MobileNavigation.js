@@ -50,7 +50,7 @@ export default function MobileNavigation(props) {
                 <MobileNavItem href='/app/trending-songs'>
                   Trending Songs
                 </MobileNavItem>
-                <MobileNavItem href='/blog'>Latest from Us</MobileNavItem>
+                <MobileNavItem href='/blogs'>Latest from Us</MobileNavItem>
                 <MobileNavItem href='/app/upgrade'>
                   Upgrade to Pro / Premium
                 </MobileNavItem>

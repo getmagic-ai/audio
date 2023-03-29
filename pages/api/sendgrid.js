@@ -7,7 +7,10 @@ const sendMail = async (req, res) => {
 
     const message = {
         to: email,
-        from: 'admin@waveforms.io', // replace with your email address
+        from: {
+            email: "admin@waveforms.io",
+            name: "Waveforms",
+        }, // replace with your email address
         subject: 'New from Waveforms!',
         text: "Hey! Thanks for subscribing to our newsletter. Get the latest news right in your email.",
     }
