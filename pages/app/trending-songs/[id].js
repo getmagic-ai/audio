@@ -66,7 +66,7 @@ const SongDetail = () => {
     );
 
   return (
-    <div>
+    <div className='min-h-screen'>
       {data && (
         <div className='flex justify-center items-center lg:flex-row flex-col gap-8'>
           <div className=' w-full sm:w-96 md:w-8/12  lg:w-6/12 flex lg:flex-row flex-col lg:gap-8 sm:gap-6 gap-4'>
