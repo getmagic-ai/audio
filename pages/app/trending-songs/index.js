@@ -7,8 +7,6 @@ import {
   ArrowTrendingDownIcon,
   ArrowRightIcon,
 } from "@heroicons/react/24/outline";
-import { ShareSocial } from "react-share-social";
-import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 import { fetchAudioData } from "@/pages/_app";
 import { ClipLoader } from "react-spinners";
 import { AuthContext } from "@/context/AuthContext";
@@ -16,22 +14,8 @@ import { useRouter } from "next/router";
 import Avatar from "react-avatar";
 import Link from "next/link";
 
-import Modal from "react-modal";
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
-Modal.setAppElement("#root");
-
 const TrendingSongs = () => {
   const [selectedTab, setSelectedTab] = useState(1);
-  const [modalIsOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
   const { currentUser, userData, loading } = useContext(AuthContext);
   const { data, isInitialLoading, error } = useQuery(
@@ -77,48 +61,8 @@ const TrendingSongs = () => {
     }
   };
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
   return (
     <div className='bg-black relative min-h-screen'>
-      <div>
-        <button onClick={openModal}>Open Modal</button>
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          style={customStyles}
-        >
-          <button onClick={closeModal}>close</button>
-          <ShareSocial
-            url='url_to_share.com'
-            socialTypes={["facebook", "twitter", "whatsapp", "telegram"]}
-            onSocialButtonClicked={(data) => console.log(data)}
-            style={{
-              root: {
-                background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-                borderRadius: 3,
-                border: 0,
-                boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-                color: "white",
-              },
-              copyContainer: {
-                border: "1px solid blue",
-                background: "rgb(0,0,0,0.7)",
-              },
-              title: {
-                color: "aquamarine",
-                fontStyle: "italic",
-              },
-            }}
-          />
-        </Modal>
-      </div>
       <h1 className='text-xl font-semibold text-gray-200 mb-8'>
         Trending Audio for {formattedDate.toString()}!
       </h1>
@@ -165,7 +109,7 @@ const TrendingSongs = () => {
             .map((item) => {
               return (
                 <li className='py-3 sm:py-4' key={item.Id}>
-                  <div className='flex items-center space-x-4'>
+                  <div className='flex items-center space-x-6'>
                     <div className='flex-shrink-0'>
                       <a
                         href={item.direct_audio_link}
@@ -173,7 +117,7 @@ const TrendingSongs = () => {
                         rel='noreferrer noopener'
                       >
                         <Avatar
-                          size='36'
+                          size='48'
                           round={false}
                           name={
                             item.artist_name ? item.artist_name : item.title
@@ -196,28 +140,28 @@ const TrendingSongs = () => {
                         href={`/app/trending-songs/${item.Id}`}
                         query={item}
                       >
-                        <p className='text-sm font-medium truncate text-white'>
+                        <p className='text-md font-medium truncate text-white'>
                           {item.title}
                         </p>
-                        <p className='text-xs font-medium truncate text-gray-200'>
+                        <p className='text-sm font-medium truncate text-gray-200'>
                           {item.artist_name}
                         </p>
                       </Link>
                     )}
                     {/* using conditional rendering cause instagram data is not added as of now, so it has no direct_audio_link , and hence showing error */}
 
-                    <div className='inline-flex items-center space-x-2'>
+                    <div className='inline-flex items-center space-x-4'>
                       {parseInt(item.ranking_change) >= 0 ? (
-                        <ArrowTrendingUpIcon height={20} color={"green"} />
+                        <ArrowTrendingUpIcon height={28} color={"green"} />
                       ) : parseInt(item.ranking_change) == 0 ? (
-                        <ArrowRightIcon height={20} color={"yellow"} />
+                        <ArrowRightIcon height={28} color={"yellow"} />
                       ) : (
-                        <ArrowTrendingDownIcon height={20} color={"red"} />
+                        <ArrowTrendingDownIcon height={28} color={"red"} />
                       )}
-                      <ArrowUpOnSquareIcon height={20} onClick={openModal} />
+                      <ArrowUpOnSquareIcon height={28} />
                       <HeartIcon
                         className='cursor-pointer'
-                        height={20}
+                        height={28}
                         onClick={() => {
                           currentUser == null
                             ? router.push("/auth/signin")
