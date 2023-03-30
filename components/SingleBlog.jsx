@@ -17,26 +17,7 @@ export default function SingleBlog({ blog }) {
     function formatMyDate(value, locale = 'en-GB') {
         return new Date(value).toLocaleDateString(locale, dateOptions);
     } //to format the date fetched from strapi
-    function imageExists() {
 
-        fetch(src, { method: 'HEAD' })
-            .then(res => {
-                if (res.ok) {
-                    {
-                        console.log('Image exists.')
-                        return true;
-                    }
-                } else {
-                    console.log('Image does not exist.')
-
-                }
-            })
-            .catch(err => console.log('Error:', err))
-
-        return false;
-
-
-    }
     return (
         <div className='-mt-12'>
             <div className='mb-3 text-blue-600 ' >

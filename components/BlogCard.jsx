@@ -16,16 +16,11 @@ export default function BlogCard({ blog }) {
         return new Date(value).toLocaleDateString(locale, dateOptions);
     } //to format the date fetched from strapi
 
-    const screenSize = useWindowSize();
-    console.log(screenSize.width)
-
-
-
     return (
 
-        <div className='my-10 md:mx-1 pt-2 lg:mx-2 lg:px-10  rounded-lg ease-out duration-200 inline-block blog-card align-middle  '>
+        <div className='my-5 md:mx-1 pt-2 lg:mx-2 lg:px-10  rounded-lg ease-out duration-200 inline-block blog-card align-middle  '>
 
-            <Link href={"/blogs/" + blog.attributes.slug}>
+            <Link href={"/blogs/blog/" + blog.attributes.slug}>
                 <Image className='lg:w-10/12   rounded-lg mb-1  aspect-video sm:w-10/12 mx-auto ' src="/assets/images/dummy2.jpg" width={500} height={500} alt="dummy img" />
 
                 {
@@ -44,14 +39,14 @@ export default function BlogCard({ blog }) {
                             {formatMyDate(blog.attributes.createdAt)}
                         </p>
                     </div>
-                    {
-                        (screenSize.width > 800) && (
-                            <div className='font-blog-body mt-3 lg:text-lg text-justify'>
-                                <ReactMarkdown>{blog.attributes.Excerpt}</ReactMarkdown>...
-                                <span className='text-blue-600'>Read more</span>
-                            </div>
-                        )
-                    }
+
+
+                    <div className='font-blog-body mt-3 lg:text-lg text-justify'>
+                        <ReactMarkdown>{blog.attributes.Excerpt}</ReactMarkdown>...
+                        <span className='text-blue-600'>Read more</span>
+                    </div>
+
+
 
                 </div>
             </Link>
@@ -59,34 +54,3 @@ export default function BlogCard({ blog }) {
         </div>
     )
 }
-
-function useWindowSize() {
-    // Initialize state with undefined width/height so server and client renders match
-    const [windowSize, setWindowSize] = useState({
-        width: undefined,
-        height: undefined,
-    });
-
-    useEffect(() => {
-        // only execute all the code below in client side
-        // Handler to call on window resize
-        function handleResize() {
-            // Set window width/height to state
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
-        }
-
-        // Add event listener
-        window.addEventListener("resize", handleResize);
-
-        // Call handler right away so state gets updated with initial window size
-        handleResize();
-
-        // Remove event listener on cleanup
-        return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount
-    return windowSize;
-}
-
