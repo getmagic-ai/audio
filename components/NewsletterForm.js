@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 //The above sendEmail
 function NewsletterForm({ currentUser }) {
   const [recipient, setRecipient] = useState("");
   const [isSending, setIsSending] = useState(false);
+  useEffect(() => {
+    if (currentUser) {
+      setRecipient(currentUser.email);
+    }
+  }, [currentUser])
+
+
 
   async function subscribe(event) {
     event.preventDefault();
     const email = event.currentTarget.elements.email.value;
+    console.log(email)
     setIsSending(true);
 
     fetch("api/sendgrid", {
@@ -44,11 +52,11 @@ function NewsletterForm({ currentUser }) {
             </label>
             <input
               id='email-address'
-              name='email-address'
+              name='email'
               type='email'
               autoComplete='email'
               required
-              value={currentUser.email}
+              value={recipient}
               onChange={(e) => {
                 setRecipient(e.target.value);
               }}
@@ -58,7 +66,9 @@ function NewsletterForm({ currentUser }) {
             <div className='mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0'>
               <button
                 type='submit'
-                className='flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-5 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                className={`btn ml-3 ${isSending ? "btn-disabled loading" : "flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-5 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  }`}
+
               >
                 Notify me
               </button>
@@ -92,7 +102,7 @@ function NewsletterForm({ currentUser }) {
             </label>
             <input
               id='email-address'
-              name='email-address'
+              name='email'
               type='email'
               autoComplete='email'
               required
