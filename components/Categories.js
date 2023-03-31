@@ -14,7 +14,7 @@ export default function Categories({ categories }) {
     }
 
     return (
-        <div className='flex flex-wrap space-x-2 '>
+        <div className='flex flex-wrap space-x-2 mt-3'>
             <Link href="/blogs" className='text-white my-2 '>
                 <div className={' box-border rounded-full inline px-2 py-2 text-black text-sm font-bold ' +
                     `${router.pathname === '/blogs'

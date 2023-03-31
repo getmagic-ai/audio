@@ -32,7 +32,10 @@ const category = ({ categories, blogs, slug }) => {
                 <meta name="Technology news" content="Tech News" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            {/* <SearchBox handleOnSearch={debounce(handleSearch, 500)} /> */}
+            <div className="text-white items-center align-middle text-xl mb-3 -my-10 ">
+                Get the latest of Media and Technology updates !
+            </div>
+            <SearchBox handleOnSearch={debounce(handleSearch, 500)} />
             <Categories categories={categories.items} />
             <BlogsList blogs={blogs.items} />
         </>
