@@ -26,7 +26,7 @@ export default function Index({ categories, blogs }) {
   return (
     <>
       <Head>
-        <title>Blogs</title>
+        <title>Waveforms.io | Blogs</title>
         <meta name="Technology news" content="Tech News" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
