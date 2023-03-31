@@ -1,7 +1,9 @@
+import { AuthContext } from "@/context/AuthContext";
 import { fetchAudioData } from "@/pages/_app";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
 import Avatar from "react-avatar";
+import { ClipLoader } from 'react-spinners';
 
 const SuggestedForYou = () => {
   const { data, isInitialLoading, error } = useQuery(
@@ -9,6 +11,8 @@ const SuggestedForYou = () => {
     ["data"],
     fetchAudioData
   );
+  const { currentUser, userData, loading } = useContext(AuthContext);
+
   if (isInitialLoading)
     return (
       <div className='flex items-center justify-center h-screen w-full'>
@@ -47,8 +51,15 @@ const SuggestedForYou = () => {
                       name={item.artist_name ? item.artist_name : item.title}
                       src={item.datasource_metadata?.coverThumb}
                       maxInitials={1}
+                      onClick={() => {
+                        currentUser == null
+                          ? router.push("/auth/signin")
+                          : setLocalStorageItem(item);
+                        router.push(`/app/trending-songs/${item.Id}`);
+                      }}
                     />
                   </div>
+
                   <p className=' font-normal text-xl leading-5 text-gray-100 md:mt-6 mt-4'>
                     {item.title}
                   </p>
