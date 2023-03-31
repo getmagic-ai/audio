@@ -15,6 +15,9 @@ export default function BlogCard({ blog }) {
     function formatMyDate(value, locale = 'en-GB') {
         return new Date(value).toLocaleDateString(locale, dateOptions);
     } //to format the date fetched from strapi
+    function capitaliseFirstLetter(title) {
+        return title.charAt(0).toUpperCase() + title.slice(1);
+    }
 
     return (
 
@@ -33,7 +36,7 @@ export default function BlogCard({ blog }) {
 
                     <div className="flex">
                         <div className='bg-gray-500 box-border my-auto rounded-full inline px-2 py-2  text-black text-sm font-bold '>
-                            {blog.attributes.Categories}
+                            {capitaliseFirstLetter(blog.attributes.Categories)}
                         </div>
                         <p className='text-sm  font-blog-title text-gray-500 sm:dispay-none lg:inline lg:text-base my-3  lg:mx-3 ml-2' >
                             {formatMyDate(blog.attributes.createdAt)}

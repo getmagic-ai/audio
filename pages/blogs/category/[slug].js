@@ -1,20 +1,38 @@
 import Categories from '@/components/Categories'
 import { fetchblogs, fetchCategories } from '@/pages/api/blogs'
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SearchBox from "@/components/SearchBox";
 import qs from "qs";
 import { BlogsList } from '@/components/BlogsList';
+import { useRouter } from 'next/router';
+import { debounce } from '@/utils/blogPageUtils';
 
-const category = ({ categories, blogs }) => {
+const category = ({ categories, blogs, slug }) => {
+
+    const [currCategory, setCurrCategory] = useState("")
+    useEffect(() => {
+        if (slug !== "") {
+            setCurrCategory("Blogs | " + slug.charAt(0).toUpperCase() + slug.slice(1))
+        }
+
+    }, [slug])
+    const router = useRouter();
+
+    const handleSearch = (query) => {
+        // query.preventDefault();
+        console.log("this is squery", query);
+        router.push(`/blogs/category/${router.query.slug}/?search=${query}`);
+    };
+
     return (
         <>
             <Head>
-                <title>Test Category</title>
+                <title>{currCategory}</title>
                 <meta name="Technology news" content="Tech News" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <SearchBox />
+            {/* <SearchBox handleOnSearch={debounce(handleSearch, 500)} /> */}
             <Categories categories={categories.items} />
             <BlogsList blogs={blogs.items} />
         </>
@@ -22,7 +40,6 @@ const category = ({ categories, blogs }) => {
 }
 
 export const getServerSideProps = async ({ query }) => {
-
     const options = {
         populate: '*',
         sort: ['id:desc'],
@@ -30,6 +47,15 @@ export const getServerSideProps = async ({ query }) => {
             category: {
                 slug: query.slug,
             }
+        }
+    }
+    if (query.search) {
+        options.filters = {
+            Title: {
+                $containsi: query.search,
+
+            },
+
         }
     }
     const queryString = qs.stringify(options);
@@ -47,10 +73,11 @@ export const getServerSideProps = async ({ query }) => {
                 items: blogs.data,
                 pagination: blogs.data.meta.pagination,
             },
+            slug: query.slug,
         },
     };
 
 
 }
 
-export default category
+export default category;

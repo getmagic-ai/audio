@@ -8,11 +8,21 @@ import NewsletterForm from "@/components/NewsletterForm";
 import { fetchblogs, fetchCategories } from "../api/blogs";
 import { BlogsList } from "@/components/BlogsList";
 import Head from "next/head";
+import { debounce } from "@/utils/blogPageUtils";
+import { useRouter } from "next/router";
+
 
 
 export default function Index({ categories, blogs }) {
   const { currentUser } = useContext(AuthContext);
 
+  const router = useRouter();
+
+  const handleSearch = (query) => {
+    // query.preventDefault();
+    console.log("this is query", query);
+    router.push(`/blogs/?search=${query}`);
+  };
   return (
     <>
       <Head>
@@ -25,19 +35,20 @@ export default function Index({ categories, blogs }) {
         Get the latest of Media and Technology updates !
       </div>
 
-      <SearchBox />
+      <SearchBox handleOnSearch={debounce(handleSearch, 500)} />
 
-      <Categories categories={categories} />
+      <Categories suppressHydrationWarning categories={categories} />
 
-
-      <BlogsList blogs={blogs.items} />
+      {blogs.items &&
+        <BlogsList suppressHydrationWarning blogs={blogs.items} />}
       <br />
       {
         currentUser ? (
           <NewsletterForm currentUser={currentUser} />
         ) : (
           <NewsletterForm />
-        ) /*Check for current user and if valid, show logged in user text*/
+        )
+        /*Check for current user and if valid, show logged in user text*/
       }
     </>
   );
