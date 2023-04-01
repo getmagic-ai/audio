@@ -17,12 +17,12 @@ const sendMail = async (req, res) => {
 
     try {
         const [response, body] = await mail.send(message)
-
+        console.log("sucessfully sent to ", email)
+        res.status(200).json({ status: "ok" })
 
     } catch (error) {
-        console.error(error)
+        console.log(error)
     }
-    res.status(200).json({ status: "ok" })
 
 }
 

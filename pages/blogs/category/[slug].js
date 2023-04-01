@@ -8,7 +8,7 @@ import { BlogsList } from '@/components/BlogsList';
 import { useRouter } from 'next/router';
 import { debounce } from '@/utils/blogPageUtils';
 
-const category = ({ categories, blogs, slug }) => {
+const Category = ({ categories, blogs, slug }) => {
 
     const [currCategory, setCurrCategory] = useState("")
     useEffect(() => {
@@ -21,8 +21,7 @@ const category = ({ categories, blogs, slug }) => {
 
     const handleSearch = (query) => {
         // query.preventDefault();
-        console.log("this is squery", query);
-        router.push(`/blogs/category/${router.query.slug}/?search=${query}`);
+        router.push(`/blogs/?search=${query}`);
     };
 
     return (
@@ -42,45 +41,44 @@ const category = ({ categories, blogs, slug }) => {
     )
 }
 
-export const getServerSideProps = async ({ query }) => {
+export const getStaticPaths = async () => {
+    const categories = await fetchCategories();
+    const paths = categories.data.data.map((category) => ({
+        params: { slug: category.attributes.slug },
+    }));
+
+    return {
+        paths,
+        fallback: true,
+    };
+};
+
+export const getStaticProps = async ({ params }) => {
     const options = {
         populate: '*',
         sort: ['id:desc'],
         filters: {
             category: {
-                slug: query.slug,
+                slug: params.slug,
             }
         }
     }
-    if (query.search) {
-        options.filters = {
-            Title: {
-                $containsi: query.search,
-
-            },
-
-        }
-    }
-    const queryString = qs.stringify(options);
 
     const categories = await fetchCategories();
+    const blogs = await fetchblogs(qs.stringify(options));
 
-    const blogs = await fetchblogs(queryString);
     return {
         props: {
             categories: {
                 items: categories.data,
-
             },
             blogs: {
                 items: blogs.data,
                 pagination: blogs.data.meta.pagination,
             },
-            slug: query.slug,
+            slug: params.slug,
         },
     };
+};
 
-
-}
-
-export default category;
+export default Category;
