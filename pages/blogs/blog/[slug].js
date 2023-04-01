@@ -1,45 +1,52 @@
 import qs from 'qs'
-import { useRouter } from "next/router";
 import SingleBlog from "@/components/SingleBlog";
-import { fetchArticleBySlug, fetchblogs } from '@/pages/api/blogs';
+import { fetchblogs } from '@/pages/api/blogs';
 
-
-
-export default function Post({ blog, notFound = false }) {
-    const router = useRouter();
+export default function Post({ blog }) {
     return (
         <>
             <SingleBlog blog={blog} />
         </>
-
     );
 }
 
-export const getServerSideProps = async ({ query }) => {
+export async function getStaticPaths() {
+    const blogs = await fetchblogs({
+        populate: "*",
+        sort: ['id:desc']
+    });
+
+    const paths = blogs.data.data.map((blog) => ({
+        params: { slug: blog.attributes.slug },
+    }));
+
+    return {
+        paths,
+        fallback: true,
+    };
+}
+
+export const getStaticProps = async ({ params }) => {
     const queryString = qs.stringify({
         populate: "*",
-        sort: ['id:desc'],
         filters: {
             slug: {
-                $eq: query.slug,
+                $eq: params.slug,
             },
         },
     });
 
-    const blogs = await fetchArticleBySlug(queryString);
+    const blogs = await fetchblogs(queryString);
 
     if (blogs.data.data.length === 0) {
         return {
             notFound: true,
         };
     }
+
     return {
         props: {
             blog: blogs.data.data[0],
         },
     };
 };
-
-
-
-

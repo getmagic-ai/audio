@@ -5,7 +5,7 @@ import qs from "qs";
 import SearchBox from "@/components/SearchBox";
 import Categories from "@/components/Categories";
 import NewsletterForm from "@/components/NewsletterForm";
-import { fetchblogs, fetchCategories } from "../api/blogs";
+import { fetchblogs, fetchBlogsByPage, fetchCategories } from "../api/blogs";
 import { BlogsList } from "@/components/BlogsList";
 import Head from "next/head";
 import { debounce } from "@/utils/blogPageUtils";
@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 
 export default function Index({ categories, blogs }) {
   const { currentUser } = useContext(AuthContext);
+
 
   const router = useRouter();
 
@@ -39,7 +40,7 @@ export default function Index({ categories, blogs }) {
 
       <Categories suppressHydrationWarning categories={categories} />
 
-      {blogs.items &&
+      {blogs !== undefined &&
         <BlogsList suppressHydrationWarning blogs={blogs.items} />}
       <br />
       {
@@ -54,34 +55,31 @@ export default function Index({ categories, blogs }) {
   );
 }
 
-
-
-export const getServerSideProps = async ({ query }) => {
-  // Blogs
+export async function getServerSideProps({ query }) {
   const options = {
     populate: ['writer.Picture'],
     sort: ['id:desc'],
-    // pagination: {
-    //     page: query.page ? +query.page : 1,
-    //     // pageSize: 1,
-    // },
   };
 
-  if (query.search) {
+  if (query.search !== "") {
     options.filters = {
-      Title: {
-        $containsi: query.search,
-      },
+
+      $or: [
+        { Title: { $containsi: query.search } },
+        { blog_body: { $containsi: query.search } },
+        { Categories: { $containsi: query.search } }
+      ]
+
+
+
     };
   }
 
   const queryString = qs.stringify(options);
 
   const blogs = await fetchblogs(queryString);
-  // console.log("this is ", blogs.data)
-  // categories
   const categories = await fetchCategories();
-  // console.log("this is ", categories.data)
+
 
   return {
     props: {
@@ -92,8 +90,47 @@ export const getServerSideProps = async ({ query }) => {
       },
     },
   };
-};
+}
 
+
+
+// export const getServerSideProps = async ({ query }) => {
+//   // Blogs
+//   const options = {
+//     populate: ['writer.Picture'],
+//     sort: ['id:desc'],
+//     // pagination: {
+//     //     page: query.page ? +query.page : 1,
+//     //     // pageSize: 1,
+//     // },
+//   };
+
+//   if (query.search) {
+//     options.filters = {
+//       Title: {
+//         $containsi: query.search,
+//       },
+//     };
+//   }
+
+//   const queryString = qs.stringify(options);
+
+//   const blogs = await fetchblogs(queryString);
+//   // console.log("this is ", blogs.data)
+//   // categories
+//   const categories = await fetchCategories();
+//   // console.log("this is ", categories.data)
+
+//   return {
+//     props: {
+//       categories: categories.data,
+//       blogs: {
+//         items: blogs.data,
+//         pagination: blogs.data.meta.pagination,
+//       },
+//     },
+//   };
+// };
 
 
 
