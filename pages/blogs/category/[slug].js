@@ -9,7 +9,8 @@ import { useRouter } from 'next/router';
 import { debounce } from '@/utils/blogPageUtils';
 
 const Category = ({ categories, blogs, slug }) => {
-
+    // console.log("categories", categories.items.data)
+    // console.log("blogs", blogs.items)
     const [currCategory, setCurrCategory] = useState("")
     useEffect(() => {
         if (slug !== "") {
@@ -66,10 +67,10 @@ export async function getStaticProps({ params }) {
         populate: '*',
         sort: ['id:desc'],
         filters: {
-            slug: {
-                $eq: params.slug,
-            },
-        },
+            category: {
+                slug: params.slug,
+            }
+        }
     }
 
     const categories = await fetchCategories();

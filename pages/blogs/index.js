@@ -67,11 +67,16 @@ export const getServerSideProps = async ({ query }) => {
     // },
   };
 
-  if (query.search) {
+  if (query.search !== "") {
     options.filters = {
-      blog_body: {
-        $containsi: query.search,
-      },
+
+      $or: [
+        { Title: { $containsi: query.search } },
+        { blog_body: { $containsi: query.search } },
+        { Categories: { $containsi: query.search } }
+      ]
+
+
 
     };
   }
