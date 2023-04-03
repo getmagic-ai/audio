@@ -23,15 +23,15 @@ export default function SingleBlog({ blog }) {
             .then(res => {
                 if (res.ok) {
                     {
-                        console.log('Image exists.')
+                        //console.log('Image exists.')
                         return true;
                     }
                 } else {
-                    console.log('Image does not exist.')
+                    //console.log('Image does not exist.')
 
                 }
             })
-            .catch(err => console.log('Error:', err))
+            .catch(err => //console.log('Error:', err))
 
         return false;
 

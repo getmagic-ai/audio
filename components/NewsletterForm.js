@@ -9,14 +9,12 @@ function NewsletterForm({ currentUser }) {
     if (currentUser) {
       setRecipient(currentUser.email);
     }
-  }, [currentUser])
-
-
+  }, [currentUser]);
 
   async function subscribe(event) {
     event.preventDefault();
     const email = event.currentTarget.elements.email.value;
-    console.log(email)
+    //console.log(email)
     setIsSending(true);
 
     fetch("api/sendgrid", {
@@ -66,9 +64,11 @@ function NewsletterForm({ currentUser }) {
             <div className='mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0'>
               <button
                 type='submit'
-                className={`btn ml-3 ${isSending ? "btn-disabled loading" : "flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-5 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  }`}
-
+                className={`btn ml-3 ${
+                  isSending
+                    ? "btn-disabled loading"
+                    : "flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-5 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                }`}
               >
                 Notify me
               </button>

@@ -18,7 +18,7 @@ const SocialSignIn = () => {
       await signInWithPopup(auth, provider);
       router.push("/app");
     } catch (error) {
-      console.log("error");
+      //console.log("error");
       alert(error);
     }
   }, [router]);
@@ -28,10 +28,10 @@ const SocialSignIn = () => {
     // additional scopes can be added as per requirement
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log(result);
+      //console.log(result);
       router.push("/app");
     } catch (error) {
-      console.log("error");
+      //console.log("error");
       alert(error);
     }
   }, [router]);

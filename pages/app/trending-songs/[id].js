@@ -19,7 +19,7 @@ const SongDetail = () => {
   useEffect(() => {
     // Client-side-only code
     let audioObject = window.localStorage.getItem("audio");
-    console.log(JSON.parse(audioObject));
+    //console.log(JSON.parse(audioObject));
     setData(JSON.parse(audioObject));
   }, [data]);
 
@@ -41,7 +41,7 @@ const SongDetail = () => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log(docSnap.data());
+      //console.log(docSnap.data());
       return true;
     } else {
       // doc.data() will be undefined in this case
