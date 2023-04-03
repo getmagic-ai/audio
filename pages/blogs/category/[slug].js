@@ -35,36 +35,45 @@ const Category = ({ categories, blogs, slug }) => {
                 Get the latest of Media and Technology updates !
             </div>
             <SearchBox handleOnSearch={debounce(handleSearch, 500)} />
-            <Categories categories={categories.items} />
-            <BlogsList blogs={blogs.items} />
+            {(categories.items !== undefined && blogs.items !== undefined) &&
+                (
+                    <>
+                        <Categories categories={categories.items} />
+                        <BlogsList blogs={blogs.items} />
+                    </>
+                )
+            }
+
         </>
     )
 }
 
 export const getStaticPaths = async () => {
-    const categories = await fetchCategories();
-    const paths = categories.data.data.map((category) => ({
+    const res = await fetchCategories();
+    const categories = await res.data.data;
+    const paths = categories.map((category) => ({
         params: { slug: category.attributes.slug },
     }));
 
     return {
         paths,
-        fallback: true,
+        fallback: false,
     };
 };
 
-export const getStaticProps = async ({ params }) => {
+export async function getStaticProps({ params }) {
     const options = {
         populate: '*',
         sort: ['id:desc'],
         filters: {
-            category: {
-                slug: params.slug,
-            }
-        }
+            slug: {
+                $eq: params.slug,
+            },
+        },
     }
 
     const categories = await fetchCategories();
+
     const blogs = await fetchblogs(qs.stringify(options));
 
     return {
