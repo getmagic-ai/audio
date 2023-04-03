@@ -11,15 +11,8 @@ import Head from "next/head";
 import { debounce } from "@/utils/blogPageUtils";
 import { useRouter } from "next/router";
 
-<<<<<<< HEAD
-export default function Index({ posts }) {
-=======
-
-
 export default function Index({ categories, blogs }) {
->>>>>>> c36de26eca5e8bafbc36e0b7d5a79ea0bc101881
   const { currentUser } = useContext(AuthContext);
-
 
   const router = useRouter();
 
@@ -30,17 +23,13 @@ export default function Index({ categories, blogs }) {
   };
   return (
     <>
-<<<<<<< HEAD
-      <div className='text-white items-center align-middle text-xl mb-3 -my-10 '>
-=======
       <Head>
         <title>Waveforms.io | Blogs</title>
-        <meta name="Technology news" content="Tech News" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name='Technology news' content='Tech News' />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <div className="text-white items-center align-middle text-xl mb-3 -my-10 ">
->>>>>>> c36de26eca5e8bafbc36e0b7d5a79ea0bc101881
+      <div className='text-white items-center align-middle text-xl mb-3 -my-10 '>
         Get the latest of Media and Technology updates !
       </div>
 
@@ -48,16 +37,9 @@ export default function Index({ categories, blogs }) {
 
       <Categories suppressHydrationWarning categories={categories} />
 
-<<<<<<< HEAD
-      <div className=' w-full   lg:flex  md:flex md:flex-wrap lg:flex-wrap lg:justify-evenly  md:justify-evenly'>
-        {posts.map((blog) => {
-          return <BlogCard key={blog.id} blog={blog} />;
-        })}
-      </div>
-=======
-      {blogs !== undefined &&
-        <BlogsList suppressHydrationWarning blogs={blogs.items} />}
->>>>>>> c36de26eca5e8bafbc36e0b7d5a79ea0bc101881
+      {blogs !== undefined && (
+        <BlogsList suppressHydrationWarning blogs={blogs.items} />
+      )}
       <br />
       {
         currentUser ? (
@@ -71,34 +53,19 @@ export default function Index({ categories, blogs }) {
   );
 }
 
-<<<<<<< HEAD
-export async function getStaticProps() {
-  const options = {
-    populate: "*",
-    sort: "publishedAt:desc",
-  };
-  const queryString = qs.stringify(options);
-
-  const blogs = await getBlogs(queryString);
-  // //console.log("this is ", data)
-=======
 export async function getServerSideProps({ query }) {
   const options = {
-    populate: ['writer.Picture'],
-    sort: ['id:desc'],
+    populate: ["writer.Picture"],
+    sort: ["id:desc"],
   };
 
   if (query.search !== "") {
     options.filters = {
-
       $or: [
         { Title: { $containsi: query.search } },
         { blog_body: { $containsi: query.search } },
-        { Categories: { $containsi: query.search } }
-      ]
-
-
-
+        { Categories: { $containsi: query.search } },
+      ],
     };
   }
 
@@ -107,8 +74,6 @@ export async function getServerSideProps({ query }) {
   const blogs = await fetchblogs(queryString);
   const categories = await fetchCategories();
 
-
->>>>>>> c36de26eca5e8bafbc36e0b7d5a79ea0bc101881
   return {
     props: {
       categories: categories.data,
@@ -119,10 +84,6 @@ export async function getServerSideProps({ query }) {
     },
   };
 }
-<<<<<<< HEAD
-=======
-
-
 
 // export const getServerSideProps = async ({ query }) => {
 //   // Blogs
@@ -161,7 +122,3 @@ export async function getServerSideProps({ query }) {
 //     },
 //   };
 // };
-
-
-
->>>>>>> c36de26eca5e8bafbc36e0b7d5a79ea0bc101881
