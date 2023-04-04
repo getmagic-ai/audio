@@ -10,7 +10,6 @@ import Head from "next/head";
 
 export default function SingleBlog({ blog }) {
   // const src = `https://kollboratecms.herokuapp.com${blog.attributes.Image.data[0].attributes.url}`
-
   //commenting it out for now cause strapi images are not available
 
   const dateOptions = {

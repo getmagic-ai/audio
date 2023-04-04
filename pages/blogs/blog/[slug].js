@@ -3,30 +3,37 @@ import SingleBlog from "@/components/SingleBlog";
 import { fetchblogs } from '@/pages/api/blogs';
 
 export default function Post({ blog }) {
-    return (
-        <>
-            <SingleBlog blog={blog} />
-        </>
-    );
+    if (blog !== undefined) {
+        return (
+            <div>
+                <SingleBlog blog={blog} />
+            </div>
+        );
+    }
+    return null;
+
 }
 
 export async function getStaticPaths() {
-    const blogs = await fetchblogs({
+    const res = await fetchblogs({
         populate: "*",
         sort: ['id:desc']
     });
+    // console.log(res.data.data);
+    const blogs = await res.data.data;
 
-    const paths = blogs.data.data.map((blog) => ({
+
+    const paths = blogs.map((blog) => ({
         params: { slug: blog.attributes.slug },
     }));
 
     return {
         paths,
-        fallback: true,
+        fallback: false,
     };
 }
 
-export const getStaticProps = async ({ params }) => {
+export async function getStaticProps({ params }) {
     const queryString = qs.stringify({
         populate: "*",
         filters: {
@@ -36,17 +43,18 @@ export const getStaticProps = async ({ params }) => {
         },
     });
 
-    const blogs = await fetchblogs(queryString);
-
-    if (blogs.data.data.length === 0) {
-        return {
-            notFound: true,
-        };
-    }
+    const res = await fetchblogs(queryString);
+    const blog = await res.data.data;
+    // console.log("blogs------------------", blog);
+    // if (blog.data.data.length === 0) {
+    //     return {
+    //         notFound: true,
+    //     };
+    // }
 
     return {
         props: {
-            blog: blogs.data.data[0],
+            blog: blog[0],
         },
     };
 };

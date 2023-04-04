@@ -1,5 +1,5 @@
 const mail = require("@sendgrid/mail")
-mail.setApiKey(process.env.SENDGRID_API_KEY);
+mail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_KEY);
 
 
 const sendMail = async (req, res) => {
@@ -17,7 +17,7 @@ const sendMail = async (req, res) => {
 
     try {
         const [response, body] = await mail.send(message)
-        console.log("sucessfully sent to ", email)
+        // console.log("sucessfully sent to ", email)
         res.status(200).json({ status: "ok" })
 
     } catch (error) {

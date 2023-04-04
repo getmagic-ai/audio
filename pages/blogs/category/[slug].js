@@ -9,7 +9,8 @@ import { useRouter } from 'next/router';
 import { debounce } from '@/utils/blogPageUtils';
 
 const Category = ({ categories, blogs, slug }) => {
-
+    // console.log("categories", categories.items.data)
+    // console.log("blogs", blogs.items)
     const [currCategory, setCurrCategory] = useState("")
     useEffect(() => {
         if (slug !== "") {
@@ -35,25 +36,33 @@ const Category = ({ categories, blogs, slug }) => {
                 Get the latest of Media and Technology updates !
             </div>
             <SearchBox handleOnSearch={debounce(handleSearch, 500)} />
-            <Categories categories={categories.items} />
-            <BlogsList blogs={blogs.items} />
+            {(categories.items !== undefined && blogs.items !== undefined) &&
+                (
+                    <>
+                        <Categories categories={categories.items} />
+                        <BlogsList blogs={blogs.items} />
+                    </>
+                )
+            }
+
         </>
     )
 }
 
 export const getStaticPaths = async () => {
-    const categories = await fetchCategories();
-    const paths = categories.data.data.map((category) => ({
+    const res = await fetchCategories();
+    const categories = await res.data.data;
+    const paths = categories.map((category) => ({
         params: { slug: category.attributes.slug },
     }));
 
     return {
         paths,
-        fallback: true,
+        fallback: false,
     };
 };
 
-export const getStaticProps = async ({ params }) => {
+export async function getStaticProps({ params }) {
     const options = {
         populate: '*',
         sort: ['id:desc'],
@@ -65,6 +74,7 @@ export const getStaticProps = async ({ params }) => {
     }
 
     const categories = await fetchCategories();
+
     const blogs = await fetchblogs(qs.stringify(options));
 
     return {
