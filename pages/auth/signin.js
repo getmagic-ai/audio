@@ -25,10 +25,10 @@ export default function SignInPage() {
         email,
         password
       );
-      console.log({ ...userCredentials.user });
+      //console.log({ ...userCredentials.user });
       router.push("/upgrade");
     } catch {
-      console.log("error");
+      //console.log("error");
     }
   };
 

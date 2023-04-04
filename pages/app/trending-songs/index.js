@@ -23,8 +23,8 @@ const TrendingSongs = () => {
     ["data"],
     fetchAudioData
   ); /*, {staleTime: 10}*/ //stale time isn't really needed, the defaults work well. Keeping it here for reference, can delete it
-  // console.log("Hey, just entered the data fethcing part..."); //debugging only
-  // console.log(data);
+  // //console.log("Hey, just entered the data fethcing part..."); //debugging only
+  // //console.log(data);
   if (isInitialLoading)
     return (
       <div className='flex items-center justify-center h-screen w-full'>
@@ -42,7 +42,7 @@ const TrendingSongs = () => {
       </div>
     );
   if (error) return "An error occured in fetching the data from nocodb";
-  // console.log(data.list[4]); //debugging only
+  // //console.log(data.list[4]); //debugging only
   const date = new Date();
   const formattedDate = date.toLocaleDateString("en-US", {
     weekday: "long" /*, year: 'numeric'*/,

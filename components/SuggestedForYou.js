@@ -3,7 +3,7 @@ import { fetchAudioData } from "@/pages/_app";
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import Avatar from "react-avatar";
-import { ClipLoader } from 'react-spinners';
+import { ClipLoader } from "react-spinners";
 
 const SuggestedForYou = () => {
   const { data, isInitialLoading, error } = useQuery(
@@ -40,7 +40,7 @@ const SuggestedForYou = () => {
           data.list
             .filter((item, idx) => idx < 8)
             .map((item) => {
-              console.log(item);
+              //console.log(item);
               return (
                 <div className='relative '>
                   <div className='relative group'>

@@ -29,7 +29,7 @@ export default function Signup() {
         email,
         password
       );
-      console.log({ ...userCredentials.user.uid });
+      //console.log({ ...userCredentials.user.uid });
       const user = userCredentials.user;
       //create Firestore user
       createFirestoreDoc("customers", {
@@ -46,7 +46,7 @@ export default function Signup() {
   async function handleGoogleSignup() {
     try {
       const userCredentials = await signInWithPopup(auth, googleAuthProvider);
-      console.log({ ...userCredentials.user.uid });
+      //console.log({ ...userCredentials.user.uid });
       const user = userCredentials.user;
       //create Firestore user
       createFirestoreDoc("customers", {
@@ -56,7 +56,7 @@ export default function Signup() {
         email: user.email,
       });
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       setError(err.message);
     }
   }

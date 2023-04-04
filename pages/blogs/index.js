@@ -20,7 +20,7 @@ export default function Index({ categories, blogs }) {
 
   const handleSearch = (query) => {
     // query.preventDefault();
-    console.log("this is query", query);
+    // console.log("this is query", query);
     router.push(`/blogs/?search=${query}`);
   };
   return (

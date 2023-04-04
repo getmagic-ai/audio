@@ -17,7 +17,7 @@ export default function WaitlistComponent({ handleWaitlistData }) {
 
   const router = useRouter();
   const handleWaitlistFormSubmit = async (e) => {
-    console.log("about to hit....trending songs..");
+    //console.log("about to hit....trending songs..");
     router.push("/app/trending-songs");
     try {
       e.preventDefault();
@@ -47,89 +47,89 @@ export default function WaitlistComponent({ handleWaitlistData }) {
         console.error(error);
       }
     } catch (error) {
-      console.log("error is..." + error);
+      //console.log("error is..." + error);
     }
-    console.log("about to hit....trending songs..");
+    //console.log("about to hit....trending songs..");
     router.push("/app/trending-songs");
   };
 
   return !submitted ? (
-    <div className="text-gray-100 space-y-3">
-      <div className="text-2xl align-middle items-center">
+    <div className='text-gray-100 space-y-3'>
+      <div className='text-2xl align-middle items-center'>
         Please join our waitlist to be notified when new audios start trending!
       </div>
 
-      <div className="text-sm align-middle items-center">
+      <div className='text-sm align-middle items-center'>
         We will use your contact information only to send you the invitation
         code!
       </div>
       <form>
         <label
-          htmlFor="waitlist-name"
-          className="block text-sm font-medium text-gray-200 mt-4"
+          htmlFor='waitlist-name'
+          className='block text-sm font-medium text-gray-200 mt-4'
         >
           Name
         </label>
-        <div className="mt-1">
+        <div className='mt-1'>
           <input
-            type="waitlist-name"
-            name="waitlist-name"
+            type='waitlist-name'
+            name='waitlist-name'
             value={waitlist_name}
             onChange={handleNameChange}
-            id="waitlist-name"
-            className="bg-gray-700 text-white shadow-sm block w-full sm:text-sm border-gray-300 rounded-md px-4 py-3"
+            id='waitlist-name'
+            className='bg-gray-700 text-white shadow-sm block w-full sm:text-sm border-gray-300 rounded-md px-4 py-3'
           />
         </div>
 
         <label
-          htmlFor="waitlist-email"
-          className="block text-sm font-medium text-gray-200 mt-4"
+          htmlFor='waitlist-email'
+          className='block text-sm font-medium text-gray-200 mt-4'
         >
           Email
         </label>
-        <div className="mt-1">
+        <div className='mt-1'>
           <input
-            type="waitlist-email"
-            name="waitlist-email"
+            type='waitlist-email'
+            name='waitlist-email'
             value={waitlist_email}
             onChange={handleEmailChange}
-            id="waitlist-email"
-            className="bg-gray-700 text-white shadow-sm block w-full sm:text-sm border-gray-300 rounded-md px-4 py-3"
+            id='waitlist-email'
+            className='bg-gray-700 text-white shadow-sm block w-full sm:text-sm border-gray-300 rounded-md px-4 py-3'
           />
         </div>
         <label
-          htmlFor="waitlist-phone"
-          className="block text-sm font-medium text-gray-200 mt-4"
+          htmlFor='waitlist-phone'
+          className='block text-sm font-medium text-gray-200 mt-4'
         >
           Phone Number
         </label>
-        <div className="mt-1">
+        <div className='mt-1'>
           <input
-            type="waitlist-phone"
-            name="waitlist-phone"
+            type='waitlist-phone'
+            name='waitlist-phone'
             value={waitlist_phone}
             onChange={handlePhoneChange}
-            id="waitlist-phone"
-            className="bg-gray-700 text-white shadow-sm block w-full sm:text-sm border-gray-300 rounded-md px-4 py-3"
+            id='waitlist-phone'
+            className='bg-gray-700 text-white shadow-sm block w-full sm:text-sm border-gray-300 rounded-md px-4 py-3'
           />
         </div>
 
         <Link
-          href="/app"
-          type="submit"
-          className="max-w-xs mt-2 inline-flex justify-between items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          href='/app'
+          type='submit'
+          className='max-w-xs mt-2 inline-flex justify-between items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
           onClick={handleWaitlistFormSubmit}
         >
           Submit & Proceed to our alpha version!
           <ArrowRightCircleIcon
-            className="ml-2 -mr-1 h-5 w-5"
-            aria-hidden="true"
+            className='ml-2 -mr-1 h-5 w-5'
+            aria-hidden='true'
           />
         </Link>
       </form>
     </div>
   ) : (
-    <div className="text-white">
+    <div className='text-white'>
       Thanks! You will now see the alpha version of our product! Thanks for your
       feedback
     </div>
