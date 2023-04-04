@@ -1,11 +1,8 @@
 const mail = require("@sendgrid/mail")
-const NEXT_PUBLIC_SENDGRID_KEY = ""
-
-mail.setApiKey(NEXT_PUBLIC_SENDGRID_KEY);
+mail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_KEY);
 
 
 const sendMail = async (req, res) => {
-
     const email = req.body;
 
     const message = {
