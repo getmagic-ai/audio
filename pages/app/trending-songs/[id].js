@@ -15,13 +15,26 @@ const SongDetail = () => {
   const router = useRouter();
   const { currentUser, userData, loading } = useContext(AuthContext);
   const [data, setData] = useState(null);
+  const getHasUserLiked = async (userId, audioId) => {
+    const docRef = doc(db, "likes", `${userId}_${audioId}`);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      //console.log(docSnap.data());
+      return true;
+    } else {
+      // doc.data() will be undefined in this case
+      return false;
+    }
+  };
+  const hasUserLiked = getHasUserLiked();
 
   useEffect(() => {
     // Client-side-only code
     let audioObject = window.localStorage.getItem("audio");
     //console.log(JSON.parse(audioObject));
     setData(JSON.parse(audioObject));
-  }, [data]);
+  }, []);
 
   const handleLike = async (userId, audioId) => {
     // Add a new document in collection "likes"
@@ -36,18 +49,6 @@ const SongDetail = () => {
     await deleteDoc(doc(db, "likes", `${userId}_${audioId}`));
   };
 
-  const getHasUserLiked = async (userId, audioId) => {
-    const docRef = doc(db, "likes", `${userId}_${audioId}`);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      //console.log(docSnap.data());
-      return true;
-    } else {
-      // doc.data() will be undefined in this case
-      return false;
-    }
-  };
   if (!data)
     return (
       <div className='flex items-center justify-center h-screen w-full'>
@@ -87,16 +88,29 @@ const SongDetail = () => {
             <h2 className='font-semibold lg:text-4xl text-3xl lg:leading-9 leading-7 text-gray-300 mt-4'>
               {data.artist_name}
             </h2>
-            <button
-              onClick={() => {
-                currentUser == null
-                  ? router.push("/auth/signin")
-                  : handleLike(currentUser.uid, data.Id);
-              }}
-              className='focus:outline-none focus:ring-2 hover:bg-gray-600 focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 lg:mt-12 mt-6'
-            >
-              Add to favorites
-            </button>
+            {hasUserLiked ? (
+              <button
+                onClick={() => {
+                  currentUser == null
+                    ? router.push("/auth/signin")
+                    : deleteLike(currentUser.uid, data.Id);
+                }}
+                className='focus:outline-none focus:ring-2 hover:bg-gray-600 focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 lg:mt-12 mt-6'
+              >
+                Remove from favorites
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  currentUser == null
+                    ? router.push("/auth/signin")
+                    : handleLike(currentUser.uid, data.Id);
+                }}
+                className='focus:outline-none focus:ring-2 hover:bg-gray-600 focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 lg:mt-12 mt-6'
+              >
+                Add to favorites
+              </button>
+            )}
             <button className='focus:outline-none focus:ring-2 hover:bg-gray-600 focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 mt-6'>
               <a href={data.direct_audio_link} target={"_blank"}>
                 View
@@ -105,7 +119,7 @@ const SongDetail = () => {
           </div>
         </div>
       )}
-      <SuggestedForYou />
+      {/* <SuggestedForYou /> */}
     </div>
   );
 };
