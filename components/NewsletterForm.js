@@ -9,7 +9,12 @@ function NewsletterForm({ currentUser }) {
     if (currentUser) {
       setRecipient(currentUser.email);
     }
-  }, [currentUser]);
+  }, [currentUser]);//write a function to validate the email address entered below
+    function validateEmail(email) {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+        //return a boolean here instead of the regex test
+    }
 
   async function subscribe(event) {
     event.preventDefault();

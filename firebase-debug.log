@@ -1,0 +1,21 @@
+[debug] [2023-04-22T19:56:13.022Z] ----------------------------------------------------------------------
+[debug] [2023-04-22T19:56:13.024Z] Command:       /usr/local/bin/node /usr/local/bin/firebase init
+[debug] [2023-04-22T19:56:13.024Z] CLI Version:   11.28.0
+[debug] [2023-04-22T19:56:13.024Z] Platform:      darwin
+[debug] [2023-04-22T19:56:13.025Z] Node Version:  v16.17.1
+[debug] [2023-04-22T19:56:13.026Z] Time:          Sat Apr 22 2023 12:56:13 GMT-0700 (Pacific Daylight Time)
+[debug] [2023-04-22T19:56:13.026Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-22T19:56:13.033Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-22T19:56:13.033Z] > authorizing via signed-in user (apdhalwani@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/Personal/Desktop/audio
+
