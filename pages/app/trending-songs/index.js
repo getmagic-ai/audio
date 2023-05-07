@@ -140,7 +140,15 @@ const TrendingSongs = () => {
                         href={`/app/trending-songs/${item.Id}`}
                         query={item}
                       >
-                        <p className='text-md font-medium truncate text-white'>
+                        <p
+                          onClick={() => {
+                            currentUser == null
+                              ? router.push("/auth/signin")
+                              : setLocalStorageItem(item);
+                            router.push(`/app/trending-songs/${item.Id}`);
+                          }}
+                          className='text-md font-medium truncate text-white'
+                        >
                           {item.title}
                         </p>
                         <p className='text-sm font-medium truncate text-gray-200'>

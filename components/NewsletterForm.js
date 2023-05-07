@@ -17,7 +17,12 @@ function NewsletterForm({ currentUser }) {
       setRecipient(currentUser.email);
       setPrefObj({ ...prefObj, email: currentUser.email });//add the current user's email to the prefObj object
     }
-  }, [currentUser]);
+  }, [currentUser]);//write a function to validate the email address entered below
+    function validateEmail(email) {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+        //return a boolean here instead of the regex test
+    }
 
   //handles the checkboxes state and updates the state of prefObj object
   const handleNewsletterChange = (event) => {

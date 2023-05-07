@@ -21,7 +21,7 @@ export async function createCheckoutSession(uid) {
   onSnapshot(checkout_session_ref, async (snap) => {
     const { sessionId } = snap.data();
     if (sessionId) {
-      //console.log('redirecting.... hold on...')
+      //console.log('redirecting.... hold on....')
       const stripe = await initializeStripe();
       stripe.redirectToCheckout({ sessionId });
     }
