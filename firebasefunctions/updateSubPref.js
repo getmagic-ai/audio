@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../config/firebase-config'
+import { userPrefDb } from '@/config/firebase-newsletter-preference-config'
 
 export default function useFetchData() {
     const [loading, setLoading] = useState(true)
