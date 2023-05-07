@@ -1,33 +1,37 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { collection, doc, setDoc, getDocs } from 'firebase/firestore';
+import { db } from '../config/firebase-config';
+//test fetch
+// import { useFetchData } from '../firebasefunctions/updateSubPref'
 
 function NewsletterForm({ currentUser }) {
   const [recipient, setRecipient] = useState(""); //email address
   const [isSending, setIsSending] = useState(false);//loading state
-  const [newsletters, setNewsletters] = useState({ blog: true, updates: true, promotions: true }); //checkboxes state
-
-
-
-  //handles the checkboxes state and updates the state of newsletters object
-  const handleNewsletterChange = (event) => {
-    setNewsletters({ ...newsletters, [event.target.name]: event.target.checked });
-
-  };
+  const [prefObj, setPrefObj] = useState({ blog: true, updates: true, promotions: true }); //checkboxes state
 
 
   //fills the email address field with the current user's email address
   useEffect(() => {
     if (currentUser) {
       setRecipient(currentUser.email);
+      setPrefObj({ ...prefObj, email: currentUser.email });//add the current user's email to the prefObj object
     }
   }, [currentUser]);
+
+  //handles the checkboxes state and updates the state of prefObj object
+  const handleNewsletterChange = (event) => {
+    setPrefObj({ ...prefObj, [event.target.name]: event.target.checked });
+
+  };
 
 
 
   // takes the email address from the form and sends it to the API route
   async function subscribe(event) {
     event.preventDefault();
-    const email = event.currentTarget.elements.email.value;//this is the email address
+    const email = event.currentTarget.elements.email.value;//this is the email 
+
     setRecipient(email)
     setIsSending(true);
     fetch("api/sendgrid", {
@@ -42,7 +46,27 @@ function NewsletterForm({ currentUser }) {
         toast.error("Subscription Failed, Please try again later.");
       }
     });
-    console.log(newsletters);
+
+    //------------fetch data from db------------
+    // const getEmailSubs = async (db) => {
+    //   const emailSubsCol = collection(db, 'users');
+    //   const emailSubsSnapshot = await getDocs(emailSubsCol);
+    //   const emailSubsList = emailSubsSnapshot.docs.map(doc => doc.data());
+    //   console.log("emailSubsList: ", emailSubsList);
+    // }
+    // getEmailSubs(db);
+
+
+    //---------------add data to db-------------------
+    const addEmailSub = async (db) => {
+      const emailSubsCol = collection(db, 'Newsletter_subscribers');
+      await setDoc(doc(emailSubsCol, email), prefObj);
+    }
+
+    addEmailSub(db);
+    console.log("prefObj: ", prefObj);
+
+
 
   }
 
@@ -81,17 +105,17 @@ function NewsletterForm({ currentUser }) {
 
               <div className=" w-full">
                 <div className="m-1 mt-2">
-                  <input type="checkbox" id="blog" name="blog" checked={newsletters.blog} onChange={handleNewsletterChange} />
+                  <input type="checkbox" id="blog" name="blog" checked={prefObj.blog} onChange={handleNewsletterChange} />
                   <label className="ml-1" htmlFor="blog">Blog updates</label>
                 </div>
 
                 <div className="m-1">
-                  <input type="checkbox" id="updates" name="updates" checked={newsletters.updates} onChange={handleNewsletterChange} />
+                  <input type="checkbox" id="updates" name="updates" checked={prefObj.updates} onChange={handleNewsletterChange} />
                   <label className="ml-1" htmlFor="updates">Product updates</label>
                 </div>
 
                 <div className="m-1">
-                  <input type="checkbox" id="promotions" name="promotions" checked={newsletters.promotions} onChange={handleNewsletterChange} />
+                  <input type="checkbox" id="promotions" name="promotions" checked={prefObj.promotions} onChange={handleNewsletterChange} />
                   <label className="ml-1" htmlFor="promotions">Promotions</label>
                 </div>
               </div>
